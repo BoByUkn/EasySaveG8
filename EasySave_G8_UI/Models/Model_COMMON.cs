@@ -1,9 +1,11 @@
 ﻿using Newtonsoft.Json;
+using System;
 using System.Globalization;
+using System.IO;
 using System.Reflection;
 using System.Resources;
 
-namespace EasySave_G8_CONS.Models
+namespace EasySave_G8_UI.Models
 {
     public class Model_COMMON
     {

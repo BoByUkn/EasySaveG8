@@ -1,7 +1,10 @@
-﻿using EasySave_G8_CONS.Models;
-using EasySave_G8_CONS.Views;
+﻿using EasySave_G8_UI.Models;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 
-namespace EasySave_G8_CONS.View_Models
+namespace EasySave_G8_UI.View_Models
 {
     public class View_Model
     {
@@ -92,22 +95,22 @@ namespace EasySave_G8_CONS.View_Models
             Model_Works ModelWorks = new Model_Works();
             List<Model_PRE> obj_list = ModelWorks.Get_Work(Name, false); 
             ModelWorks.Delete_Work(Name);
-            View_SAVE ViewSAVE = new View_SAVE();
-            ViewSAVE.Get_Infos(true, true, obj_list);
+            //View_SAVE ViewSAVE = new View_SAVE();
+            //ViewSAVE.Get_Infos(true, true, obj_list);
         }
 
         //MV Show WorkNotFound error
         public void MV_Work_NotFound()
         {
-            View_WORKS ViewWORKS = new View_WORKS();
-            ViewWORKS.Work_NotFound();
+            //View_WORKS ViewWORKS = new View_WORKS();
+            //ViewWORKS.Work_NotFound();
         }
 
         //MV Show 5Works error
         public void MV_Work_5Works()
         {
-            View_WORKS ViewWORKS = new View_WORKS();
-            ViewWORKS.Work_5Works();
+            //View_WORKS ViewWORKS = new View_WORKS();
+            //ViewWORKS.Work_5Works();
         }
 
         //VM Change app_config Language
@@ -134,12 +137,12 @@ namespace EasySave_G8_CONS.View_Models
         //MV Update the progression bar
         public void MV_Update_ProgressionBar(int percentage)
         {
-            View_SAVE ViewSAVE = new View_SAVE();
-            ViewSAVE.Progression_Bar(percentage);
+            //View_SAVE ViewSAVE = new View_SAVE();
+            //ViewSAVE.Progression_Bar(percentage);
         }
 
         //MV Show the log files
-        public List<Model_AFT> MV_Look_Logs(String Date)
+        public List<Model_AFT> MV_Look_Logs(string Date)
         {
             Model_Logs ModelLogs = new Model_Logs();
             List<Model_AFT> list = ModelLogs.Get_Logs(Date);

@@ -1,10 +1,13 @@
 ﻿using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.IO;
 
-namespace EasySave_G8_CONS.Models
+namespace EasySave_G8_UI.Models
 {
     public class Model_Logs
     {
-        public List<Model_AFT> Get_Logs(String Date) //Retrieve log file content
+        public List<Model_AFT> Get_Logs(string Date) //Retrieve log file content
         {
             string fileName = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\logs\" + Date + ".json";
 

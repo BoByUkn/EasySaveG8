@@ -1,7 +1,10 @@
-﻿using EasySave_G8_CONS.View_Models;
+﻿using EasySave_G8_UI.View_Models;
 using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.IO;
 
-namespace EasySave_G8_CONS.Models
+namespace EasySave_G8_UI.Models
 {
     public class Model_AFT : Model_PRE
     {
