@@ -1,5 +1,4 @@
-﻿using EasySave_G8_UI.View;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,27 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace EasySave_G8_UI
+namespace EasySave_G8_UI.View
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Logique d'interaction pour Dashboard.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class Dashboard : Page
     {
-        public MainWindow()
+        public Dashboard()
         {
             InitializeComponent();
-            Main.Content = new Dashboard();
-        }
-
-        private void Classic_Save_Button(object sender, RoutedEventArgs e)
-        {
-            Main.Content= new Classic_Save();
-        }
-
-        private void Main_Navigated(object sender, NavigationEventArgs e)
-        {
-
         }
     }
 }

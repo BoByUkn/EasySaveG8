@@ -8,31 +8,24 @@
         Title="EasySave G8" Height="720" Width="1280">
 
 
-    <Grid Background="#808080">
-        
-        
-        <TextBlock 
-        Foreground="White" FontSize="36" 
-        VerticalAlignment="Top" HorizontalAlignment="Left"
-        Text="EASYSAVE" Margin="10,0,0,0" Grid.ColumnSpan="2" 
-    />
+    <Grid Background="#FFB8B08D">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="181*"/>
+            <ColumnDefinition Width="459*"/>
+        </Grid.ColumnDefinitions>
 
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,-6,0,5">
-            <Button Margin="10" Padding="10,5" Content="Classic Save" Height="35" Width="149" Click="Classic_Save_Button" VerticalAlignment="Top" />
-            <Button Margin="10" Padding="10,5" Content="Saves Works" Height="35" Width="149" VerticalAlignment="Top"/>
-            <Button Margin="10" Padding="10,5" Content="Logs" Height="35" Width="149" VerticalAlignment="Top"/>
-            <Button Margin="10" Padding="10,5" Content="Settings Language" Height="35" Width="149" VerticalAlignment="Top"/>
-            <Button Margin="10" Padding="10,5" Content="Home Page" Height="35" Width="149" VerticalAlignment="Top"/>
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Width="345" Background="#FF283845">
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Width="345" Background="#FF283845">
+                <TextBlock Foreground="White" TextAlignment="Center" FontSize="36" Background="#FF161E27" Height="52"><Run Text="E"/><Run Language="fr-fr" Text="asy Save G8"/><LineBreak/><Run Language="fr-fr"/></TextBlock>
+                <TextBlock Foreground="White" TextAlignment="Center" FontSize="16" Background="#FF161E27" Height="27"><Run Language="fr-fr" Text="v2.0"/><LineBreak/><Run/></TextBlock>
+            </StackPanel>
+            <Button Margin="0,30,10,10" Padding="10.5" HorizontalAlignment="Left" FontSize="22" Content="Classic Save" Height="50" Width="250" Click="Classic_Save_Button" />
+            <Button Margin="0,30,10,10" Padding="10,5" HorizontalAlignment="Left" FontSize="22" Content="Saves Works" Height="50" Width="250"/>
+            <Button Margin="0,30,10,10" Padding="10,5" HorizontalAlignment="Left" FontSize="22" Content="Logs" Height="50" Width="250"/>
+            <Button Margin="0,30,10,10" Padding="10,5" HorizontalAlignment="Left" FontSize="22" Content="Settings Language" Height="50" Width="250"/>
+            <Button Margin="0,30,10,10" Padding="10,5" HorizontalAlignment="Left" FontSize="22" Content="Home Page" Height="50" Width="143"/>
         </StackPanel>
-
-
-        <Frame x:Name="Main" NavigationUIVisibility="Hidden" Navigated="Main_Navigated" />
-
-
-
-
-
-
+        <Frame x:Name="Main" NavigationUIVisibility="Hidden" Navigated="Main_Navigated" Margin="345,0,0,0" Grid.ColumnSpan="2" />
 
     </Grid>
 
