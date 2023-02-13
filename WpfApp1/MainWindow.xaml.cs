@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace EasySave_G8_UI
+namespace WpfApp1
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -23,17 +23,6 @@ namespace EasySave_G8_UI
         public MainWindow()
         {
             InitializeComponent();
-          
-        }
-
-        private void Classic_Save_Button(object sender, RoutedEventArgs e)
-        {
-            Main.Content= new Classic_Save();
-        }
-
-        private void Main_Navigated(object sender, NavigationEventArgs e)
-        {
-
         }
     }
 }

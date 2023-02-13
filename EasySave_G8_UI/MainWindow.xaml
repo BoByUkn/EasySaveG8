@@ -5,8 +5,35 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EasySave_G8_UI"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="EasySave G8" Height="720" Width="1280">
+
+
+    <Grid Background="#808080">
+        
+        
+        <TextBlock 
+        Foreground="White" FontSize="36" 
+        VerticalAlignment="Top" HorizontalAlignment="Left"
+        Text="EASYSAVE" Margin="10,0,0,0" Grid.ColumnSpan="2" 
+    />
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,-6,0,5">
+            <Button Margin="10" Padding="10,5" Content="Classic Save" Height="35" Width="149" Click="Classic_Save_Button" VerticalAlignment="Top" />
+            <Button Margin="10" Padding="10,5" Content="Saves Works" Height="35" Width="149" VerticalAlignment="Top"/>
+            <Button Margin="10" Padding="10,5" Content="Logs" Height="35" Width="149" VerticalAlignment="Top"/>
+            <Button Margin="10" Padding="10,5" Content="Settings Language" Height="35" Width="149" VerticalAlignment="Top"/>
+            <Button Margin="10" Padding="10,5" Content="Home Page" Height="35" Width="149" VerticalAlignment="Top"/>
+        </StackPanel>
+
+
+        <Frame x:Name="Main" NavigationUIVisibility="Hidden" Navigated="Main_Navigated" />
+
+
+
+
+
+
 
     </Grid>
+
 </Window>
