@@ -1,17 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using EasySave_G8_UI.View_Models;
+using EasySave_G8_UI.Views;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace EasySave_G8_UI
 {
@@ -23,6 +13,37 @@ namespace EasySave_G8_UI
         public MainWindow()
         {
             InitializeComponent();
+            Main.Content = new Dashboard();
+        }
+
+        private void Classics_Click(object sender, RoutedEventArgs e)
+        {
+            Main.Content= new Classics();
+        }
+
+        private void Dashboard_Click(object sender, RoutedEventArgs e)
+        {
+            Main.Content = new Dashboard();
+        }
+
+        private void Works_Click(object sender, RoutedEventArgs e)
+        {
+            Main.Content = new Works();
+        }
+
+        private void Logs_Click(object sender, RoutedEventArgs e)
+        {
+            Main.Content = new Logs();
+        }
+
+        private void Shutdown_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
+
+        private void Main_Navigated(object sender, NavigationEventArgs e)
+        {
+
         }
     }
 }

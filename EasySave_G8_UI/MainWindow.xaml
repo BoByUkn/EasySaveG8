@@ -5,8 +5,60 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EasySave_G8_UI"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="EasySave G8" Height="720" Width="1280">
+
+    
+    <Grid Background="#FFB8B08D">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="181*"/>
+            <ColumnDefinition Width="459*"/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Width="345" Background="#FF283845">
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Width="345" Background="#FF283845">
+                <TextBlock x:Name="Title" Foreground="White" TextAlignment="Center" FontSize="36" Background="#FF161E27" Height="81"><Run Text="E"/><Run Language="fr-fr" Text="asy Save G8"/><LineBreak/><Run Language="fr-fr"/></TextBlock>
+                <TextBlock x:Name="Version" Foreground="White" TextAlignment="Center" FontSize="16" Background="#FF161E27" Height="41"><Run Language="fr-fr" Text="v2.0"/><LineBreak/><Run/></TextBlock>
+            </StackPanel>
+
+            <Button x:Name="Dashboard_btn" Margin="-40,20,10,10" Padding="10.5" HorizontalAlignment="Left" FontSize="22" Content="Dashboard" Height="70" Width="250" Background="#FFDDDDDD" Click="Dashboard_Click">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="35"></Setter>
+                    </Style>
+                </Button.Resources>
+            </Button>
+            <Button x:Name="Classics_btn" Margin="-40,20,10,10" Padding="10.5" HorizontalAlignment="Left" FontSize="22" Content="Classics" Height="70" Width="250" Click="Classics_Click" Background="#FFDDDDDD" >
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="35"></Setter>
+                    </Style>
+                </Button.Resources>
+            </Button>
+            <Button x:Name="Works_btn" Margin="-40,20,10,10" Padding="10,5" HorizontalAlignment="Left" FontSize="22" Content="Works" Height="70" Width="250" Background="#FFDDDDDD" Click="Works_Click">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="35"></Setter>
+                    </Style>
+                </Button.Resources>
+            </Button>
+            <Button x:Name="Logs_btn" Margin="-40,20,10,10" Padding="10,5" HorizontalAlignment="Left" FontSize="22" Content="Logs" Height="70" Width="250" Background="#FFDDDDDD" Click="Logs_Click">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="35"></Setter>
+                    </Style>
+                </Button.Resources>
+            </Button>
+            <Button x:Name="Shutdown_btn" Margin="-40,20,10,10" Padding="10,5" HorizontalAlignment="Left" FontSize="22" Content="Shutdown" Height="70" Width="250" Background="#FFD9D9D9" Click="Shutdown_Click">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="35"></Setter>
+                    </Style>
+                </Button.Resources>
+            </Button>
+
+        </StackPanel>
+        <Frame x:Name="Main" NavigationUIVisibility="Hidden" Navigated="Main_Navigated" Margin="345,0,0,0" Grid.ColumnSpan="2" />
 
     </Grid>
+
 </Window>
