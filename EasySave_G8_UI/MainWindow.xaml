@@ -16,14 +16,15 @@
 
         <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Width="345" Background="#FF283845">
             <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Width="345" Background="#FF283845">
-                <TextBlock Foreground="White" TextAlignment="Center" FontSize="36" Background="#FF161E27" Height="52"><Run Text="E"/><Run Language="fr-fr" Text="asy Save G8"/><LineBreak/><Run Language="fr-fr"/></TextBlock>
-                <TextBlock Foreground="White" TextAlignment="Center" FontSize="16" Background="#FF161E27" Height="27"><Run Language="fr-fr" Text="v2.0"/><LineBreak/><Run/></TextBlock>
+                <TextBlock Foreground="White" TextAlignment="Center" FontSize="36" Background="#FF161E27" Height="81"><Run Text="E"/><Run Language="fr-fr" Text="asy Save G8"/><LineBreak/><Run Language="fr-fr"/></TextBlock>
+                <TextBlock Foreground="White" TextAlignment="Center" FontSize="16" Background="#FF161E27" Height="41"><Run Language="fr-fr" Text="v2.0"/><LineBreak/><Run/></TextBlock>
             </StackPanel>
-            <Button Margin="0,30,10,10" Padding="10.5" HorizontalAlignment="Left" FontSize="22" Content="Classic Save" Height="50" Width="250" Click="Classic_Save_Button" />
-            <Button Margin="0,30,10,10" Padding="10,5" HorizontalAlignment="Left" FontSize="22" Content="Saves Works" Height="50" Width="250"/>
-            <Button Margin="0,30,10,10" Padding="10,5" HorizontalAlignment="Left" FontSize="22" Content="Logs" Height="50" Width="250"/>
-            <Button Margin="0,30,10,10" Padding="10,5" HorizontalAlignment="Left" FontSize="22" Content="Settings Language" Height="50" Width="250"/>
-            <Button Margin="0,30,10,10" Padding="10,5" HorizontalAlignment="Left" FontSize="22" Content="Home Page" Height="50" Width="143"/>
+            <Button x:Name="Dashboard_btn" Margin="0,30,10,10" Padding="10.5" HorizontalAlignment="Left" FontSize="22" Content="Dashboard" Height="50" Width="250" Background="#FFDDDDDD" Click="Dashboard_Click"/>
+            <Button x:Name="Classics_btn" Margin="0,30,10,10" Padding="10.5" HorizontalAlignment="Left" FontSize="22" Content="Classics" Height="50" Width="250" Click="Classics_Click" Background="#FFDDDDDD" />
+            <Button x:Name="Works_btn" Margin="0,30,10,10" Padding="10,5" HorizontalAlignment="Left" FontSize="22" Content="Works" Height="50" Width="250" Background="#FFDDDDDD" Click="Works_Click"/>
+            <Button x:Name="Logs_btn" Margin="0,30,10,10" Padding="10,5" HorizontalAlignment="Left" FontSize="22" Content="Logs" Height="50" Width="250" Background="#FFDDDDDD" Click="Logs_Click"/>
+            <Button Margin="0,30,10,10" Padding="10,5" HorizontalAlignment="Left" FontSize="22" Content="Settings" Height="50" Width="250" Background="#FFDDDDDD"/>
+            <Button x:Name="Shutdown_btn" Margin="0,30,10,10" Padding="10,5" HorizontalAlignment="Left" FontSize="22" Content="Shutdown" Height="50" Width="143" Background="#FFD9D9D9" Click="Shutdown_Click"/>
         </StackPanel>
         <Frame x:Name="Main" NavigationUIVisibility="Hidden" Navigated="Main_Navigated" Margin="345,0,0,0" Grid.ColumnSpan="2" />
 
