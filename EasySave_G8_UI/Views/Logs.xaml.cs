@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace EasySave_G8_UI.View
+namespace EasySave_G8_UI.Views
 {
     /// <summary>
-    /// Logique d'interaction pour Dashboard.xaml
+    /// Logique d'interaction pour Logs.xaml
     /// </summary>
-    public partial class Dashboard : Page
+    public partial class Logs : Page
     {
-        public Dashboard()
+        public Logs()
         {
             InitializeComponent();
         }
