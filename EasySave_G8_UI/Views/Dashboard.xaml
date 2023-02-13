@@ -8,8 +8,5 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Dashboard">
 
-    <Grid>
-        <TextBlock HorizontalAlignment="Left" Height="90" Margin="266,173,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="218"><Run Language="fr-fr" Text="Dashboard"/></TextBlock>
-
-    </Grid>
+    <Grid Width="904" Height="706"/>
 </Page>
