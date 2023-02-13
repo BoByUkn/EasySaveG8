@@ -1,4 +1,4 @@
-﻿<Page x:Class="EasySave_G8_UI.Views.Classics"
+﻿<Page x:Class="EasySave_G8_UI.Views.Works"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -6,10 +6,10 @@
       xmlns:local="clr-namespace:EasySave_G8_UI.Views"
       mc:Ignorable="d" 
       d:DesignHeight="704" d:DesignWidth="935"
-      Title="Classics" Height="704.04" Width="935">
+      Title="Works" Height="704.04" Width="935">
 
     <Grid>
-        <TextBlock HorizontalAlignment="Left" Height="134" Margin="524,138,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="202"><Run Language="fr-fr" Text="Classics"/></TextBlock>
+        <TextBlock HorizontalAlignment="Left" Height="125" Margin="304,170,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="232"><Run Language="fr-fr" Text="Works"/></TextBlock>
 
     </Grid>
 </Page>

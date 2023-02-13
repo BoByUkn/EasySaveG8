@@ -60,6 +60,16 @@ namespace EasySave_G8_UI.Models
                     string jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(obj_list, Newtonsoft.Json.Formatting.Indented); //Serialialize the data in JSON form
                     File.WriteAllText(fileName, jsonString); //Write json file
                 }
+                else
+                {
+                    View_Model ViewModel = new View_Model();
+                    ViewModel.MV_Work_NotFound();
+                }
+            }
+            else 
+            {
+                View_Model ViewModel = new View_Model();
+                ViewModel.MV_Work_NotFound();
             }
         }
     }

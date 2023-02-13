@@ -3,9 +3,6 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Xml.Serialization;
-using System.Xml;
-using System.Threading;
 
 namespace EasySave_G8_UI.Models
 {
@@ -23,9 +20,6 @@ namespace EasySave_G8_UI.Models
 
         View_Model VM = new View_Model();
         private double ActualSize2 = 0;
-        public Model_AFT()
-        {
-        }
 
         public Model_AFT(string Name, string Source, string Destination, bool Type) : base(Name, Source, Destination, Type)
         {
@@ -46,15 +40,18 @@ namespace EasySave_G8_UI.Models
                 Model_StateLogs ModelStateLogs = new Model_StateLogs(this.Name, this.Source, this.Destination, this.Type, this.total_files);
                 if (File.Exists(Source)) //If it's a file
                 {
+                    Console.WriteLine($"{View_Model.VM_GetString_Language("file_save_inprogress")}");
                     utcDateStart = DateTime.Now;
 
                     File.Copy(Source, Destination, true);
                     Size = new System.IO.FileInfo(Source).Length;
 
                     utcDateFinish = DateTime.Now;
+                    Console.WriteLine($"{View_Model.VM_GetString_Language("file_save_done")}");
                 }
                 else if (Directory.Exists(Source)) //If it's a folder
                 {
+                    Console.WriteLine($"{View_Model.VM_GetString_Language("dir_save_inprogress")}");
                     utcDateStart = DateTime.Now;
                     var files = Directory.GetFiles(Source, "*.*", SearchOption.AllDirectories); //Get folders and files in the source directory
                     Directory.CreateDirectory(Destination); //Create the destination directory if it doesn't exist
@@ -74,8 +71,8 @@ namespace EasySave_G8_UI.Models
                         string targetFile = file.Replace(Source, Destination2);
 
                         ActualSize2 = ActualSize2 + new System.IO.FileInfo(file).Length;//Increment size with each file
-
-                        double percentage = (int)(((double)ActualSize2 / (double)Size) * 100);//progression's percentage of the save
+                        
+                        int percentage = (int)(((double)ActualSize2 / (double)Size) * 100);//progression's percentage of the save
                         VM.MV_Update_ProgressionBar(percentage); // update progression bar
 
 
@@ -92,7 +89,11 @@ namespace EasySave_G8_UI.Models
                     ModelStateLogs.State = "ENDED";
                    
                     utcDateFinish = DateTime.Now;
+                    Console.WriteLine();
+                    Console.WriteLine();
+                    Console.WriteLine($"{View_Model.VM_GetString_Language("dir_save_done")}");
                 }
+                else { Console.WriteLine($"{View_Model.VM_GetString_Language("invalid_path")}" + "\n"); }
                 
                 Duration = utcDateFinish.Subtract(utcDateStart);  // Calculation of the result of the arrival date - the departure date to obtain a duration, it's in TimeSpan, it is the result of the subtraction of two DataTime
 
@@ -100,6 +101,9 @@ namespace EasySave_G8_UI.Models
 
                 ModelStateLogs.millisecondsDuration = millisecondsDuration; //add millisecondsDuration to the object ModelStateLogs
                 StateLog(ModelStateLogs);// Write the JSon State Logs with all info 
+
+                Console.WriteLine($"{View_Model.VM_GetString_Language("svduration")}" + millisecondsDuration + " ms \n" + $"{View_Model.VM_GetString_Language("return_menu")}");
+                Console.ReadLine();
             }
         }
 
@@ -111,6 +115,7 @@ namespace EasySave_G8_UI.Models
                 
                 if (Directory.Exists(Source))
                 {
+                    Console.WriteLine($"{View_Model.VM_GetString_Language("file_save_inprogress")}");
                     utcDateStart = DateTime.Now;
 
                     string[] sourceFiles = Directory.GetFiles(Source, "*.*", SearchOption.AllDirectories); // Get the list of files in the source directory
@@ -132,7 +137,7 @@ namespace EasySave_G8_UI.Models
 
                         ActualSize2 = ActualSize2 + new System.IO.FileInfo(sourceFile).Length;//Increment size with each file
 
-                        double percentage = (double)(((double)ActualSize2 / (double)Size) * 100);
+                        int percentage = (int)(((double)ActualSize2 / (double)Size) * 100);
                         VM.MV_Update_ProgressionBar(percentage);
 
                         ModelStateLogs.progression = percentage;
@@ -159,13 +164,22 @@ namespace EasySave_G8_UI.Models
 
                     }
                     utcDateFinish = DateTime.Now;
-                }                
+                    Console.WriteLine();
+                    Console.WriteLine();
+                    Console.WriteLine($"{View_Model.VM_GetString_Language("dir_save_done")}");
+
+                }
+                else { Console.WriteLine($"{View_Model.VM_GetString_Language("invalid_path")}" + "\n"); }
+                
                 Duration = utcDateFinish.Subtract(utcDateStart); // Calculation of the result of the arrival date - the departure date to obtain a duration, it's in TimeSpan, it is the result of the subtraction of two DataTime
                 millisecondsDuration = Duration.TotalMilliseconds; // Convert Duration in milliseconds
 
                 ModelStateLogs.millisecondsDuration = millisecondsDuration; //add millisecondsDuration to the object ModelStateLogs
                 ModelStateLogs.State = "ENDED"; // Uptadte status of the save in order to write it in Json state logs
                 StateLog(ModelStateLogs); // Write the JSon State Logs with all info 
+
+                Console.WriteLine($"{View_Model.VM_GetString_Language("svduration")}" + millisecondsDuration + " ms \n" + $"{View_Model.VM_GetString_Language("return_menu")}");
+                Console.ReadLine();
             }
         }
 
@@ -174,8 +188,6 @@ namespace EasySave_G8_UI.Models
             string utcDateOnly = utcDateDateTime.ToString("dd/MM/yyyy");
             utcDateOnly = utcDateOnly.Replace("/", "-"); //Format the date to allow serializing
             string fileName = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\logs\" + utcDateOnly + ".json";
-            string fileName2 = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\logs\" + utcDateOnly + ".xml";
-
 
             if (File.Exists(fileName))  //Test if log file exists, else it creates it
             {
@@ -187,9 +199,6 @@ namespace EasySave_G8_UI.Models
                 
                 string jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(values, Newtonsoft.Json.Formatting.Indented); //Serialialize the data in JSON form
                 File.WriteAllText(fileName, jsonString); //Write json file
-                XmlSerializer serializer = new XmlSerializer(typeof(List<Model_AFT>));
-                StreamWriter writer = new StreamWriter(fileName2);
-                serializer.Serialize(writer, values);
             }
 
             else if (!File.Exists(fileName))
@@ -198,9 +207,6 @@ namespace EasySave_G8_UI.Models
                 values.Add(this);// Add object ModelAFT in the list values
                 var jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(values, Newtonsoft.Json.Formatting.Indented); //Serialialize the data in JSON form
                 File.WriteAllText(fileName, jsonString); // Write json file
-                XmlSerializer serializer = new XmlSerializer(typeof(List<Model_AFT>));
-                StreamWriter writer = new StreamWriter(fileName2);
-                serializer.Serialize(writer, values);
             }
         }
 

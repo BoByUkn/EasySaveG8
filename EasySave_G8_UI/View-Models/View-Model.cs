@@ -1,18 +1,12 @@
 ﻿using EasySave_G8_UI.Models;
-using EasySave_G8_UI.Views;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Windows;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Diagnostics;
-using System.Windows.Data;
 
 namespace EasySave_G8_UI.View_Models
 {
-    public class View_Model : INotifyPropertyChanged
+    public class View_Model
     {
         //VM Startup Initialisation
         public void VM_Init() 
@@ -60,6 +54,14 @@ namespace EasySave_G8_UI.View_Models
         //VM Run a single or all works
         public void VM_Work_Run(string Name, bool AllBool)
         {
+            if (!AllBool)
+            {
+                if (!VM_Work_Exist(Name))
+                {
+                    MV_Work_NotFound();
+                    return;
+                }
+            }
             Model_Works ModelWorks = new Model_Works();
             List<Model_PRE>? obj_list = (ModelWorks.Get_Work(Name, AllBool)); //Use Get_Work to get Work data
             foreach (Model_PRE obj in obj_list) //Loop throught every works in list and execute them
@@ -72,8 +74,43 @@ namespace EasySave_G8_UI.View_Models
         //VM Delete a Work
         public void VM_Work_Delete(string Name)
         {
+            if (!VM_Work_Exist(Name))
+            {
+                MV_Work_NotFound();
+                return;
+            }
             Model_Works ModelWorks = new Model_Works();
             ModelWorks.Delete_Work(Name);
+
+        }
+
+        //VM Edit a Work
+        public void VM_Work_Edit(string Name)
+        {
+            if (!VM_Work_Exist(Name))
+            {
+                MV_Work_NotFound();
+                return;
+            }
+            Model_Works ModelWorks = new Model_Works();
+            List<Model_PRE> obj_list = ModelWorks.Get_Work(Name, false); 
+            ModelWorks.Delete_Work(Name);
+            //View_SAVE ViewSAVE = new View_SAVE();
+            //ViewSAVE.Get_Infos(true, true, obj_list);
+        }
+
+        //MV Show WorkNotFound error
+        public void MV_Work_NotFound()
+        {
+            //View_WORKS ViewWORKS = new View_WORKS();
+            //ViewWORKS.Work_NotFound();
+        }
+
+        //MV Show 5Works error
+        public void MV_Work_5Works()
+        {
+            //View_WORKS ViewWORKS = new View_WORKS();
+            //ViewWORKS.Work_5Works();
         }
 
         //VM Change app_config Language
@@ -97,36 +134,12 @@ namespace EasySave_G8_UI.View_Models
             return rtrn_string;
         }
 
-
-        // PROGRESS BAR PART
-        private double _progressValue;
-
-        public double ProgressValue
-        {
-            get { return _progressValue; }
-            set
-            {
-                if (_progressValue != value)
-                {
-                    _progressValue = value;
-                    OnPropertyChanged(nameof(ProgressValue));
-                }
-            }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
         //MV Update the progression bar
-        public void MV_Update_ProgressionBar(double percentage)
+        public void MV_Update_ProgressionBar(int percentage)
         {
-            this.ProgressValue = percentage;
+            //View_SAVE ViewSAVE = new View_SAVE();
+            //ViewSAVE.Progression_Bar(percentage);
         }
-
 
         //MV Show the log files
         public List<Model_AFT> MV_Look_Logs(string Date)
@@ -142,12 +155,6 @@ namespace EasySave_G8_UI.View_Models
             Model_Logs ModelLogs = new Model_Logs();
             string[] files = ModelLogs.Show_Logs();
             return files;
-        }
-
-        public bool VM_BlackList()
-        {
-            Model_BLACKLIST ModelBLACKLIST = new Model_BLACKLIST();
-            return ModelBLACKLIST.BlacklistTest();
         }
     }
 }

@@ -400,5 +400,3 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
-/EasySave_G8_UI/Views/Classics.xaml
-/.gitignore
