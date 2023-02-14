@@ -11,8 +11,8 @@
     <Grid Background="#FFB8B08D" SnapsToDevicePixels="True">
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="250"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="282"/>
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -22,7 +22,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Border Background="#283845" BorderBrush="#283845" Grid.ColumnSpan="2" BorderThickness="2" CornerRadius="25" Grid.RowSpan="5"  Margin="94,11,85,24">
+        <Border Background="#283845" BorderBrush="#283845" Grid.ColumnSpan="2" BorderThickness="2" CornerRadius="25" Grid.RowSpan="5"  Margin="94,50,85,51">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -31,34 +31,54 @@
             </Grid>
         </Border>
 
-        <TextBlock Foreground="White" FontSize="25" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="0" FontFamily="Bahnschrift Condensed" RenderTransformOrigin="-0.517,0.633" Margin="151,0,0,0">
+
+        <TextBlock Foreground="White" FontSize="35" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="1" FontFamily="Bahnschrift Condensed" RenderTransformOrigin="-0.517,0.633" Margin="124,56,0,0" Height="36" Width="157">
+        <Run Language="fr-fr" Text="Classic Save"/>
+        </TextBlock>
+
+
+        <TextBlock Foreground="White" FontSize="25" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="0" FontFamily="Bahnschrift Condensed" RenderTransformOrigin="-0.517,0.633" Margin="209,17,0,0" Height="30" Width="46" Grid.Row="1">
         <Run Language="fr-fr" Text="Name"/>
         </TextBlock>
-        <TextBox x:Name="textBox1" Height="22" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Left" Width="419" Grid.Column="1" Margin="34,0,0,0"/>
+        <TextBox x:Name="textBox1" Height="22" TextWrapping="Wrap" VerticalAlignment="Top" HorizontalAlignment="Left" Width="419" Grid.Column="1" Margin="60,21,0,0" Grid.Row="1"/>
 
-        <TextBlock Foreground="White" FontSize="25" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="0" Grid.Row="1" FontFamily="Bahnschrift Condensed" Margin="125,0,0,0">
+        <TextBlock Foreground="White" FontSize="25" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="0" Grid.Row="1" FontFamily="Bahnschrift Condensed" Margin="173,122,0,0" Height="30" Width="99" Grid.RowSpan="2">
         <Run Language="fr-fr" Text="Source Path"/>
         </TextBlock>
-        <TextBox x:Name="textBox2" Height="22" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Left" Width="419" Grid.Column="1" Grid.Row="1" Margin="34,0,0,0"/>
+        <TextBox x:Name="textBox2" Height="22" TextWrapping="Wrap" VerticalAlignment="Top" HorizontalAlignment="Left" Width="419" Grid.Column="1" Grid.Row="1" Margin="60,126,0,0" Grid.RowSpan="2"/>
 
-        <TextBlock Foreground="White" FontSize="25" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="0" Grid.Row="2" FontFamily="Bahnschrift Condensed" Margin="107,0,0,0">
+        <TextBlock Foreground="White" FontSize="25" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="0" Grid.Row="2" FontFamily="Bahnschrift Condensed" Margin="141,83,0,0" Height="30" Width="136">
         <Run Language="fr-fr" Text="Destination Path"/>
         </TextBlock>
-        <TextBox x:Name="textBox3" Height="22" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="2" Width="419" Margin="34,0,0,0"/>
+        <TextBox x:Name="textBox3" Height="22" TextWrapping="Wrap" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="2" Width="419" Margin="60,87,0,0"/>
 
-        <TextBlock Foreground="White" FontSize="25" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="0" Grid.Row="3" FontFamily="Bahnschrift Condensed" Margin="151,0,0,0">
+        <TextBlock Foreground="White" FontSize="25" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="0" Grid.Row="3" FontFamily="Bahnschrift Condensed" Margin="220,0,0,0" Height="30" Width="37">
         <Run Language="fr-fr" Text="Type"/>
         </TextBlock>
-        <ComboBox x:Name="comboBox1" HorizontalAlignment="Left" Height="24" Width="120" Grid.Column="1" Grid.Row="3" Margin="34,36,0,30">
+        <ComboBox x:Name="comboBox1" HorizontalAlignment="Left" Width="120" Grid.Column="1" Grid.Row="3" Margin="60,62,0,55">
             <ComboBoxItem Content="Complète"/>
             <ComboBoxItem Content="Différentielle"/>
         </ComboBox>
 
 
 
-        <Border Background="#D9D9D9" BorderBrush="White" BorderThickness="2" CornerRadius="25" Grid.Column="1" Grid.Row="4" Margin="50,30,300,60">
-            <Button Content="Launch Save" Click="Button_Click" FontFamily="Bahnschrift Condensed" FontSize="25" Margin="22,-2,25,-2" BorderBrush="{x:Null}"/>
-        </Border>
+        <Button Content="Browse" FontFamily="Bahnschrift Condensed" FontSize="15" Margin="498,125,115,133" BorderBrush="{x:Null}" Grid.Column="1" Grid.Row="1" Click="Button_Click_Browse" Grid.RowSpan="2">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="7"></Setter>
+                </Style>
+            </Button.Resources>
+        </Button>
+
+        <Button Content="Browse" FontFamily="Bahnschrift Condensed" FontSize="15" Margin="498,87,115,31" BorderBrush="{x:Null}" Grid.Column="1" Grid.Row="2" Click="Button_Click_Browse2"/>
+
+        <Button Background="#D9D9D9"  Margin="51,20,299,70" Grid.Column="1" Grid.Row="4" Content="Launch Save" Click="Button_Click" FontFamily="Bahnschrift Condensed" FontSize="25" BorderBrush="{x:Null}">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="25"></Setter>
+                </Style>
+            </Button.Resources>
+        </Button>
 
     </Grid>
 

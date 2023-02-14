@@ -6,10 +6,55 @@
       xmlns:local="clr-namespace:EasySave_G8_UI.Views"
       mc:Ignorable="d" 
       d:DesignHeight="704" d:DesignWidth="935"
-      Title="Logs" Height="704" Width="935">
+      Title="Logs" Height="704.04" Width="935">
 
-    <Grid>
-        <TextBlock HorizontalAlignment="Left" Height="103" Margin="334,197,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="171"><Run Language="fr-fr" Text="Logs"/></TextBlock>
+    <Grid Background="#FFB8B08D" SnapsToDevicePixels="True">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="282"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+
+
+
+        <Border Background="#283845" BorderBrush="#283845" Grid.ColumnSpan="2" BorderThickness="2" CornerRadius="25" Grid.RowSpan="5"  Margin="94,50,85,51">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+            </Grid>
+        </Border>
+
+
+        <ScrollBar Grid.Column="1" Margin="503,112,136,87" Grid.RowSpan="5" />
+
+        <TextBox Name="textBoxLogs" Background="#FFFFFF" BorderBrush="#283845" Grid.ColumnSpan="2" BorderThickness="2" Grid.RowSpan="5"  Margin="159,0,150,87" Height="505" VerticalAlignment="Bottom">
+        </TextBox>
+
+        <Button Background="#D9D9D9"  Margin="380,54,141,56" Grid.Column="1" Content="Reload" Click="ButtonLogs_Refresh" FontFamily="Bahnschrift Condensed" FontSize="25" BorderBrush="{x:Null}" Grid.Row="4">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="25"></Setter>
+                </Style>
+            </Button.Resources>
+        </Button>
+
+        <TextBlock Foreground="White" FontSize="25" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="1" FontFamily="Bahnschrift Condensed" RenderTransformOrigin="-0.517,0.633" Margin="156,54,0,0" Height="53" Width="68">
+        <Run Language="fr-fr" Text="Logs" FontSize="40"/>
+        </TextBlock>
+
+
 
     </Grid>
+
+
 </Page>
