@@ -133,7 +133,7 @@
     <value>Tableau de bord</value>
   </data>
   <data name="dest_path" xml:space="preserve">
-    <value>Chemin Destination</value>
+    <value>Destination</value>
   </data>
   <data name="differential" xml:space="preserve">
     <value>Différentielle</value>
@@ -151,7 +151,7 @@
     <value>Quitter</value>
   </data>
   <data name="source_path" xml:space="preserve">
-    <value>Chemin Source</value>
+    <value>Source</value>
   </data>
   <data name="works" xml:space="preserve">
     <value>Travaux</value>

@@ -8,7 +8,7 @@
       d:DesignHeight="704" d:DesignWidth="935"
       Title="Logs" Height="704.04" Width="935">
 
-    <Grid Background="#FFB8B08D" SnapsToDevicePixels="True">
+    <Grid SnapsToDevicePixels="True">
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="282"/>
@@ -22,7 +22,10 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Border Background="#283845" BorderBrush="#283845" Grid.ColumnSpan="2" BorderThickness="2" CornerRadius="25" Grid.RowSpan="5"  Margin="94,50,85,51">
+
+
+
+        <Border Background="#283845" BorderBrush="#283845" Grid.ColumnSpan="2" BorderThickness="2" CornerRadius="50" Grid.RowSpan="5"  Margin="94,50,85,51">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>

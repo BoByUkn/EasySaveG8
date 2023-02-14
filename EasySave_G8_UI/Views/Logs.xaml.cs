@@ -16,26 +16,21 @@ namespace EasySave_G8_UI.Views
         }  
 
 
-
-
-
         private void ButtonLogs_Refresh(object sender, EventArgs e)
         {
-            textBoxLogs.Text = "";
+            FolderBrowserDialog folderbrowserdialog1 = new FolderBrowserDialog();
 
-            string logsFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "EasySave", "logs");
-            string[] logFiles = Directory.GetFiles(logsFolder);
-
-            foreach (string logFile in logFiles)
+            if (folderbrowserdialog1.ShowDialog() == DialogResult.OK)
             {
-                textBoxLogs.Text += File.ReadAllText(logFile) + Environment.NewLine;
+                textBoxLogs.Text = "";
+
+                string[] files = Directory.GetFiles(folderbrowserdialog1.SelectedPath);
+
+                foreach (string file in files)
+                {
+                    textBoxLogs.Text += file + Environment.NewLine;
+                }
             }
-        }
-        private void ButtonStateLogs_Refresh(object sender, EventArgs e)
-        {
-            textBoxLogs.Text = "";
-            textBoxLogs.Text = File.ReadAllText(@"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\StateLog.json");
         }
     }
 }
-

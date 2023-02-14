@@ -8,8 +8,8 @@
       d:DesignHeight="704" d:DesignWidth="935"
       Title="Dashboard">
 
-    <Grid>
-        <Border HorizontalAlignment="Center" Height="322" VerticalAlignment="Top" Width="600" Margin="0,75,0,0" Background="#FF283845" CornerRadius="60,60,60,60">
+    <Grid SnapsToDevicePixels="True">
+        <Border HorizontalAlignment="Center" Height="500" VerticalAlignment="Top" Width="600" Margin="0,75,0,0" Background="#FF283845" CornerRadius="60,60,60,60">
             <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Top" Width="345" Background="#FF283845">
                 <TextBlock x:Name="DashboardTitle" TextAlignment="Center" HorizontalAlignment="Center" Height="38" TextWrapping="Wrap" VerticalAlignment="Top" Width="456" FontSize="22" Foreground="White"><Run Language="fr-fr" Text="Dashboard"/><LineBreak/><Run Language="fr-fr"/></TextBlock>
             </StackPanel>        

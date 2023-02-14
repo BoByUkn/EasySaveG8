@@ -133,7 +133,7 @@
     <value>Dashboard</value>
   </data>
   <data name="dest_path" xml:space="preserve">
-    <value>Destination Path</value>
+    <value>Destination</value>
   </data>
   <data name="differential" xml:space="preserve">
     <value>Differential</value>
@@ -151,7 +151,7 @@
     <value>Shutdown</value>
   </data>
   <data name="source_path" xml:space="preserve">
-    <value>Source Path</value>
+    <value>Source</value>
   </data>
   <data name="works" xml:space="preserve">
     <value>Works</value>
