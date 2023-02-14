@@ -13,7 +13,6 @@
             <ColumnDefinition Width="181*"/>
             <ColumnDefinition Width="459*"/>
         </Grid.ColumnDefinitions>
-
         <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Width="345" Background="#FF283845">
             <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Width="345" Background="#FF283845">
                 <TextBlock x:Name="Title" Foreground="White" TextAlignment="Center" FontSize="36" Background="#FF161E27" Height="81"><Run Text="E"/><Run Language="fr-fr" Text="asy Save G8"/><LineBreak/><Run Language="fr-fr"/></TextBlock>

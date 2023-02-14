@@ -8,8 +8,58 @@
       d:DesignHeight="704" d:DesignWidth="935"
       Title="Classics" Height="704.04" Width="935">
 
-    <Grid>
-        <TextBlock HorizontalAlignment="Left" Height="134" Margin="524,138,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="202"><Run Language="fr-fr" Text="Classics"/></TextBlock>
+    <Grid Background="#FFB8B08D" SnapsToDevicePixels="True">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Border Background="#283845" BorderBrush="#283845" Grid.ColumnSpan="2" BorderThickness="2" CornerRadius="25" Grid.RowSpan="5"  Margin="94,11,85,24">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+            </Grid>
+        </Border>
+
+        <TextBlock Foreground="White" FontSize="25" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="0" FontFamily="Bahnschrift Condensed" RenderTransformOrigin="-0.517,0.633" Margin="151,0,0,0">
+        <Run Language="fr-fr" Text="Name"/>
+        </TextBlock>
+        <TextBox x:Name="textBox1" Height="22" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Left" Width="419" Grid.Column="1" Margin="34,0,0,0"/>
+
+        <TextBlock Foreground="White" FontSize="25" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="0" Grid.Row="1" FontFamily="Bahnschrift Condensed" Margin="125,0,0,0">
+        <Run Language="fr-fr" Text="Source Path"/>
+        </TextBlock>
+        <TextBox x:Name="textBox2" Height="22" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Left" Width="419" Grid.Column="1" Grid.Row="1" Margin="34,0,0,0"/>
+
+        <TextBlock Foreground="White" FontSize="25" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="0" Grid.Row="2" FontFamily="Bahnschrift Condensed" Margin="107,0,0,0">
+        <Run Language="fr-fr" Text="Destination Path"/>
+        </TextBlock>
+        <TextBox x:Name="textBox3" Height="22" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="2" Width="419" Margin="34,0,0,0"/>
+
+        <TextBlock Foreground="White" FontSize="25" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="0" Grid.Row="3" FontFamily="Bahnschrift Condensed" Margin="151,0,0,0">
+        <Run Language="fr-fr" Text="Type"/>
+        </TextBlock>
+        <ComboBox x:Name="comboBox1" HorizontalAlignment="Left" Height="24" Width="120" Grid.Column="1" Grid.Row="3" Margin="34,36,0,30">
+            <ComboBoxItem Content="Complète"/>
+            <ComboBoxItem Content="Différentielle"/>
+        </ComboBox>
+
+
+
+        <Border Background="#D9D9D9" BorderBrush="White" BorderThickness="2" CornerRadius="25" Grid.Column="1" Grid.Row="4" Margin="50,30,300,60">
+            <Button Content="Launch Save" Click="Button_Click" FontFamily="Bahnschrift Condensed" FontSize="25" Margin="22,-2,25,-2" BorderBrush="{x:Null}"/>
+        </Border>
 
     </Grid>
+
 </Page>
