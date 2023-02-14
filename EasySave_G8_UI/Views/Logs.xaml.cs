@@ -32,5 +32,11 @@ namespace EasySave_G8_UI.Views
                 }
             }
         }
+
+        private void ButtonStateLogs_Refresh(object sender, EventArgs e)
+        {
+            textBoxLogs.Text = "";
+            textBoxLogs.Text = File.ReadAllText(@"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\StateLog.json");
+        }
     }
 }

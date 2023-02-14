@@ -6,10 +6,8 @@
         xmlns:local="clr-namespace:EasySave_G8_UI"
         mc:Ignorable="d"
         ResizeMode="NoResize"
-        Title="EasySave G8" Height="720" Width="1280"
-        Icon="/Assets/Pictures/icon.ico">
+        Title="EasySave G8" Height="720" Width="1280">
 
-    
     <Grid Background="#FFB8B08D">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="181*"/>
