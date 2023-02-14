@@ -30,7 +30,7 @@ namespace EasySave_G8_UI.Models
 
         static Model_LANG() //Initiate Lang RessourceManager
         {
-            _rm = new ResourceManager("EasySave_G8_CONS.Assets.Language.strings", Assembly.GetExecutingAssembly());
+            _rm = new ResourceManager("EasySave_G8_UI.Assets.Language.strings", Assembly.GetExecutingAssembly());
         }
 
         public static string? GetString(string name) //Get the string from the resx files

@@ -38,17 +38,17 @@
 
 
         <TextBlock Foreground="White" FontSize="25" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="0" FontFamily="Bahnschrift Condensed" RenderTransformOrigin="-0.517,0.633" Margin="209,17,0,0" Height="30" Width="46" Grid.Row="1">
-        <Run Language="fr-fr" Text="Name"/>
+        <Run Language="fr-fr" Name="Name"/>
         </TextBlock>
         <TextBox x:Name="textBox1" Height="22" TextWrapping="Wrap" VerticalAlignment="Top" HorizontalAlignment="Left" Width="419" Grid.Column="1" Margin="60,21,0,0" Grid.Row="1"/>
 
         <TextBlock Foreground="White" FontSize="25" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="0" Grid.Row="1" FontFamily="Bahnschrift Condensed" Margin="173,122,0,0" Height="30" Width="99" Grid.RowSpan="2">
-        <Run Language="fr-fr" Text="Source Path"/>
+        <Run Language="fr-fr" Name="Source_Path"/>
         </TextBlock>
         <TextBox x:Name="textBox2" Height="22" TextWrapping="Wrap" VerticalAlignment="Top" HorizontalAlignment="Left" Width="419" Grid.Column="1" Grid.Row="1" Margin="60,126,0,0" Grid.RowSpan="2"/>
 
         <TextBlock Foreground="White" FontSize="25" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="0" Grid.Row="2" FontFamily="Bahnschrift Condensed" Margin="141,83,0,0" Height="30" Width="136">
-        <Run Language="fr-fr" Text="Destination Path"/>
+        <Run Language="fr-fr" Name="Dest_Path"/>
         </TextBlock>
         <TextBox x:Name="textBox3" Height="22" TextWrapping="Wrap" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="2" Width="419" Margin="60,87,0,0"/>
 
@@ -56,8 +56,8 @@
         <Run Language="fr-fr" Text="Type"/>
         </TextBlock>
         <ComboBox x:Name="comboBox1" HorizontalAlignment="Left" Width="120" Grid.Column="1" Grid.Row="3" Margin="60,62,0,55">
-            <ComboBoxItem Content="Complète"/>
-            <ComboBoxItem Content="Différentielle"/>
+            <ComboBoxItem Name="Complete" Content="Complète"/>
+            <ComboBoxItem Name="Differential" Content="Différentielle"/>
         </ComboBox>
 
 
@@ -72,13 +72,24 @@
 
         <Button Content="Browse" FontFamily="Bahnschrift Condensed" FontSize="15" Margin="498,87,115,31" BorderBrush="{x:Null}" Grid.Column="1" Grid.Row="2" Click="Button_Click_Browse2"/>
 
-        <Button Background="#D9D9D9"  Margin="51,20,299,70" Grid.Column="1" Grid.Row="4" Content="Launch Save" Click="Button_Click" FontFamily="Bahnschrift Condensed" FontSize="25" BorderBrush="{x:Null}">
+        <Button Content="Browse" FontFamily="Bahnschrift Condensed" FontSize="15" Margin="498,125,115,133" BorderBrush="{x:Null}" Grid.Column="1" Grid.Row="1" Click="Button_Click_Browse" Grid.RowSpan="2">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="7"></Setter>
+                </Style>
+            </Button.Resources>
+        </Button>
+
+        <Button Content="Browse" FontFamily="Bahnschrift Condensed" FontSize="15" Margin="498,87,115,31" BorderBrush="{x:Null}" Grid.Column="1" Grid.Row="2" Click="Button_Click_Browse2"/>
+
+        <Button Name="LaunchBtn" Background="#D9D9D9"  Margin="51,20,299,70" Grid.Column="1" Grid.Row="4" Click="Button_Click" FontFamily="Bahnschrift Condensed" FontSize="25" BorderBrush="{x:Null}">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="25"></Setter>
                 </Style>
             </Button.Resources>
         </Button>
+
 
     </Grid>
 

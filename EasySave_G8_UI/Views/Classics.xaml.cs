@@ -21,8 +21,18 @@ namespace EasySave_G8_UI.Views
         public Classics()
         {
             InitializeComponent();
+            translate();
         }
 
+        private void translate()
+        {
+            Name.Text = $"{View_Model.VM_GetString_Language("name")}";
+            Source_Path.Text = $"{View_Model.VM_GetString_Language("source_path")}";
+            Dest_Path.Text = $"{View_Model.VM_GetString_Language("dest_path")}";
+            LaunchBtn.Content = $"{View_Model.VM_GetString_Language("launch_save")}";
+            Complete.Content = $"{View_Model.VM_GetString_Language("complete")}";
+            Differential.Content = $"{View_Model.VM_GetString_Language("differential")}";
+        }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             string Name = this.textBox1.Text;

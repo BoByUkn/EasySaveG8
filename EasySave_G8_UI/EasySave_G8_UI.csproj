@@ -8,7 +8,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\Pictures\england.png" />
+    <None Remove="Assets\Pictures\france.png" />
+    <None Remove="Assets\Pictures\france2.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\Pictures\england.png" />
+    <Resource Include="Assets\Pictures\france.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
 </Project>
