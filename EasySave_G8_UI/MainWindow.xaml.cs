@@ -15,9 +15,12 @@ namespace EasySave_G8_UI
         public MainWindow()
         {
             InitializeComponent();
+            View_Model ViewMODEL = new View_Model();
+            ViewMODEL.VM_Init();
             translate();
             Main.Content = new Dashboard();
         }
+
 
         private void translate()
         {
@@ -29,8 +32,6 @@ namespace EasySave_G8_UI
             Works_btn.Content = $"{View_Model.VM_GetString_Language("works")}";
             Logs_btn.Content = $"{View_Model.VM_GetString_Language("logs")}";
             Shutdown_btn.Content = $"{View_Model.VM_GetString_Language("shutdown")}";
-
-
         }
 
         private void Classics_Click(object sender, RoutedEventArgs e)

@@ -1,4 +1,7 @@
-﻿using System.Windows.Controls;
+﻿using EasySave_G8_UI.Models;
+using EasySave_G8_UI.View_Models;
+using System.Collections.Generic;
+using System.Windows.Controls;
 
 namespace EasySave_G8_UI.Views
 {
@@ -10,6 +13,17 @@ namespace EasySave_G8_UI.Views
         public Works()
         {
             InitializeComponent();
+            Works_List();
+        }
+
+        private void Works_List()
+        {
+            View_Model ViewMODEL = new View_Model();
+            List<Model_PRE>? WorkList = ViewMODEL.VM_Work_Show(null, true);
+            foreach(Model_PRE obj in WorkList)
+            {
+                List_Works.Items.Add(obj.Name);
+            }
         }
     }
 }
