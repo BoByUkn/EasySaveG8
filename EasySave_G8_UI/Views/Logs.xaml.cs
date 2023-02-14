@@ -16,22 +16,7 @@ namespace EasySave_G8_UI.Views
         }  
 
 
-        private void ButtonLogs_Refresh(object sender, EventArgs e)
-        {
-            FolderBrowserDialog folderbrowserdialog1 = new FolderBrowserDialog();
 
-            if (folderbrowserdialog1.ShowDialog() == DialogResult.OK)
-            {
-                textBoxLogs.Text = "";
-
-                string[] files = Directory.GetFiles(folderbrowserdialog1.SelectedPath);
-
-                foreach (string file in files)
-                {
-                    textBoxLogs.Text += file + Environment.NewLine;
-                }
-            }
-        }
 
 
         private void ButtonLogs_Refresh(object sender, EventArgs e)
