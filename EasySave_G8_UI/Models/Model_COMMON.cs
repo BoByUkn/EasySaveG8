@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Reflection;
@@ -61,6 +62,23 @@ namespace EasySave_G8_UI.Models
             var cultureInfo = new CultureInfo(language);
             CultureInfo.CurrentCulture = cultureInfo;
             CultureInfo.CurrentUICulture = cultureInfo;
+        }
+    }
+
+
+    public class BlackList
+    {
+        public void BlacklistTest()
+        {
+            
+        }
+
+        public void BlacklistReturn()
+        {
+            string fileName = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\app_config.json";
+            string fileContent = File.ReadAllText(fileName); // Bring content of filename in filecontent
+            Model_LANG base_conf = JsonConvert.DeserializeObject<Model_LANG>(fileContent); // Create the list named values
+
         }
     }
 }

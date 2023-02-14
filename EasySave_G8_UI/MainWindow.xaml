@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EasySave_G8_UI"
         mc:Ignorable="d"
-        Title="EasySave G8" Height="720" Width="1280">
+        Title="EasySave G8" Height="720" Width="1280"
+        Icon="/Assets/Pictures/icon.ico">
 
     
     <Grid Background="#FFB8B08D">
@@ -79,10 +80,9 @@
                     </Style>
                 </Button.Resources>
             </Button>
-
             <ItemsControl>
-                <RadioButton Content="/Assets/Pictures/england.png" Style="{StaticResource Flag}" Width="40" Height="40" Checked="EngButton_Checked"/>
-                <RadioButton Content="/Assets/Pictures/france.png" Style="{StaticResource Flag}" Width="40" Height="40" Checked="FraButton_Checked"/>
+                <RadioButton Content="/Assets/Pictures/england.png" Style="{StaticResource Flag}" Width="40" Height="40" Checked="EngButton_Checked" HorizontalAlignment="Left"/>
+                <RadioButton Content="/Assets/Pictures/france.png" Style="{StaticResource Flag}" Width="40" Height="40" Checked="FraButton_Checked" HorizontalAlignment="Left"/>
             </ItemsControl>
         </StackPanel>
 

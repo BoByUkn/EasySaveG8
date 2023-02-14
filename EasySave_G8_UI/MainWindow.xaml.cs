@@ -1,4 +1,5 @@
-﻿using EasySave_G8_UI.View_Models;
+﻿using EasySave_G8_UI.Models;
+using EasySave_G8_UI.View_Models;
 using EasySave_G8_UI.Views;
 using System;
 using System.Windows;
