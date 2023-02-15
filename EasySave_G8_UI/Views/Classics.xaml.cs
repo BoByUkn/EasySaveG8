@@ -28,18 +28,20 @@ namespace EasySave_G8_UI.Views
         }
         private void Button_Click_LaunchSave(object sender, RoutedEventArgs e)
         {
-            string Name = this.textBox1.Text;
-            string Source = this.textBox2.Text;
-            string Destination = this.textBox3.Text;
-            int indexType = this.comboBox1.SelectedIndex;
-            bool Type;
-            if (indexType == 0) { Type = true; }
-            else { Type = false; }
-
-            View_Model Classic_Save = new View_Model();
-            Classic_Save.VM_Classic(Name, Source, Destination, Type);
-
-
+            View_Model ViewModel = new View_Model();
+            
+            bool blacklist = ViewModel.VM_BlackList();
+            if(blacklist == false)
+            {
+                string Name = this.textBox1.Text;
+                string Source = this.textBox2.Text;
+                string Destination = this.textBox3.Text;
+                int indexType = this.comboBox1.SelectedIndex;
+                bool Type;
+                if (indexType == 0) { Type = true; }
+                else { Type = false; }
+                ViewModel.VM_Classic(Name, Source, Destination, Type);
+            }
         }
 
         private void ProgressBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)

@@ -1,10 +1,14 @@
 ﻿using Newtonsoft.Json;
+using EasySave_G8_UI.View_Models;
 using System;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Reflection;
 using System.Resources;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ToolTip;
+using System.Runtime.ConstrainedExecution;
+using System.Windows.Controls;
 
 namespace EasySave_G8_UI.Models
 {
@@ -53,7 +57,7 @@ namespace EasySave_G8_UI.Models
             string fileName = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\app_config.json";
             string fileContent = File.ReadAllText(fileName); // Bring content of filename in filecontent
             Model_LANG base_conf = JsonConvert.DeserializeObject<Model_LANG>(fileContent); // Create the list named values
-            return (base_conf.lang);
+            return base_conf.lang;
         }
 
         public void UpdateLanguage() //Update CultureInfo with Language stored in app_config
@@ -66,18 +70,33 @@ namespace EasySave_G8_UI.Models
     }
 
 
-    public class BlackList
+    public class Model_BLACKLIST
     {
-        public void BlacklistTest()
+        public string[] blacklist { get; set; }
+        public bool BlacklistTest()
         {
-            
+            string[] blacklistProcessus = { "CalculatorApp" };
+            bool blacklistState = false;
+
+            var processes = Process.GetProcesses();
+
+            foreach (Process process in Process.GetProcesses())
+            {
+                if(Array.IndexOf(blacklistProcessus, process.ProcessName) != -1)
+                {
+                    blacklistState = true;
+                }
+            }
+            return blacklistState;
+
         }
 
-        public void BlacklistReturn()
+        public string[] BlacklistReturn()
         {
             string fileName = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\app_config.json";
             string fileContent = File.ReadAllText(fileName); // Bring content of filename in filecontent
-            Model_LANG base_conf = JsonConvert.DeserializeObject<Model_LANG>(fileContent); // Create the list named values
+            Model_BLACKLIST base_conf = JsonConvert.DeserializeObject<Model_BLACKLIST>(fileContent); // Create the list named values
+            return base_conf.blacklist;
 
         }
     }
