@@ -1,9 +1,10 @@
 ﻿using EasySave_G8_UI.Models;
 using EasySave_G8_UI.View_Models;
 using System.Collections.Generic;
+using System.Windows;
 using System.Windows.Controls;
 
-namespace EasySave_G8_UI.Views
+namespace EasySave_G8_UI.Views.Works
 {
     /// <summary>
     /// Logique d'interaction pour Works.xaml
@@ -24,6 +25,12 @@ namespace EasySave_G8_UI.Views
             {
                 List_Works.Items.Add(obj.Name);
             }
+        }
+
+        private void Create_btn_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            var mainWindow = Application.Current.MainWindow as MainWindow;
+            mainWindow.Main.Content = new Works_Create();
         }
     }
 }

@@ -126,6 +126,9 @@
   <data name="coucou" xml:space="preserve">
     <value>salut</value>
   </data>
+  <data name="create_work" xml:space="preserve">
+    <value>Créer un travail</value>
+  </data>
   <data name="dashboard" xml:space="preserve">
     <value>Tableau de bord</value>
   </data>

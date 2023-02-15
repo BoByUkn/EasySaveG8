@@ -79,9 +79,11 @@
                     </Style>
                 </Button.Resources>
             </Button>
-            <ItemsControl>
-                <RadioButton Content="/Assets/Pictures/england.png" Style="{StaticResource Flag}" Width="40" Height="40" Checked="EngButton_Checked" HorizontalAlignment="Left"/>
-                <RadioButton Content="/Assets/Pictures/france.png" Style="{StaticResource Flag}" Width="40" Height="40" Checked="FraButton_Checked" HorizontalAlignment="Left"/>
+            <ItemsControl HorizontalAlignment="Right" Margin="0,10,30,0">
+                <StackPanel Orientation="Horizontal">
+                    <RadioButton Content="/Assets/Pictures/england.png" Style="{StaticResource Flag}" Width="40" Height="40" Checked="EngButton_Checked" HorizontalAlignment="Left" Margin="0,0,15,0"/>
+                    <RadioButton Content="/Assets/Pictures/france.png" Style="{StaticResource Flag}" Width="40" Height="40" Checked="FraButton_Checked" HorizontalAlignment="Left"/>
+                </StackPanel>
             </ItemsControl>
         </StackPanel>
 
