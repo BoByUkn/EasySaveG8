@@ -1,20 +1,18 @@
-﻿<Page x:Class="EasySave_G8_UI.Views.Classics"
+﻿<Page x:Class="EasySave_G8_UI.Views.Works.Works_Edit"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:EasySave_G8_UI.Views"
+      xmlns:local="clr-namespace:EasySave_G8_UI.Views.Works"
       mc:Ignorable="d" 
       d:DesignHeight="704" d:DesignWidth="935"
-      Title="Classics">
+      Title="Works_Edit">
 
     <Grid SnapsToDevicePixels="True">
-
-
         <Border HorizontalAlignment="Center" Height="550" VerticalAlignment="Top" Width="750" Margin="0,75,0,0" Background="#FF283845" CornerRadius="60,60,60,60">
             <Grid>
-                <TextBlock Foreground="White" FontSize="35" VerticalAlignment="Top" HorizontalAlignment="Center" FontFamily="Bahnschrift Condensed" Height="40" Width="157">
-                <Run Language="fr-fr" Text="Classic Save"/>
+                <TextBlock Foreground="White" FontSize="35" VerticalAlignment="Top" HorizontalAlignment="Center" TextAlignment="Center" FontFamily="Bahnschrift Condensed" Height="40" Width="157">
+                <Run Language="fr-fr" Text="Edit Work"/>
                 </TextBlock>
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -23,6 +21,7 @@
                         <ColumnDefinition Width="100"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
@@ -72,16 +71,23 @@
                         <ComboBoxItem Name="Complete" Content="Complète"/>
                         <ComboBoxItem Name="Differential" Content="Différentielle"/>
                     </ComboBox>
+
+                    <TextBlock Foreground="White" FontSize="17" Margin="30,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0" Grid.Row="5" FontFamily="Bahnschrift Condensed">
+                    <Run Language="fr-fr" Text="Execute Now"/>
+                    </TextBlock>
+                    <ComboBox x:Name="comboBox2" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="419" Grid.Column="1" Grid.Row="5" Margin="30,0,30,0">
+                        <ComboBoxItem Name="Yes" Content="Complète"/>
+                        <ComboBoxItem Name="No" Content="Différentielle"/>
+                    </ComboBox>
                 </Grid>
 
-                <Button Name="LaunchBtn" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="22" Height="45" Width="250" Background="#FFD9D9D9" Margin="0,0,0,30" Click="Button_Click_LaunchSave">
+                <Button x:Name="Save_btn" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="22" Height="45" Width="250" Background="#FFD9D9D9" Content="Save Work"  Margin="0,0,0,30" Click="Save_btn_Click">
                     <Button.Resources>
                         <Style TargetType="Border">
                             <Setter Property="CornerRadius" Value="25"></Setter>
                         </Style>
                     </Button.Resources>
                 </Button>
-                
             </Grid>
         </Border>
     </Grid>

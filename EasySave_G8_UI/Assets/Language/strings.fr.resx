@@ -126,6 +126,9 @@
   <data name="coucou" xml:space="preserve">
     <value>salut</value>
   </data>
+  <data name="create_work" xml:space="preserve">
+    <value>Créer un travail</value>
+  </data>
   <data name="dashboard" xml:space="preserve">
     <value>Tableau de bord</value>
   </data>
@@ -137,6 +140,9 @@
   </data>
   <data name="differential" xml:space="preserve">
     <value>Différentielle</value>
+  </data>
+  <data name="lang" xml:space="preserve">
+    <value>fr</value>
   </data>
   <data name="launch_save" xml:space="preserve">
     <value>Démarrer la sauvegarde</value>

@@ -4,47 +4,21 @@ using System.Windows.Controls;
 using System.IO;
 using Microsoft.Win32;
 
-namespace EasySave_G8_UI.Views
+namespace EasySave_G8_UI.Views.Works
 {
     /// <summary>
-    /// Logique d'interaction pour Classics.xaml
+    /// Logique d'interaction pour Works_Create.xaml
     /// </summary>
-    public partial class Classics : Page
+    public partial class Works_Create : Page
     {
-        public Classics()
+        public Works_Create()
         {
             InitializeComponent();
-            translate();
         }
 
-        private void translate()
+        private void Save_btn_Click(object sender, RoutedEventArgs e)
         {
-            Name.Text = $"{View_Model.VM_GetString_Language("name")}";
-            Source_Path.Text = $"{View_Model.VM_GetString_Language("source_path")}";
-            Dest_Path.Text = $"{View_Model.VM_GetString_Language("dest_path")}";
-            LaunchBtn.Content = $"{View_Model.VM_GetString_Language("launch_save")}";
-            Complete.Content = $"{View_Model.VM_GetString_Language("complete")}";
-            Differential.Content = $"{View_Model.VM_GetString_Language("differential")}";
-        }
-        private void Button_Click_LaunchSave(object sender, RoutedEventArgs e)
-        {
-            string Name = this.textBox1.Text;
-            string Source = this.textBox2.Text;
-            string Destination = this.textBox3.Text;
-            int indexType = this.comboBox1.SelectedIndex;
-            bool Type;
-            if (indexType == 0) { Type = true; }
-            else { Type = false; }
-
-            View_Model Classic_Save = new View_Model();
-            Classic_Save.VM_Classic(Name, Source, Destination, Type);
-
-
-        }
-
-        private void ProgressBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-
+            View_Model ViewModel = new View_Model();
         }
 
         private void Button_Click_Browse(object sender, RoutedEventArgs e)

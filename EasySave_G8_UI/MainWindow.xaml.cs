@@ -1,9 +1,10 @@
 ﻿using EasySave_G8_UI.Models;
 using EasySave_G8_UI.View_Models;
 using EasySave_G8_UI.Views;
+using EasySave_G8_UI.Views.Works;
 using System;
+using System.IO;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Navigation;
 
 namespace EasySave_G8_UI
@@ -17,9 +18,15 @@ namespace EasySave_G8_UI
         {
             InitializeComponent();
             View_Model ViewMODEL = new View_Model();
-            ViewMODEL.VM_Init();
+            string fileName = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave";
+            if (!Directory.Exists(fileName)) //Check if mandatory files are present or not. If not, creates them
+            {
+                ViewMODEL.VM_Init();
+            }
             translate();
             Main.Content = new Dashboard();
+            if ($"{View_Model.VM_GetString_Language("lang")}" == "en") { ENradio.IsChecked = true; }
+            else { FRradio.IsChecked = true; }
         }
 
 

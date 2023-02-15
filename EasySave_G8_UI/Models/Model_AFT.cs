@@ -40,18 +40,15 @@ namespace EasySave_G8_UI.Models
                 Model_StateLogs ModelStateLogs = new Model_StateLogs(this.Name, this.Source, this.Destination, this.Type, this.total_files);
                 if (File.Exists(Source)) //If it's a file
                 {
-                    Console.WriteLine($"{View_Model.VM_GetString_Language("file_save_inprogress")}");
                     utcDateStart = DateTime.Now;
 
                     File.Copy(Source, Destination, true);
                     Size = new System.IO.FileInfo(Source).Length;
 
                     utcDateFinish = DateTime.Now;
-                    Console.WriteLine($"{View_Model.VM_GetString_Language("file_save_done")}");
                 }
                 else if (Directory.Exists(Source)) //If it's a folder
                 {
-                    Console.WriteLine($"{View_Model.VM_GetString_Language("dir_save_inprogress")}");
                     utcDateStart = DateTime.Now;
                     var files = Directory.GetFiles(Source, "*.*", SearchOption.AllDirectories); //Get folders and files in the source directory
                     Directory.CreateDirectory(Destination); //Create the destination directory if it doesn't exist
@@ -89,11 +86,7 @@ namespace EasySave_G8_UI.Models
                     ModelStateLogs.State = "ENDED";
                    
                     utcDateFinish = DateTime.Now;
-                    Console.WriteLine();
-                    Console.WriteLine();
-                    Console.WriteLine($"{View_Model.VM_GetString_Language("dir_save_done")}");
                 }
-                else { Console.WriteLine($"{View_Model.VM_GetString_Language("invalid_path")}" + "\n"); }
                 
                 Duration = utcDateFinish.Subtract(utcDateStart);  // Calculation of the result of the arrival date - the departure date to obtain a duration, it's in TimeSpan, it is the result of the subtraction of two DataTime
 
@@ -101,9 +94,6 @@ namespace EasySave_G8_UI.Models
 
                 ModelStateLogs.millisecondsDuration = millisecondsDuration; //add millisecondsDuration to the object ModelStateLogs
                 StateLog(ModelStateLogs);// Write the JSon State Logs with all info 
-
-                Console.WriteLine($"{View_Model.VM_GetString_Language("svduration")}" + millisecondsDuration + " ms \n" + $"{View_Model.VM_GetString_Language("return_menu")}");
-                Console.ReadLine();
             }
         }
 
@@ -115,7 +105,6 @@ namespace EasySave_G8_UI.Models
                 
                 if (Directory.Exists(Source))
                 {
-                    Console.WriteLine($"{View_Model.VM_GetString_Language("file_save_inprogress")}");
                     utcDateStart = DateTime.Now;
 
                     string[] sourceFiles = Directory.GetFiles(Source, "*.*", SearchOption.AllDirectories); // Get the list of files in the source directory
@@ -164,22 +153,13 @@ namespace EasySave_G8_UI.Models
 
                     }
                     utcDateFinish = DateTime.Now;
-                    Console.WriteLine();
-                    Console.WriteLine();
-                    Console.WriteLine($"{View_Model.VM_GetString_Language("dir_save_done")}");
-
-                }
-                else { Console.WriteLine($"{View_Model.VM_GetString_Language("invalid_path")}" + "\n"); }
-                
+                }                
                 Duration = utcDateFinish.Subtract(utcDateStart); // Calculation of the result of the arrival date - the departure date to obtain a duration, it's in TimeSpan, it is the result of the subtraction of two DataTime
                 millisecondsDuration = Duration.TotalMilliseconds; // Convert Duration in milliseconds
 
                 ModelStateLogs.millisecondsDuration = millisecondsDuration; //add millisecondsDuration to the object ModelStateLogs
                 ModelStateLogs.State = "ENDED"; // Uptadte status of the save in order to write it in Json state logs
                 StateLog(ModelStateLogs); // Write the JSon State Logs with all info 
-
-                Console.WriteLine($"{View_Model.VM_GetString_Language("svduration")}" + millisecondsDuration + " ms \n" + $"{View_Model.VM_GetString_Language("return_menu")}");
-                Console.ReadLine();
             }
         }
 
