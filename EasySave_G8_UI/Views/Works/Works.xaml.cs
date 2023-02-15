@@ -32,5 +32,11 @@ namespace EasySave_G8_UI.Views.Works
             var mainWindow = Application.Current.MainWindow as MainWindow;
             mainWindow.Main.Content = new Works_Create();
         }
+
+        private void ExecuteAll_btn_Click(object sender, RoutedEventArgs e)
+        {
+            View_Model ViewModel = new View_Model();
+            ViewModel.VM_Work_Run("", true);
+        }
     }
 }

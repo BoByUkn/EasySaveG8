@@ -19,7 +19,7 @@
                     </Grid.ColumnDefinitions>
                     <StackPanel Grid.Column="0">
                         <ListBox x:Name="List_Works" HorizontalAlignment="Center" Height="400" Width="300" VerticalAlignment="Center" Margin="0,50,0,15" SelectionMode="Multiple" d:ItemsSource="{d:SampleData ItemCount=5}"/>
-                        <Button x:Name="ExecuteAll_btn" HorizontalAlignment="Center" FontSize="22" Content="Execute All" Height="50" Width="300" Background="#FFD9D9D9">
+                        <Button x:Name="ExecuteAll_btn" HorizontalAlignment="Center" FontSize="22" Content="Execute All" Height="50" Width="300" Background="#FFD9D9D9" Click="ExecuteAll_btn_Click">
                             <Button.Resources>
                                 <Style TargetType="{x:Type Border}">
                                     <Setter Property="CornerRadius" Value="15"/>
