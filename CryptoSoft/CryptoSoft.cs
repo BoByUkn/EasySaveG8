@@ -19,6 +19,7 @@ TimeSpan CryptoSoft(string Source, string Destination)
         }
         DateTime TimeEnd = DateTime.Now;
         TimeSpan Duration = TimeStart.Subtract(TimeEnd);
+        double msDuration = Duration.TotalMilliseconds
 
         return Duration;
     }
