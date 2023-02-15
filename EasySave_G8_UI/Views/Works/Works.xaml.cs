@@ -19,6 +19,7 @@ namespace EasySave_G8_UI.Views.Works
 
         private void Works_List()
         {
+            List_Works.Items.Clear();
             View_Model ViewMODEL = new View_Model();
             List<Model_PRE>? WorkList = ViewMODEL.VM_Work_Show(null, true);
             foreach(Model_PRE obj in WorkList)
@@ -37,6 +38,31 @@ namespace EasySave_G8_UI.Views.Works
         {
             View_Model ViewModel = new View_Model();
             ViewModel.VM_Work_Run("", true);
+        }
+
+        private void ExecuteSelected_btn_Click(object sender, RoutedEventArgs e)
+        {
+            View_Model ViewModel = new View_Model();
+            foreach(string WorkName in List_Works.SelectedItems)
+            {
+                ViewModel.VM_Work_Run(WorkName, false);
+            }
+        }
+
+        private void Delete_btn_Click(object sender, RoutedEventArgs e)
+        {
+            View_Model ViewModel = new View_Model();
+            foreach (string WorkName in List_Works.SelectedItems)
+            {
+                ViewModel.VM_Work_Delete(WorkName);
+            }
+            Works_List();
+        }
+
+        private void Edit_btn_Click(object sender, RoutedEventArgs e)
+        {
+            var mainWindow = Application.Current.MainWindow as MainWindow;
+            mainWindow.Main.Content = new Works_Create();
         }
     }
 }

@@ -4,21 +4,22 @@ using System.Windows.Controls;
 using System.IO;
 using Microsoft.Win32;
 
+
 namespace EasySave_G8_UI.Views.Works
 {
     /// <summary>
-    /// Logique d'interaction pour Works_Create.xaml
+    /// Logique d'interaction pour Works_Edit.xaml
     /// </summary>
-    public partial class Works_Create : Page
+    public partial class Works_Edit : Page
     {
-        public Works_Create()
+        public Works_Edit()
         {
             InitializeComponent();
         }
 
         private void Save_btn_Click(object sender, RoutedEventArgs e)
         {
-            View_Model ViewModel = new View_Model();
+
         }
 
         private void Button_Click_Browse(object sender, RoutedEventArgs e)

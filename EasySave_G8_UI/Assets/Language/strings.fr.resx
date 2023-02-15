@@ -141,6 +141,9 @@
   <data name="differential" xml:space="preserve">
     <value>Différentielle</value>
   </data>
+  <data name="lang" xml:space="preserve">
+    <value>fr</value>
+  </data>
   <data name="launch_save" xml:space="preserve">
     <value>Démarrer la sauvegarde</value>
   </data>
