@@ -74,7 +74,7 @@
                     </ComboBox>
                 </Grid>
 
-                <Button Name="LaunchBtn" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="22" Height="45" Width="250" Background="#FFD9D9D9" Margin="0,0,0,30">
+                <Button Name="LaunchBtn" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="22" Height="45" Width="250" Background="#FFD9D9D9" Margin="0,0,0,30" Click="Button_Click_LaunchSave">
                     <Button.Resources>
                         <Style TargetType="Border">
                             <Setter Property="CornerRadius" Value="25"></Setter>

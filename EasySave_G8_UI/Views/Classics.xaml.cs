@@ -26,7 +26,7 @@ namespace EasySave_G8_UI.Views
             Complete.Content = $"{View_Model.VM_GetString_Language("complete")}";
             Differential.Content = $"{View_Model.VM_GetString_Language("differential")}";
         }
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Button_Click_LaunchSave(object sender, RoutedEventArgs e)
         {
             string Name = this.textBox1.Text;
             string Source = this.textBox2.Text;
