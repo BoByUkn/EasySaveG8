@@ -117,11 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ch_feat" xml:space="preserve">
-    <value>To select a feature, enter the corresponding number:</value>
+  <data name="browse" xml:space="preserve">
+    <value>Browse</value>
   </data>
-  <data name="ch_lang" xml:space="preserve">
-    <value>Choose a language: </value>
+  <data name="classics" xml:space="preserve">
+    <value>Classics</value>
+  </data>
+  <data name="classics_title" xml:space="preserve">
+    <value>Classic Save</value>
+  </data>
+  <data name="complete" xml:space="preserve">
+    <value>Complete</value>
   </data>
   <data name="date_error" xml:space="preserve">
     <value>Error : the date </value>
@@ -129,20 +135,44 @@
   <data name="date_error_2" xml:space="preserve">
     <value>doesn't exist or is not written well.</value>
   </data>
-  <data name="dest" xml:space="preserve">
-    <value>Enter the destination path of the file to copy:</value>
+  <data name="create_work_title" xml:space="preserve">
+    <value>Create work</value>
+  </data>
+  <data name="daily_logs" xml:space="preserve">
+    <value>Daily logs</value>
+  </data>
+  <data name="dashboard" xml:space="preserve">
+    <value>Dashboard</value>
   </data>
   <data name="dest_actual" xml:space="preserve">
     <value>Actual destination : </value>
   </data>
-  <data name="dest_actual_note" xml:space="preserve">
-    <value>Note : Leave empty to keep the actual destination.</value>
+  <data name="delete_selection" xml:space="preserve">
+    <value>Delete selection</value>
+  </data>
+  <data name="dest_path" xml:space="preserve">
+    <value>Destination</value>
   </data>
   <data name="dir_save_done" xml:space="preserve">
     <value>Save of the directory done</value>
   </data>
-  <data name="dir_save_inprogress" xml:space="preserve">
-    <value>Save of the directory in progress...</value>
+  <data name="directories" xml:space="preserve">
+    <value>Directories</value>
+  </data>
+  <data name="edit_selection" xml:space="preserve">
+    <value>Edit selection</value>
+  </data>
+  <data name="execute_all" xml:space="preserve">
+    <value>Execute all</value>
+  </data>
+  <data name="execute_now" xml:space="preserve">
+    <value>Execute now</value>
+  </data>
+  <data name="execute_selection" xml:space="preserve">
+    <value>Execute selection</value>
+  </data>
+  <data name="lang" xml:space="preserve">
+    <value>en</value>
   </data>
   <data name="enter_option" xml:space="preserve">
     <value>Enter an option: </value>
@@ -150,65 +180,8 @@
   <data name="exec_save" xml:space="preserve">
     <value>Enter 'true' to run the job after saving it or 'false' to save it only.</value>
   </data>
-  <data name="file_save_done" xml:space="preserve">
-    <value>Save of the file(s) done</value>
-  </data>
-  <data name="file_save_inprogress" xml:space="preserve">
-    <value>Save of the file(s) in progress...</value>
-  </data>
-  <data name="first_use" xml:space="preserve">
-    <value>First use detected, initalising  mandatory files creation at </value>
-  </data>
-  <data name="invalid_path" xml:space="preserve">
-    <value>One of the path does not exist or it's not a correct one</value>
-  </data>
-  <data name="lang_menu" xml:space="preserve">
-    <value>Language settings</value>
-  </data>
-  <data name="logs_ch1" xml:space="preserve">
-    <value>Show logs</value>
-  </data>
-  <data name="logs_ch2" xml:space="preserve">
-    <value>Look for a specific log file</value>
-  </data>
-  <data name="logs_ch3" xml:space="preserve">
-    <value>Back to the main menu</value>
-  </data>
-  <data name="LOGS_menu" xml:space="preserve">
-    <value>Logs Menu</value>
-  </data>
-  <data name="logs_open_file" xml:space="preserve">
-    <value>Enter the date of the log file to open with the format dd-MM-YYYY :</value>
-  </data>
-  <data name="menu_ch1" xml:space="preserve">
-    <value>Simple backup</value>
-  </data>
-  <data name="menu_ch1_output" xml:space="preserve">
-    <value>Switching to classic save mode...</value>
-  </data>
-  <data name="menu_ch2" xml:space="preserve">
-    <value>Backup works</value>
-  </data>
-  <data name="menu_ch2_output" xml:space="preserve">
-    <value>Switching to backup works mode...</value>
-  </data>
-  <data name="menu_ch3" xml:space="preserve">
-    <value>History</value>
-  </data>
-  <data name="menu_ch3_output" xml:space="preserve">
-    <value>Switching to history mode</value>
-  </data>
-  <data name="menu_ch4" xml:space="preserve">
-    <value>Language settings</value>
-  </data>
-  <data name="menu_ch4_output" xml:space="preserve">
-    <value>Switching to language mode</value>
-  </data>
-  <data name="menu_ch5" xml:space="preserve">
-    <value>Quit</value>
-  </data>
-  <data name="menu_ch5_output" xml:space="preserve">
-    <value>Program stop...</value>
+  <data name="logs_title" xml:space="preserve">
+    <value>Logs</value>
   </data>
   <data name="name" xml:space="preserve">
     <value>Name : </value>
@@ -358,13 +331,37 @@
   <data name="work_queue_error" xml:space="preserve">
     <value>At least one work is required in the queue to start execution.</value>
   </data>
-  <data name="work_queue_note" xml:space="preserve">
-    <value>Note : Leave empty to launch the execution of the queue.</value>
+  <data name="next" xml:space="preserve">
+    <value>Next</value>
+  </data>
+  <data name="no" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="save_work" xml:space="preserve">
+    <value>Save work</value>
+  </data>
+  <data name="select_directory" xml:space="preserve">
+    <value>Select a directory</value>
+  </data>
+  <data name="shutdown" xml:space="preserve">
+    <value>Shutdown</value>
   </data>
   <data name="wrong_number-lang" xml:space="preserve">
     <value>Please enter 1 or 2</value>
   </data>
-  <data name="wrong_number_menu" xml:space="preserve">
-    <value>Please enter a number between 1 and 5</value>
+  <data name="state_logs" xml:space="preserve">
+    <value>State logs</value>
+  </data>
+  <data name="works" xml:space="preserve">
+    <value>Works</value>
+  </data>
+  <data name="works_title" xml:space="preserve">
+    <value>Works</value>
+  </data>
+  <data name="work_edit" xml:space="preserve">
+    <value>Edit Work</value>
+  </data>
+  <data name="yes" xml:space="preserve">
+    <value>Yes</value>
   </data>
 </root>

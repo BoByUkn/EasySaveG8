@@ -11,7 +11,7 @@
     <Grid SnapsToDevicePixels="True">
         <Border HorizontalAlignment="Center" Height="550" VerticalAlignment="Top" Width="750" Margin="0,75,0,0" Background="#FF283845" CornerRadius="60,60,60,60">
             <Grid>
-                <TextBlock Name="CreateWork_Title" Foreground="White" FontSize="35" VerticalAlignment="Top" TextAlignment="Center" HorizontalAlignment="Center" FontFamily="Bahnschrift Condensed" Height="40" Width="157">
+                <TextBlock Name="CreateWork_Title" Foreground="White" FontSize="35" VerticalAlignment="Top" TextAlignment="Center" HorizontalAlignment="Center" FontFamily="Bahnschrift Condensed" Height="40" Width="326">
                 <Run Language="fr-fr" Text="Create Work"/>
                 </TextBlock>
                 <Grid>
@@ -36,8 +36,8 @@
                     <TextBox x:Name="textBox1" TextWrapping="Wrap" Height="30" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" Width="419" Grid.Column="1" Grid.Row="1" Margin="30,0,30,0"/>
                     <Label x:Name="LabelError" Content="" HorizontalAlignment="Left" Height="30" VerticalAlignment="Center" Width="135" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Margin="505,0,0,0" Background="{x:Null}" Foreground="Red" FontSize="10"/>
 
-                    <TextBlock Foreground="White" FontSize="17" Margin="30,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0" FontFamily="Bahnschrift Condensed" Grid.Row="2">
-                    <Run Language="fr-fr" Name="Source_Path"/>
+                    <TextBlock Name="Source_Path" Text="Source" Foreground="White" FontSize="17" Margin="30,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0" FontFamily="Bahnschrift Condensed" Grid.Row="2">
+                    <Run Language="fr-fr" />
                     </TextBlock>
                     <TextBox x:Name="textBox2" TextWrapping="Wrap" Height="30" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" Width="419" Grid.Column="1" Grid.Row="2" Margin="30,0,30,0"/>
 
@@ -72,7 +72,7 @@
                         <ComboBoxItem Name="Differential" Content="Différentielle"/>
                     </ComboBox>
 
-                    <TextBlock Name="Execute_Now" Foreground="White" FontSize="17" Margin="30,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0" Grid.Row="5" FontFamily="Bahnschrift Condensed">
+                    <TextBlock Name="Execute_Now" TextAlignment="Center" Foreground="White" FontSize="17" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="0" Grid.Row="5" FontFamily="Bahnschrift Condensed" Width="156" Grid.ColumnSpan="2" Margin="-13,0,0,0">
                     <Run Language="fr-fr" Text="Execute Now"/>
                     </TextBlock>
                     <ComboBox x:Name="comboBox2" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="419" Grid.Column="1" Grid.Row="5" Margin="30,0,30,0">
