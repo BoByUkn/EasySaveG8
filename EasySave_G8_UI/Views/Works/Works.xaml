@@ -11,7 +11,7 @@
     <Grid SnapsToDevicePixels="True">
         <Border HorizontalAlignment="Center" Height="550" VerticalAlignment="Top" Width="750" Margin="0,75,0,0" Background="#FF283845" CornerRadius="60,60,60,60">
             <Grid>
-                <TextBlock TextAlignment="Center" HorizontalAlignment="Center" Height="38" TextWrapping="Wrap" VerticalAlignment="Top" FontFamily="Bahnschrift Condensed" Width="456" FontSize="35" Foreground="White"><Run Language="fr-fr" Text="Works"/><LineBreak/><Run Language="fr-fr"/></TextBlock>
+                <TextBlock Name="Works_Title" TextAlignment="Center" HorizontalAlignment="Center" Height="38" TextWrapping="Wrap" VerticalAlignment="Top" FontFamily="Bahnschrift Condensed" Width="456" FontSize="35" Foreground="White"><Run Language="fr-fr" Text="Works"/><LineBreak/><Run Language="fr-fr"/></TextBlock>
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>

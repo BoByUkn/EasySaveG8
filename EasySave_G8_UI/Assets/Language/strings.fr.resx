@@ -117,8 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="browse" xml:space="preserve">
+    <value>Parcourir</value>
+  </data>
   <data name="classics" xml:space="preserve">
     <value>Classique</value>
+  </data>
+  <data name="classics_title" xml:space="preserve">
+    <value>Sauvegarde Classique</value>
   </data>
   <data name="complete" xml:space="preserve">
     <value>Complète</value>
@@ -129,17 +135,41 @@
   <data name="create_work" xml:space="preserve">
     <value>Créer un travail</value>
   </data>
+  <data name="create_work_title" xml:space="preserve">
+    <value>Créer un travail</value>
+  </data>
+  <data name="daily_logs" xml:space="preserve">
+    <value>Historique quotidien</value>
+  </data>
   <data name="dashboard" xml:space="preserve">
     <value>Tableau de bord</value>
   </data>
   <data name="dashboard_title" xml:space="preserve">
     <value>Tableau de bord</value>
   </data>
+  <data name="delete_selection" xml:space="preserve">
+    <value>Supprimer sélection</value>
+  </data>
   <data name="dest_path" xml:space="preserve">
     <value>Destination</value>
   </data>
   <data name="differential" xml:space="preserve">
     <value>Différentielle</value>
+  </data>
+  <data name="directories" xml:space="preserve">
+    <value>Dossiers</value>
+  </data>
+  <data name="edit_selection" xml:space="preserve">
+    <value>Editer sélection</value>
+  </data>
+  <data name="execute_all" xml:space="preserve">
+    <value>Tout exécuter</value>
+  </data>
+  <data name="execute_now" xml:space="preserve">
+    <value>Exécuter maintenant</value>
+  </data>
+  <data name="execute_selection" xml:space="preserve">
+    <value>Exécuter sélection</value>
   </data>
   <data name="lang" xml:space="preserve">
     <value>fr</value>
@@ -150,8 +180,23 @@
   <data name="logs" xml:space="preserve">
     <value>Historique</value>
   </data>
+  <data name="logs_title" xml:space="preserve">
+    <value>Historique</value>
+  </data>
   <data name="name" xml:space="preserve">
     <value>Nom</value>
+  </data>
+  <data name="next" xml:space="preserve">
+    <value>Suivant</value>
+  </data>
+  <data name="no" xml:space="preserve">
+    <value>Non</value>
+  </data>
+  <data name="save_work" xml:space="preserve">
+    <value>Sauvegarder le travail</value>
+  </data>
+  <data name="select_directory" xml:space="preserve">
+    <value>Sélectionner un dossier</value>
   </data>
   <data name="shutdown" xml:space="preserve">
     <value>Quitter</value>
@@ -159,7 +204,19 @@
   <data name="source_path" xml:space="preserve">
     <value>Source</value>
   </data>
+  <data name="state_logs" xml:space="preserve">
+    <value>Historique d'état</value>
+  </data>
   <data name="works" xml:space="preserve">
     <value>Travaux</value>
+  </data>
+  <data name="works_title" xml:space="preserve">
+    <value>Travaux</value>
+  </data>
+  <data name="work_edit" xml:space="preserve">
+    <value>Editer le travail</value>
+  </data>
+  <data name="yes" xml:space="preserve">
+    <value>Oui</value>
   </data>
 </root>

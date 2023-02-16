@@ -26,7 +26,8 @@ namespace EasySave_G8_UI.Models
             File.WriteAllText(fileName, jsonString); //Create and append JSON into file
             var RandomInt64 = new Random();
             long cipherKey = RandomInt64.NextInt64(); //Generates a random 64bit key for CryptoSoft
-            string filePath = @"C:\Users" + Environment.UserName + @"\AppData\Roaming\EasySave\cipher key.txt"; //Creates a file to store the key
+            string filePath = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\cipherkey.txt"; //Creates a file to store the key
+            File.Create(filePath).Dispose();
             using (StreamWriter writer = new StreamWriter(filePath)) //Writes the key into that file
             {
                 writer.Write(cipherKey);
