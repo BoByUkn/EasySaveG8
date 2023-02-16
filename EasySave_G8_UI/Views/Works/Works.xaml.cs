@@ -15,18 +15,6 @@ namespace EasySave_G8_UI.Views.Works
         {
             InitializeComponent();
             Works_List();
-            translate();
-        }
-
-        private void translate()
-        {
-            Works_Title.Text = $"{View_Model.VM_GetString_Language("works_title")}";
-            Next_btn.Content = $"{View_Model.VM_GetString_Language("next")}";
-            ExecuteAll_btn.Content = $"{View_Model.VM_GetString_Language("execute_all")}";
-            ExecuteSelected_btn.Content = $"{View_Model.VM_GetString_Language("execute_selection")}";
-            Edit_btn.Content = $"{View_Model.VM_GetString_Language("edit_selection")}";
-            Delete_btn.Content = $"{View_Model.VM_GetString_Language("delete_selection")}";
-            Create_btn.Content = $"{View_Model.VM_GetString_Language("create_work")}";
         }
 
         private void Works_List()
@@ -105,7 +93,49 @@ namespace EasySave_G8_UI.Views.Works
 
         private void Next_btn_Click(object sender, RoutedEventArgs e)
         {
+            if (List_Works.SelectedItems.Count == 0 || List_Works.SelectedItems.Count == 1) { return; }
 
+            string CurrentWork = "";
+            string WorkName = "";
+            bool AfterCurrent = false;
+            bool WorkNameFound = false;
+
+            foreach (string Item in List_Works.SelectedItems)
+            {
+                if (List_Work_Detail.Text.Contains(Item)) { CurrentWork = Item; }
+            }
+
+            while (!WorkNameFound)
+            {
+                foreach (string Item in List_Works.SelectedItems)
+                {
+                    if (Item == CurrentWork) { AfterCurrent = true; }
+                    if (Item != CurrentWork && AfterCurrent) 
+                    {
+                        WorkName = Item;
+                        WorkNameFound = true;
+                    }
+                    else if (AfterCurrent) 
+                    {
+                        WorkName = Item;
+                        WorkNameFound = true;
+                    }
+                }
+            }
+
+            List_Work_Detail.Text = "";
+            
+            View_Model ViewModel = new View_Model();
+            List<Model_PRE> obj_list = ViewModel.VM_Work_Show(WorkName, false);
+
+            foreach (Model_PRE obj in obj_list)
+            {
+                List_Work_Detail.Text = "Name: " + obj.Name + "\n";
+                List_Work_Detail.Text += "Source: " + obj.Source + "\n";
+                List_Work_Detail.Text += "Destination: " + obj.Destination + "\n";
+                if (obj.Type) { List_Work_Detail.Text += "Type: Complete \n"; }
+                else { List_Work_Detail.Text += "Type: Differential \n"; }
+            }
         }
     }
 }
