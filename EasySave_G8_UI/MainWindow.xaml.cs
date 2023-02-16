@@ -23,6 +23,7 @@ namespace EasySave_G8_UI
             {
                 ViewMODEL.VM_Init();
             }
+
             translate();
             Main.Content = new Dashboard();
             if ($"{View_Model.VM_GetString_Language("lang")}" == "en") { ENradio.IsChecked = true; }
@@ -85,22 +86,5 @@ namespace EasySave_G8_UI
             ViewModelFR.VM_Change_Language("fr");
             translate();
         }
-
-
-        //private void combobox_selectionchanged(object sender, system.windows.controls.selectionchangedeventargs e)
-        //{
-        //    if (lang.selectedindex == 0)
-        //    {
-        //        view_model viewmodeleng = new view_model();
-        //        viewmodeleng.vm_change_language("en");
-        //    }
-        //    else
-        //    {
-        //        view_model viewmodelfr = new view_model();
-        //        viewmodelfr.vm_change_language("fr");
-        //    }
-        //        translate();
-        //}
-
     }
 }
