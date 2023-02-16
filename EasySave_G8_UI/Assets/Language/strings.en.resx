@@ -117,8 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="browse" xml:space="preserve">
+    <value>Browse</value>
+  </data>
   <data name="classics" xml:space="preserve">
     <value>Classics</value>
+  </data>
+  <data name="classics_title" xml:space="preserve">
+    <value>Classic Save</value>
   </data>
   <data name="complete" xml:space="preserve">
     <value>Complete</value>
@@ -129,17 +135,38 @@
   <data name="create_work" xml:space="preserve">
     <value>Create Work</value>
   </data>
+  <data name="create_work_title" xml:space="preserve">
+    <value>Create work</value>
+  </data>
   <data name="dashboard" xml:space="preserve">
     <value>Dashboard</value>
   </data>
   <data name="dashboard_title" xml:space="preserve">
     <value>Dashboard</value>
   </data>
+  <data name="delete_selection" xml:space="preserve">
+    <value>Delete selection</value>
+  </data>
   <data name="dest_path" xml:space="preserve">
     <value>Destination</value>
   </data>
   <data name="differential" xml:space="preserve">
     <value>Differential</value>
+  </data>
+  <data name="directories" xml:space="preserve">
+    <value>Directories</value>
+  </data>
+  <data name="edit_selection" xml:space="preserve">
+    <value>Edit selection</value>
+  </data>
+  <data name="execute_all" xml:space="preserve">
+    <value>Execute all</value>
+  </data>
+  <data name="execute_now" xml:space="preserve">
+    <value>Execute now</value>
+  </data>
+  <data name="execute_selection" xml:space="preserve">
+    <value>Execute selection</value>
   </data>
   <data name="lang" xml:space="preserve">
     <value>en</value>
@@ -153,6 +180,15 @@
   <data name="name" xml:space="preserve">
     <value>Name</value>
   </data>
+  <data name="next" xml:space="preserve">
+    <value>Next</value>
+  </data>
+  <data name="Save work" xml:space="preserve">
+    <value>Save Work</value>
+  </data>
+  <data name="select_directory" xml:space="preserve">
+    <value>Select a directory</value>
+  </data>
   <data name="shutdown" xml:space="preserve">
     <value>Shutdown</value>
   </data>
@@ -160,6 +196,9 @@
     <value>Source</value>
   </data>
   <data name="works" xml:space="preserve">
+    <value>Works</value>
+  </data>
+  <data name="works_title" xml:space="preserve">
     <value>Works</value>
   </data>
 </root>

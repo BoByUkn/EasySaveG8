@@ -13,8 +13,8 @@
 
         <Border HorizontalAlignment="Center" Height="550" VerticalAlignment="Top" Width="750" Margin="0,75,0,0" Background="#FF283845" CornerRadius="60,60,60,60">
             <Grid>
-                <TextBlock Foreground="White" FontSize="35" VerticalAlignment="Top" HorizontalAlignment="Center" FontFamily="Bahnschrift Condensed" Height="40" Width="157">
-                <Run Language="fr-fr" Text="Classic Save"/>
+                <TextBlock Foreground="White" FontSize="35" VerticalAlignment="Top" HorizontalAlignment="Center" FontFamily="Bahnschrift Condensed" Height="40" Width="325" TextAlignment="Center">
+                <Run Language="fr-fr" Text="Classic Save" Name="Classics_Title"/>
                 </TextBlock>
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -32,18 +32,18 @@
                     </Grid.RowDefinitions>
 
                     <TextBlock Foreground="White" FontSize="17" Margin="30,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0" FontFamily="Bahnschrift Condensed" Grid.Row="1">
-                    <Run Language="fr-fr" Name="Name"/>
+                    <Run Language="fr-fr" Text="Name" Name="Name"/>
                     </TextBlock>
                     <TextBox x:Name="textBox1" TextWrapping="Wrap" Height="30" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" Width="419" Grid.Column="1" Grid.Row="1" Margin="30,0,30,0"/>
 
                     <ProgressBar Name="progressBar1" Grid.Row="0" Grid.Column="1" Margin="0,70,0,10" Minimum="0" Maximum="100"  Value="{Binding ProgressValue}" />
 
                     <TextBlock Foreground="White" FontSize="17" Margin="30,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0" FontFamily="Bahnschrift Condensed" Grid.Row="2">
-                    <Run Language="fr-fr" Name="Source_Path"/>
+                    <Run Language="fr-fr" Text="Source" Name="Source_Path"/>
                     </TextBlock>
                     <TextBox x:Name="textBox2" TextWrapping="Wrap" Height="30" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" Width="419" Grid.Column="1" Grid.Row="2" Margin="30,0,30,0"/>
 
-                    <Button Content="Browse" FontFamily="Bahnschrift Condensed" Height="30" FontSize="15" BorderBrush="{x:Null}" Grid.Column="2" Margin="0,0,30,0"  Grid.Row="2" Click="Button_Click_Browse">
+                    <Button Name="Browse" Content="Browse" FontFamily="Bahnschrift Condensed" Height="30" FontSize="15" BorderBrush="{x:Null}" Grid.Column="2" Margin="0,0,30,0"  Grid.Row="2" Click="Button_Click_Browse">
                         <Button.Resources>
                             <Style TargetType="Border">
                                 <Setter Property="CornerRadius" Value="5"></Setter>
@@ -53,11 +53,11 @@
 
 
                     <TextBlock Foreground="White" FontSize="17" Margin="30,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0" FontFamily="Bahnschrift Condensed" Grid.Row="3">
-                    <Run Language="fr-fr" Name="Dest_Path"/>
+                    <Run Language="fr-fr" Text="Destination"  Name="Dest_Path"/>
                     </TextBlock>
                     <TextBox x:Name="textBox3" TextWrapping="Wrap" Height="30" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" Width="419" Grid.Column="1" Grid.Row="3" Margin="30,0,30,0"/>
 
-                    <Button Content="Browse" FontFamily="Bahnschrift Condensed" Height="30" FontSize="15" BorderBrush="{x:Null}" Grid.Column="2" Margin="0,0,30,0"  Grid.Row="3" Click="Button_Click_Browse2">
+                    <Button Name="Browse2" Content="Browse" FontFamily="Bahnschrift Condensed" Height="30" FontSize="15" BorderBrush="{x:Null}" Grid.Column="2" Margin="0,0,30,0"  Grid.Row="3" Click="Button_Click_Browse2">
                         <Button.Resources>
                             <Style TargetType="Border">
                                 <Setter Property="CornerRadius" Value="5"></Setter>
@@ -75,7 +75,7 @@
                     </ComboBox>
                 </Grid>
 
-                <Button Name="LaunchBtn" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="22" Height="45" Width="250" Background="#FFD9D9D9" Margin="0,0,0,30" Click="Button_Click_LaunchSave">
+                <Button Name="LaunchBtn" Content="Launch Save" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="22" Height="45" Width="250" Background="#FFD9D9D9" Margin="0,0,0,30" Click="Button_Click_LaunchSave">
                     <Button.Resources>
                         <Style TargetType="Border">
                             <Setter Property="CornerRadius" Value="25"></Setter>

@@ -15,6 +15,18 @@ namespace EasySave_G8_UI.Views.Works
         {
             InitializeComponent();
             Works_List();
+            translate();
+        }
+
+        private void translate()
+        {
+            Works_Title.Text = $"{View_Model.VM_GetString_Language("works_title")}";
+            Next_btn.Content = $"{View_Model.VM_GetString_Language("next")}";
+            ExecuteAll_btn.Content = $"{View_Model.VM_GetString_Language("execute_all")}";
+            ExecuteSelected_btn.Content = $"{View_Model.VM_GetString_Language("execute_selection")}";
+            Edit_btn.Content = $"{View_Model.VM_GetString_Language("edit_selection")}";
+            Delete_btn.Content = $"{View_Model.VM_GetString_Language("delete_selection")}";
+            Create_btn.Content = $"{View_Model.VM_GetString_Language("create_work")}";
         }
 
         private void Works_List()

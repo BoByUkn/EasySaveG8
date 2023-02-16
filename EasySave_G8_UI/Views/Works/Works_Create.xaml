@@ -11,8 +11,8 @@
     <Grid SnapsToDevicePixels="True">
         <Border HorizontalAlignment="Center" Height="550" VerticalAlignment="Top" Width="750" Margin="0,75,0,0" Background="#FF283845" CornerRadius="60,60,60,60">
             <Grid>
-                <TextBlock Foreground="White" FontSize="35" VerticalAlignment="Top" TextAlignment="Center" HorizontalAlignment="Center" FontFamily="Bahnschrift Condensed" Height="40" Width="157">
-                <Run Language="fr-fr" Text="New Work"/>
+                <TextBlock Name="CreateWork_Title" Foreground="White" FontSize="35" VerticalAlignment="Top" TextAlignment="Center" HorizontalAlignment="Center" FontFamily="Bahnschrift Condensed" Height="40" Width="157">
+                <Run Language="fr-fr" Text="Create Work"/>
                 </TextBlock>
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -30,8 +30,8 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <TextBlock Foreground="White" FontSize="17" Margin="30,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0" FontFamily="Bahnschrift Condensed" Grid.Row="1">
-                    <Run Language="fr-fr" Name="Name"/>
+                    <TextBlock Name="Name" Text="Name" Foreground="White" FontSize="17" Margin="30,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0" FontFamily="Bahnschrift Condensed" Grid.Row="1">
+                    <Run Language="fr-fr"/>
                     </TextBlock>
                     <TextBox x:Name="textBox1" TextWrapping="Wrap" Height="30" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" Width="419" Grid.Column="1" Grid.Row="1" Margin="30,0,30,0"/>
                     <Label x:Name="LabelError" Content="" HorizontalAlignment="Left" Height="30" VerticalAlignment="Center" Width="135" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Margin="505,0,0,0" Background="{x:Null}" Foreground="Red" FontSize="10"/>
@@ -41,7 +41,7 @@
                     </TextBlock>
                     <TextBox x:Name="textBox2" TextWrapping="Wrap" Height="30" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" Width="419" Grid.Column="1" Grid.Row="2" Margin="30,0,30,0"/>
 
-                    <Button Content="Browse" FontFamily="Bahnschrift Condensed" Height="30" FontSize="15" BorderBrush="{x:Null}" Grid.Column="2" Margin="0,0,30,0"  Grid.Row="2" Click="Button_Click_Browse">
+                    <Button x:Name="Browse" Content="Browse" FontFamily="Bahnschrift Condensed" Height="30" FontSize="15" BorderBrush="{x:Null}" Grid.Column="2" Margin="0,0,30,0"  Grid.Row="2" Click="Button_Click_Browse">
                         <Button.Resources>
                             <Style TargetType="Border">
                                 <Setter Property="CornerRadius" Value="5"></Setter>
@@ -50,12 +50,12 @@
                     </Button>
 
 
-                    <TextBlock Foreground="White" FontSize="17" Margin="30,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0" FontFamily="Bahnschrift Condensed" Grid.Row="3">
-                    <Run Language="fr-fr" Name="Dest_Path"/>
+                    <TextBlock Name="Dest_Path" Text="Destination" Foreground="White" FontSize="17" Margin="30,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0" FontFamily="Bahnschrift Condensed" Grid.Row="3">
+                    <Run Language="fr-fr" />
                     </TextBlock>
                     <TextBox x:Name="textBox3" TextWrapping="Wrap" Height="30" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" Width="419" Grid.Column="1" Grid.Row="3" Margin="30,0,30,0"/>
 
-                    <Button Content="Browse" FontFamily="Bahnschrift Condensed" Height="30" FontSize="15" BorderBrush="{x:Null}" Grid.Column="2" Margin="0,0,30,0"  Grid.Row="3" Click="Button_Click_Browse2">
+                    <Button Name="Browse2" Content="Browse" FontFamily="Bahnschrift Condensed" Height="30" FontSize="15" BorderBrush="{x:Null}" Grid.Column="2" Margin="0,0,30,0"  Grid.Row="3" Click="Button_Click_Browse2">
                         <Button.Resources>
                             <Style TargetType="Border">
                                 <Setter Property="CornerRadius" Value="5"></Setter>
@@ -72,7 +72,7 @@
                         <ComboBoxItem Name="Differential" Content="Différentielle"/>
                     </ComboBox>
 
-                    <TextBlock Foreground="White" FontSize="17" Margin="30,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0" Grid.Row="5" FontFamily="Bahnschrift Condensed">
+                    <TextBlock Name="Execute_Now" Foreground="White" FontSize="17" Margin="30,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0" Grid.Row="5" FontFamily="Bahnschrift Condensed">
                     <Run Language="fr-fr" Text="Execute Now"/>
                     </TextBlock>
                     <ComboBox x:Name="comboBox2" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="419" Grid.Column="1" Grid.Row="5" Margin="30,0,30,0">
