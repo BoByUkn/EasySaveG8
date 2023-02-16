@@ -1,9 +1,14 @@
 ﻿using Newtonsoft.Json;
+using EasySave_G8_UI.View_Models;
 using System;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Reflection;
 using System.Resources;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ToolTip;
+using System.Runtime.ConstrainedExecution;
+using System.Windows.Controls;
 
 namespace EasySave_G8_UI.Models
 {
@@ -19,6 +24,13 @@ namespace EasySave_G8_UI.Models
             string fileName = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\app_config.json";
             var jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(ModelCOMMON); //Serialialize the data in JSON form
             File.WriteAllText(fileName, jsonString); //Create and append JSON into file
+            var RandomInt64 = new Random();
+            long cipherKey = RandomInt64.NextInt64(); //Generates a random 64bit key for CryptoSoft
+            string filePath = @"C:\Users" + Environment.UserName + @"\AppData\Roaming\EasySave\cipher key.txt"; //Creates a file to store the key
+            using (StreamWriter writer = new StreamWriter(filePath)) //Writes the key into that file
+            {
+                writer.Write(cipherKey);
+            }
         }
     }
 
@@ -30,7 +42,7 @@ namespace EasySave_G8_UI.Models
 
         static Model_LANG() //Initiate Lang RessourceManager
         {
-            _rm = new ResourceManager("EasySave_G8_CONS.Assets.Language.strings", Assembly.GetExecutingAssembly());
+            _rm = new ResourceManager("EasySave_G8_UI.Assets.Language.strings", Assembly.GetExecutingAssembly());
         }
 
         public static string? GetString(string name) //Get the string from the resx files
@@ -52,7 +64,7 @@ namespace EasySave_G8_UI.Models
             string fileName = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\app_config.json";
             string fileContent = File.ReadAllText(fileName); // Bring content of filename in filecontent
             Model_LANG base_conf = JsonConvert.DeserializeObject<Model_LANG>(fileContent); // Create the list named values
-            return (base_conf.lang);
+            return base_conf.lang;
         }
 
         public void UpdateLanguage() //Update CultureInfo with Language stored in app_config
@@ -61,6 +73,38 @@ namespace EasySave_G8_UI.Models
             var cultureInfo = new CultureInfo(language);
             CultureInfo.CurrentCulture = cultureInfo;
             CultureInfo.CurrentUICulture = cultureInfo;
+        }
+    }
+
+
+    public class Model_BLACKLIST
+    {
+        public string[] blacklist { get; set; }
+        public bool BlacklistTest()
+        {
+            string[] blacklistProcessus = { "CalculatorApp" };
+            bool blacklistState = false;
+
+            var processes = Process.GetProcesses();
+
+            foreach (Process process in Process.GetProcesses())
+            {
+                if(Array.IndexOf(blacklistProcessus, process.ProcessName) != -1)
+                {
+                    blacklistState = true;
+                }
+            }
+            return blacklistState;
+
+        }
+
+        public string[] BlacklistReturn()
+        {
+            string fileName = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\app_config.json";
+            string fileContent = File.ReadAllText(fileName); // Bring content of filename in filecontent
+            Model_BLACKLIST base_conf = JsonConvert.DeserializeObject<Model_BLACKLIST>(fileContent); // Create the list named values
+            return base_conf.blacklist;
+
         }
     }
 }

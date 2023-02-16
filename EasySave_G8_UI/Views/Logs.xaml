@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:EasySave_G8_UI.Views"
       mc:Ignorable="d" 
       d:DesignHeight="704" d:DesignWidth="935"
-      Title="Logs" Height="704" Width="935">
+      Title="Logs">
 
     <Grid SnapsToDevicePixels="True">
 
@@ -17,7 +17,7 @@
             <Grid>
                 <StackPanel Orientation="Vertical">
                     <TextBlock Foreground="White" FontSize="35" TextAlignment="Center" VerticalAlignment="Top" HorizontalAlignment="Center" FontFamily="Bahnschrift Condensed" Margin="0,0,0,30" Height="40" Width="157">
-                    <Run Language="fr-fr" Name="Logs_Title" Text="Logs"/>
+                    <Run Language="fr-fr" Text="Logs"/>
                     </TextBlock>
                     <TextBox Name="textBoxLogs" Background="#FFFFFF" BorderBrush="#283845"  HorizontalAlignment="Center" Width="500" Height="375" VerticalAlignment="Top">
                         <TextBox.Resources>
@@ -33,7 +33,7 @@
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
 
-                        <Button Name="Daily_Logs" Background="#D9D9D9" Grid.Column="0" Content="Daily Logs" Height="50" Click="ButtonLogs_Refresh" FontSize="25" BorderBrush="{x:Null}" Margin="30,40,20,10">
+                        <Button Background="#D9D9D9" Grid.Column="0" Content="Daily Logs" Height="50" Click="ButtonLogs_Refresh" FontSize="25" BorderBrush="{x:Null}" Margin="30,40,20,10">
                             <Button.Resources>
                                 <Style TargetType="Border">
                                     <Setter Property="CornerRadius" Value="15"></Setter>
@@ -41,7 +41,7 @@
                             </Button.Resources>
                         </Button>
 
-                        <Button Name="State_Logs" Background="#D9D9D9" Grid.Column="1" Content="State Logs" Height="50" Click="ButtonStateLogs_Refresh" FontSize="25" BorderBrush="{x:Null}" Margin="30,40,20,10">
+                        <Button Background="#D9D9D9" Grid.Column="1" Content="State Logs" Height="50" Click="ButtonStateLogs_Refresh" FontSize="25" BorderBrush="{x:Null}" Margin="30,40,20,10">
                             <Button.Resources>
                                 <Style TargetType="Border">
                                     <Setter Property="CornerRadius" Value="15"></Setter>

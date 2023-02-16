@@ -38,12 +38,6 @@ namespace EasySave_G8_UI.Models
                 string fileContent = File.ReadAllText(fileName); //Bring content of filename in filecontent
                 List<Model_PRE> ?values = new List<Model_PRE>(); //Create the list named values
                 values = JsonConvert.DeserializeObject<List<Model_PRE>>(fileContent); //Deserialialize the data in JSON form
-                if (values.Count() == 5 || values.Count() > 5) //Check if there is already 5 works
-                {
-                    View_Model ViewMODEL = new View_Model();
-                    ViewMODEL.MV_Work_5Works();
-                    return;
-                }
                 values?.Add(this); //Add object ModelAFT in the list values
                 string jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(values, Newtonsoft.Json.Formatting.Indented); //Serialialize the data in JSON form
                 File.WriteAllText(fileName, jsonString); //Write json file

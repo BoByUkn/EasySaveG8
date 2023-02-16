@@ -14,23 +14,6 @@ namespace EasySave_G8_UI.Views.Works
         public Works_Create()
         {
             InitializeComponent();
-            translate();
-        }
-
-        private void translate()
-        {
-            CreateWork_Title.Text = $"{View_Model.VM_GetString_Language("create_work_title")}";
-            Name.Text = $"{View_Model.VM_GetString_Language("name")}";
-            Source_Path.Text = $"{View_Model.VM_GetString_Language("source_path")}";
-            Dest_Path.Text = $"{View_Model.VM_GetString_Language("dest_path")}";
-            Browse.Content = $"{View_Model.VM_GetString_Language("browse")}";
-            Browse2.Content = $"{View_Model.VM_GetString_Language("browse")}";
-            Save_btn.Content = $"{View_Model.VM_GetString_Language("save_work")}";
-            Execute_Now.Text = $"{View_Model.VM_GetString_Language("execute_now")}";
-            Complete.Content = $"{View_Model.VM_GetString_Language("complete")}";
-            Differential.Content = $"{View_Model.VM_GetString_Language("differential")}";
-            Yes.Content = $"{View_Model.VM_GetString_Language("yes")}";
-            No.Content = $"{View_Model.VM_GetString_Language("no")}";
         }
 
         private void Save_btn_Click(object sender, RoutedEventArgs e)

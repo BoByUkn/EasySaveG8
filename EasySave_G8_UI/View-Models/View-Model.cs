@@ -106,13 +106,6 @@ namespace EasySave_G8_UI.View_Models
             //ViewWORKS.Work_NotFound();
         }
 
-        //MV Show 5Works error
-        public void MV_Work_5Works()
-        {
-            //View_WORKS ViewWORKS = new View_WORKS();
-            //ViewWORKS.Work_5Works();
-        }
-
         //VM Change app_config Language
         public void VM_Change_Language(string lang)
         {
@@ -155,6 +148,12 @@ namespace EasySave_G8_UI.View_Models
             Model_Logs ModelLogs = new Model_Logs();
             string[] files = ModelLogs.Show_Logs();
             return files;
+        }
+
+        public bool VM_BlackList()
+        {
+            Model_BLACKLIST ModelBLACKLIST = new Model_BLACKLIST();
+            return ModelBLACKLIST.BlacklistTest();
         }
     }
 }
