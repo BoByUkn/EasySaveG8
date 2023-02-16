@@ -117,251 +117,49 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="browse" xml:space="preserve">
-    <value>Browse</value>
-  </data>
   <data name="classics" xml:space="preserve">
     <value>Classics</value>
-  </data>
-  <data name="classics_title" xml:space="preserve">
-    <value>Classic Save</value>
   </data>
   <data name="complete" xml:space="preserve">
     <value>Complete</value>
   </data>
-  <data name="date_error" xml:space="preserve">
-    <value>Error : the date </value>
+  <data name="coucou" xml:space="preserve">
+    <value>hello</value>
   </data>
-  <data name="date_error_2" xml:space="preserve">
-    <value>doesn't exist or is not written well.</value>
-  </data>
-  <data name="create_work_title" xml:space="preserve">
-    <value>Create work</value>
-  </data>
-  <data name="daily_logs" xml:space="preserve">
-    <value>Daily logs</value>
+  <data name="create_work" xml:space="preserve">
+    <value>Create Work</value>
   </data>
   <data name="dashboard" xml:space="preserve">
     <value>Dashboard</value>
   </data>
-  <data name="dest_actual" xml:space="preserve">
-    <value>Actual destination : </value>
-  </data>
-  <data name="delete_selection" xml:space="preserve">
-    <value>Delete selection</value>
+  <data name="dashboard_title" xml:space="preserve">
+    <value>Dashboard</value>
   </data>
   <data name="dest_path" xml:space="preserve">
     <value>Destination</value>
   </data>
-  <data name="dir_save_done" xml:space="preserve">
-    <value>Save of the directory done</value>
-  </data>
-  <data name="directories" xml:space="preserve">
-    <value>Directories</value>
-  </data>
-  <data name="edit_selection" xml:space="preserve">
-    <value>Edit selection</value>
-  </data>
-  <data name="execute_all" xml:space="preserve">
-    <value>Execute all</value>
-  </data>
-  <data name="execute_now" xml:space="preserve">
-    <value>Execute now</value>
-  </data>
-  <data name="execute_selection" xml:space="preserve">
-    <value>Execute selection</value>
+  <data name="differential" xml:space="preserve">
+    <value>Differential</value>
   </data>
   <data name="lang" xml:space="preserve">
     <value>en</value>
   </data>
-  <data name="enter_option" xml:space="preserve">
-    <value>Enter an option: </value>
+  <data name="launch_save" xml:space="preserve">
+    <value>Launch Save</value>
   </data>
-  <data name="exec_save" xml:space="preserve">
-    <value>Enter 'true' to run the job after saving it or 'false' to save it only.</value>
-  </data>
-  <data name="logs_title" xml:space="preserve">
+  <data name="logs" xml:space="preserve">
     <value>Logs</value>
   </data>
   <data name="name" xml:space="preserve">
-    <value>Name : </value>
-  </data>
-  <data name="name_actual" xml:space="preserve">
-    <value>Actual name : </value>
-  </data>
-  <data name="name_actual_note" xml:space="preserve">
-    <value>Note : Leave empty to keep the actual name.</value>
-  </data>
-  <data name="name_del" xml:space="preserve">
-    <value>Enter the name of the work to delete : </value>
-  </data>
-  <data name="name_exec" xml:space="preserve">
-    <value>Enter the name of the work to execute : </value>
-  </data>
-  <data name="name_modif" xml:space="preserve">
-    <value>Enter the name of the work to edit : </value>
-  </data>
-  <data name="overwr" xml:space="preserve">
-    <value>Enter true for replace the existing file or false for no replace:</value>
-  </data>
-  <data name="overwrite" xml:space="preserve">
-    <value>Overwrite : </value>
-  </data>
-  <data name="return_logs_menu" xml:space="preserve">
-    <value>Press any key to return to the logs menu...</value>
-  </data>
-  <data name="return_menu" xml:space="preserve">
-    <value>Press RETURN to return to the main menu</value>
-  </data>
-  <data name="return_works_menu" xml:space="preserve">
-    <value>Press any key to return to the works menu...</value>
-  </data>
-  <data name="slogan" xml:space="preserve">
-    <value>Easy Save G8, the most powerful backup manager on the market!</value>
-  </data>
-  <data name="source_actual" xml:space="preserve">
-    <value>Actual source :</value>
-  </data>
-  <data name="source_actual_note" xml:space="preserve">
-    <value>Note : Leave empty to keep the actual source.</value>
-  </data>
-  <data name="src" xml:space="preserve">
-    <value>Enter the source path of the file to copy:</value>
-  </data>
-  <data name="step1" xml:space="preserve">
-    <value>Step 1/</value>
-  </data>
-  <data name="step2" xml:space="preserve">
-    <value>Step 2/</value>
-  </data>
-  <data name="step3" xml:space="preserve">
-    <value>Step 3/</value>
-  </data>
-  <data name="step4" xml:space="preserve">
-    <value>Step 4/</value>
-  </data>
-  <data name="step5" xml:space="preserve">
-    <value>Step 5/</value>
-  </data>
-  <data name="svduration" xml:space="preserve">
-    <value>Save duration = </value>
-  </data>
-  <data name="svname" xml:space="preserve">
-    <value>Enter the name of the save: </value>
-  </data>
-  <data name="svtype" xml:space="preserve">
-    <value>Enter true for full save and false for differential save:</value>
-  </data>
-  <data name="svtype_actual_complete" xml:space="preserve">
-    <value>Actual type : Complete backup</value>
-  </data>
-  <data name="svtype_actual_diff" xml:space="preserve">
-    <value>Actual type : Differential backup</value>
-  </data>
-  <data name="type_complete" xml:space="preserve">
-    <value>Type : Complete backup</value>
-  </data>
-  <data name="type_diff" xml:space="preserve">
-    <value>Type : Differential backup</value>
-  </data>
-  <data name="valid_bool" xml:space="preserve">
-    <value>Please enter 'true' or 'false'.</value>
-  </data>
-  <data name="valid_choice" xml:space="preserve">
-    <value>Please enter a valid choice</value>
-  </data>
-  <data name="valid_date" xml:space="preserve">
-    <value>Please enter a valid date.</value>
-  </data>
-  <data name="valid_path" xml:space="preserve">
-    <value>Please enter a valid path.</value>
-  </data>
-  <data name="valid_svname" xml:space="preserve">
-    <value>Please enter a valid save name.</value>
-  </data>
-  <data name="welcome" xml:space="preserve">
-    <value>  ______                   _____                    _____  ___  
- |  ____|                 / ____|                  / ____|/ _ \ 
- | |__   __ _ ___ _   _  | (___   __ ___   _____  | |  __| (_) |
- |  __| / _` / __| | | |  \___ \ / _` \ \ / / _ \ | | |_ |&gt; _ &lt; 
- | |___| (_| \__ \ |_| |  ____) | (_| |\ V /  __/ | |__| | (_) |
- |______\__,_|___/\__, | |_____/ \__,_| \_/ \___|  \_____|\___/ 
-                   __/ |                                        
-                  |___/</value>
-  </data>
-  <data name="works_ch1" xml:space="preserve">
-    <value>View backup works</value>
-  </data>
-  <data name="works_ch2" xml:space="preserve">
-    <value>Execute a backup work</value>
-  </data>
-  <data name="works_ch3" xml:space="preserve">
-    <value>Execute multiple backup works</value>
-  </data>
-  <data name="works_ch4" xml:space="preserve">
-    <value>Execute all the backup works</value>
-  </data>
-  <data name="works_ch5" xml:space="preserve">
-    <value>Create a new backup work</value>
-  </data>
-  <data name="works_ch6" xml:space="preserve">
-    <value>Edit a backup work</value>
-  </data>
-  <data name="works_ch7" xml:space="preserve">
-    <value>Delete a backup work</value>
-  </data>
-  <data name="works_ch8" xml:space="preserve">
-    <value>Return to main menu</value>
-  </data>
-  <data name="works_limit" xml:space="preserve">
-    <value>Limit of 5 works reached, works not saved.</value>
-  </data>
-  <data name="works_menu" xml:space="preserve">
-    <value>Backup works menu</value>
-  </data>
-  <data name="works_notfound" xml:space="preserve">
-    <value>No works were found for this name.</value>
-  </data>
-  <data name="work_name_exist" xml:space="preserve">
-    <value>A work with this name already exists. Please enter another name.</value>
-  </data>
-  <data name="work_queue_add" xml:space="preserve">
-    <value>Enter the name of the backup work you want to add to the execution queue.</value>
-  </data>
-  <data name="work_queue_error" xml:space="preserve">
-    <value>At least one work is required in the queue to start execution.</value>
-  </data>
-  <data name="next" xml:space="preserve">
-    <value>Next</value>
-  </data>
-  <data name="no" xml:space="preserve">
-    <value>No</value>
-  </data>
-  <data name="save_work" xml:space="preserve">
-    <value>Save work</value>
-  </data>
-  <data name="select_directory" xml:space="preserve">
-    <value>Select a directory</value>
+    <value>Name</value>
   </data>
   <data name="shutdown" xml:space="preserve">
     <value>Shutdown</value>
   </data>
-  <data name="wrong_number-lang" xml:space="preserve">
-    <value>Please enter 1 or 2</value>
-  </data>
-  <data name="state_logs" xml:space="preserve">
-    <value>State logs</value>
+  <data name="source_path" xml:space="preserve">
+    <value>Source</value>
   </data>
   <data name="works" xml:space="preserve">
     <value>Works</value>
-  </data>
-  <data name="works_title" xml:space="preserve">
-    <value>Works</value>
-  </data>
-  <data name="work_edit" xml:space="preserve">
-    <value>Edit Work</value>
-  </data>
-  <data name="yes" xml:space="preserve">
-    <value>Yes</value>
   </data>
 </root>

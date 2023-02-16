@@ -84,7 +84,9 @@ namespace EasySave_G8_UI.Models
         {
             string[] blacklistProcessus = { "CalculatorApp" };
             bool blacklistState = false;
+
             var processes = Process.GetProcesses();
+
             foreach (Process process in Process.GetProcesses())
             {
                 if(Array.IndexOf(blacklistProcessus, process.ProcessName) != -1)
@@ -93,6 +95,7 @@ namespace EasySave_G8_UI.Models
                 }
             }
             return blacklistState;
+
         }
 
         public string[] BlacklistReturn()

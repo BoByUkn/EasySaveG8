@@ -3,38 +3,28 @@ using System.Windows;
 using System.Windows.Controls;
 using System.IO;
 using Microsoft.Win32;
-using System.ComponentModel;
-using Newtonsoft.Json.Linq;
-using System.Runtime.CompilerServices;
-using System.Diagnostics;
 
 namespace EasySave_G8_UI.Views
 {
     /// <summary>
     /// Logique d'interaction pour Classics.xaml
     /// </summary>
-    /// 
     public partial class Classics : Page
     {
         public Classics()
         {
             InitializeComponent();
             translate();
-            DataContext = new View_Model();
         }
 
         private void translate()
         {
-            Classics_Title.Text = Name.Text = $"{View_Model.VM_GetString_Language("classics_title")}";
             Name.Text = $"{View_Model.VM_GetString_Language("name")}";
             Source_Path.Text = $"{View_Model.VM_GetString_Language("source_path")}";
             Dest_Path.Text = $"{View_Model.VM_GetString_Language("dest_path")}";
             LaunchBtn.Content = $"{View_Model.VM_GetString_Language("launch_save")}";
             Complete.Content = $"{View_Model.VM_GetString_Language("complete")}";
             Differential.Content = $"{View_Model.VM_GetString_Language("differential")}";
-            Browse.Content = $"{View_Model.VM_GetString_Language("browse")}";
-            Browse2.Content = $"{View_Model.VM_GetString_Language("browse")}";
-
         }
         private void Button_Click_LaunchSave(object sender, RoutedEventArgs e)
         {
@@ -58,14 +48,15 @@ namespace EasySave_G8_UI.Views
         {
 
         }
+
         private void Button_Click_Browse(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.CheckFileExists = false;
             openFileDialog.CheckPathExists = true;
             openFileDialog.ValidateNames = false;
-            openFileDialog.FileName = $"{View_Model.VM_GetString_Language("select_directory")}";
-            openFileDialog.Filter = $"{View_Model.VM_GetString_Language("directories")}| *.directory";
+            openFileDialog.FileName = "Selectionner un dossier";
+            openFileDialog.Filter = "Dossiers|*.directory";
             openFileDialog.InitialDirectory = @"C:\";
 
             if (openFileDialog.ShowDialog() == true)
@@ -79,8 +70,8 @@ namespace EasySave_G8_UI.Views
             openFileDialog.CheckFileExists = false;
             openFileDialog.CheckPathExists = true;
             openFileDialog.ValidateNames = false;
-            openFileDialog.FileName = $"{View_Model.VM_GetString_Language("select_directory")}";
-            openFileDialog.Filter = $"{View_Model.VM_GetString_Language("directories")}| *.directory";
+            openFileDialog.FileName = "Selectionner un dossier";
+            openFileDialog.Filter = "Dossiers|*.directory";
             openFileDialog.InitialDirectory = @"C:\";
 
             if (openFileDialog.ShowDialog() == true)
@@ -88,7 +79,5 @@ namespace EasySave_G8_UI.Views
                 textBox3.Text = Path.GetDirectoryName(openFileDialog.FileName);
             }
         }
-
-
     }
 }

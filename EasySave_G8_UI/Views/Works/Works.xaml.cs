@@ -110,12 +110,12 @@ namespace EasySave_G8_UI.Views.Works
                 foreach (string Item in List_Works.SelectedItems)
                 {
                     if (Item == CurrentWork) { AfterCurrent = true; }
-                    if (Item != CurrentWork && AfterCurrent) 
+                    if (Item != CurrentWork && AfterCurrent)
                     {
                         WorkName = Item;
                         WorkNameFound = true;
                     }
-                    else if (AfterCurrent) 
+                    else if (AfterCurrent)
                     {
                         WorkName = Item;
                         WorkNameFound = true;
@@ -124,7 +124,7 @@ namespace EasySave_G8_UI.Views.Works
             }
 
             List_Work_Detail.Text = "";
-            
+
             View_Model ViewModel = new View_Model();
             List<Model_PRE> obj_list = ViewModel.VM_Work_Show(WorkName, false);
 

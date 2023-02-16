@@ -13,30 +13,26 @@ namespace EasySave_G8_UI.Views
         public Logs()
         {
             InitializeComponent();
-        }  
-
+        }
 
         private void ButtonLogs_Refresh(object sender, EventArgs e)
         {
-            FolderBrowserDialog folderbrowserdialog1 = new FolderBrowserDialog();
-
-            if (folderbrowserdialog1.ShowDialog() == DialogResult.OK)
+            String folderPath = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\logs\";// Get the files in the folder
+            string[] files = Directory.GetFiles(folderPath);
+            textBoxLogs.Clear();// Clear the contents of the text box
+            foreach (string file in files)// Loop through the files and add them to the text box
             {
-                textBoxLogs.Text = "";
-
-                string[] files = Directory.GetFiles(folderbrowserdialog1.SelectedPath);
-
-                foreach (string file in files)
-                {
-                    textBoxLogs.Text += file + Environment.NewLine;
-                }
+                textBoxLogs.AppendText(file + Environment.NewLine);
+                textBoxLogs.AppendText(File.ReadAllText(file) + Environment.NewLine);
             }
         }
 
         private void ButtonStateLogs_Refresh(object sender, EventArgs e)
         {
             textBoxLogs.Text = "";
-            textBoxLogs.Text = File.ReadAllText(@"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\StateLog.json");
+            String file = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\StateLog.json";
+            textBoxLogs.AppendText(file + Environment.NewLine);
+            textBoxLogs.AppendText(File.ReadAllText(file) + Environment.NewLine);
         }
     }
 }

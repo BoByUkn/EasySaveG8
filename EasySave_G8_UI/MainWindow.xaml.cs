@@ -67,6 +67,11 @@ namespace EasySave_G8_UI
             Application.Current.Shutdown();
         }
 
+        private void Main_Navigated(object sender, NavigationEventArgs e)
+        {
+
+        }
+
         private void EngButton_Checked(object sender, RoutedEventArgs e)
         {
             View_Model ViewModelENG = new View_Model();
@@ -80,5 +85,22 @@ namespace EasySave_G8_UI
             ViewModelFR.VM_Change_Language("fr");
             translate();
         }
+
+
+        //private void combobox_selectionchanged(object sender, system.windows.controls.selectionchangedeventargs e)
+        //{
+        //    if (lang.selectedindex == 0)
+        //    {
+        //        view_model viewmodeleng = new view_model();
+        //        viewmodeleng.vm_change_language("en");
+        //    }
+        //    else
+        //    {
+        //        view_model viewmodelfr = new view_model();
+        //        viewmodelfr.vm_change_language("fr");
+        //    }
+        //        translate();
+        //}
+
     }
 }
