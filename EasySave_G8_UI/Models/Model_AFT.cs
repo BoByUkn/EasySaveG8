@@ -3,6 +3,9 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Xml.Serialization;
+using System.Xml;
+using System.Threading;
 
 namespace EasySave_G8_UI.Models
 {
@@ -20,6 +23,9 @@ namespace EasySave_G8_UI.Models
 
         View_Model VM = new View_Model();
         private double ActualSize2 = 0;
+        public Model_AFT()
+        {
+        }
 
         public Model_AFT(string Name, string Source, string Destination, bool Type) : base(Name, Source, Destination, Type)
         {
@@ -68,8 +74,8 @@ namespace EasySave_G8_UI.Models
                         string targetFile = file.Replace(Source, Destination2);
 
                         ActualSize2 = ActualSize2 + new System.IO.FileInfo(file).Length;//Increment size with each file
-                        
-                        int percentage = (int)(((double)ActualSize2 / (double)Size) * 100);//progression's percentage of the save
+
+                        double percentage = (int)(((double)ActualSize2 / (double)Size) * 100);//progression's percentage of the save
                         VM.MV_Update_ProgressionBar(percentage); // update progression bar
 
 
@@ -126,7 +132,7 @@ namespace EasySave_G8_UI.Models
 
                         ActualSize2 = ActualSize2 + new System.IO.FileInfo(sourceFile).Length;//Increment size with each file
 
-                        int percentage = (int)(((double)ActualSize2 / (double)Size) * 100);
+                        double percentage = (double)(((double)ActualSize2 / (double)Size) * 100);
                         VM.MV_Update_ProgressionBar(percentage);
 
                         ModelStateLogs.progression = percentage;
@@ -168,6 +174,8 @@ namespace EasySave_G8_UI.Models
             string utcDateOnly = utcDateDateTime.ToString("dd/MM/yyyy");
             utcDateOnly = utcDateOnly.Replace("/", "-"); //Format the date to allow serializing
             string fileName = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\logs\" + utcDateOnly + ".json";
+            string fileName2 = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\logs\" + utcDateOnly + ".xml";
+
 
             if (File.Exists(fileName))  //Test if log file exists, else it creates it
             {
@@ -179,6 +187,9 @@ namespace EasySave_G8_UI.Models
                 
                 string jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(values, Newtonsoft.Json.Formatting.Indented); //Serialialize the data in JSON form
                 File.WriteAllText(fileName, jsonString); //Write json file
+                XmlSerializer serializer = new XmlSerializer(typeof(List<Model_AFT>));
+                StreamWriter writer = new StreamWriter(fileName2);
+                serializer.Serialize(writer, values);
             }
 
             else if (!File.Exists(fileName))
@@ -187,6 +198,9 @@ namespace EasySave_G8_UI.Models
                 values.Add(this);// Add object ModelAFT in the list values
                 var jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(values, Newtonsoft.Json.Formatting.Indented); //Serialialize the data in JSON form
                 File.WriteAllText(fileName, jsonString); // Write json file
+                XmlSerializer serializer = new XmlSerializer(typeof(List<Model_AFT>));
+                StreamWriter writer = new StreamWriter(fileName2);
+                serializer.Serialize(writer, values);
             }
         }
 

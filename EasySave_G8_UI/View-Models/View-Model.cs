@@ -1,12 +1,18 @@
 ﻿using EasySave_G8_UI.Models;
+using EasySave_G8_UI.Views;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Windows;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Diagnostics;
+using System.Windows.Data;
 
 namespace EasySave_G8_UI.View_Models
 {
-    public class View_Model
+    public class View_Model : INotifyPropertyChanged
     {
         //VM Startup Initialisation
         public void VM_Init() 
@@ -127,12 +133,36 @@ namespace EasySave_G8_UI.View_Models
             return rtrn_string;
         }
 
-        //MV Update the progression bar
-        public void MV_Update_ProgressionBar(int percentage)
+
+        // PROGRESS BAR PART
+        private double _progressValue;
+
+        public double ProgressValue
         {
-            //View_SAVE ViewSAVE = new View_SAVE();
-            //ViewSAVE.Progression_Bar(percentage);
+            get { return _progressValue; }
+            set
+            {
+                if (_progressValue != value)
+                {
+                    _progressValue = value;
+                    OnPropertyChanged(nameof(ProgressValue));
+                }
+            }
         }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        //MV Update the progression bar
+        public void MV_Update_ProgressionBar(double percentage)
+        {
+            this.ProgressValue = percentage;
+        }
+
 
         //MV Show the log files
         public List<Model_AFT> MV_Look_Logs(string Date)

@@ -36,6 +36,7 @@
                     </TextBlock>
                     <TextBox x:Name="textBox1" TextWrapping="Wrap" Height="30" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" Width="419" Grid.Column="1" Grid.Row="1" Margin="30,0,30,0"/>
 
+                    <ProgressBar Name="progressBar1" Grid.Row="0" Grid.Column="1" Margin="0,70,0,10" Minimum="0" Maximum="100"  Value="{Binding ProgressValue}" />
 
                     <TextBlock Foreground="White" FontSize="17" Margin="30,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0" FontFamily="Bahnschrift Condensed" Grid.Row="2">
                     <Run Language="fr-fr" Name="Source_Path"/>

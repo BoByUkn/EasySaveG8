@@ -3,18 +3,24 @@ using System.Windows;
 using System.Windows.Controls;
 using System.IO;
 using Microsoft.Win32;
+using System.ComponentModel;
+using Newtonsoft.Json.Linq;
+using System.Runtime.CompilerServices;
+using System.Diagnostics;
 
 namespace EasySave_G8_UI.Views
 {
     /// <summary>
     /// Logique d'interaction pour Classics.xaml
     /// </summary>
+    /// 
     public partial class Classics : Page
     {
         public Classics()
         {
             InitializeComponent();
             translate();
+            DataContext = new View_Model();
         }
 
         private void translate()
@@ -48,7 +54,6 @@ namespace EasySave_G8_UI.Views
         {
 
         }
-
         private void Button_Click_Browse(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -79,5 +84,7 @@ namespace EasySave_G8_UI.Views
                 textBox3.Text = Path.GetDirectoryName(openFileDialog.FileName);
             }
         }
+
+
     }
 }

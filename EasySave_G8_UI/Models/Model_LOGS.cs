@@ -37,8 +37,10 @@ namespace EasySave_G8_UI.Models
 
     public class Model_StateLogs : Model_AFT
     {
-        public int progression { get; set; }
+        public double progression { get; set; }
         public string State { get; set; }
+
+        public Model_StateLogs() { }
         public Model_StateLogs(string Name, string Source, string Destination, bool Type, int file_remain) : base(Name, Source, Destination, Type)
         {
             this.Name = Name;
