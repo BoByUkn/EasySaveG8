@@ -149,5 +149,11 @@ namespace EasySave_G8_UI.View_Models
             string[] files = ModelLogs.Show_Logs();
             return files;
         }
+
+        public bool VM_BlackList()
+        {
+            Model_BLACKLIST ModelBLACKLIST = new Model_BLACKLIST();
+            return ModelBLACKLIST.BlacklistTest();
+        }
     }
 }

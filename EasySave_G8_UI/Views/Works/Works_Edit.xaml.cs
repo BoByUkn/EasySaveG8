@@ -3,7 +3,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.IO;
 using Microsoft.Win32;
-
+using EasySave_G8_UI.Models;
+using System.Collections.Generic;
 
 namespace EasySave_G8_UI.Views.Works
 {
@@ -12,14 +13,46 @@ namespace EasySave_G8_UI.Views.Works
     /// </summary>
     public partial class Works_Edit : Page
     {
-        public Works_Edit()
+        private string Original_WorkName { get; set; }
+
+        public Works_Edit(string? WorkName)
         {
             InitializeComponent();
+            Original_WorkName = WorkName;
+            Get_Work_Data();
+        }
+
+        private void Get_Work_Data()
+        {
+            textBox1.Text = Original_WorkName;
+            View_Model ViewModel = new View_Model();
+            List<Model_PRE> Work_List = ViewModel.VM_Work_Show(Original_WorkName, false);
+            foreach(Model_PRE obj in Work_List) 
+            {
+                textBox2.Text = obj.Source;
+                textBox3.Text = obj.Destination;
+                if (obj.Type) { comboBox1.SelectedIndex = 0; }
+                else { comboBox1.SelectedIndex = 1;}
+            }
         }
 
         private void Save_btn_Click(object sender, RoutedEventArgs e)
         {
+            View_Model ViewModel = new View_Model();
+            ViewModel.VM_Work_Delete(Original_WorkName);
 
+            bool Type;
+            if (comboBox1.Text == "Complète" || comboBox1.Text == "Complete") { Type = true; }
+            else { Type = false; }
+
+            bool ExeNow;
+            if (comboBox2.Text == "Oui" || comboBox2.Text == "Yes") { ExeNow = true; }
+            else { ExeNow = false; }
+
+            ViewModel.VM_Work_New(textBox1.Text, textBox2.Text, textBox3.Text, Type, ExeNow);
+
+            var mainWindow = Application.Current.MainWindow as MainWindow;
+            mainWindow.Main.Content = new Works();
         }
 
         private void Button_Click_Browse(object sender, RoutedEventArgs e)

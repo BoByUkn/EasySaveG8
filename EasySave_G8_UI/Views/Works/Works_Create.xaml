@@ -34,7 +34,7 @@
                     <Run Language="fr-fr" Name="Name"/>
                     </TextBlock>
                     <TextBox x:Name="textBox1" TextWrapping="Wrap" Height="30" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" Width="419" Grid.Column="1" Grid.Row="1" Margin="30,0,30,0"/>
-
+                    <Label x:Name="LabelError" Content="" HorizontalAlignment="Left" Height="30" VerticalAlignment="Center" Width="135" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Margin="505,0,0,0" Background="{x:Null}" Foreground="Red" FontSize="10"/>
 
                     <TextBlock Foreground="White" FontSize="17" Margin="30,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0" FontFamily="Bahnschrift Condensed" Grid.Row="2">
                     <Run Language="fr-fr" Name="Source_Path"/>
@@ -76,8 +76,8 @@
                     <Run Language="fr-fr" Text="Execute Now"/>
                     </TextBlock>
                     <ComboBox x:Name="comboBox2" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="419" Grid.Column="1" Grid.Row="5" Margin="30,0,30,0">
-                        <ComboBoxItem Name="Yes" Content="Complète"/>
-                        <ComboBoxItem Name="No" Content="Différentielle"/>
+                        <ComboBoxItem Name="Yes" Content="Yes"/>
+                        <ComboBoxItem Name="No" Content="No"/>
                     </ComboBox>
                 </Grid>
 

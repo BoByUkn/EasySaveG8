@@ -62,7 +62,38 @@ namespace EasySave_G8_UI.Views.Works
         private void Edit_btn_Click(object sender, RoutedEventArgs e)
         {
             var mainWindow = Application.Current.MainWindow as MainWindow;
-            mainWindow.Main.Content = new Works_Create();
+            int i = 0;
+            string WorkName = "";
+            foreach (string Work in List_Works.SelectedItems)
+            {
+                i++;
+                if (i>1) { MessageBox.Show("Only one Work can be edited at a time.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning); return; }
+                WorkName = Work;
+            }
+            if (i == 1) { mainWindow.Main.Content = new Works_Edit(WorkName); }
+            else { MessageBox.Show("Please choose a Work in the list to edit it.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning); }
+        }
+        private void List_Works_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            List_Work_Detail.Text = "";
+            if (List_Works.SelectedItems.Count == 0) { return; }
+
+            View_Model ViewModel = new View_Model();
+            List<Model_PRE> obj_list = ViewModel.VM_Work_Show((List_Works.Items[List_Works.SelectedIndex].ToString()), false);
+            
+            foreach(Model_PRE obj in obj_list)
+            {
+                List_Work_Detail.Text = "Name: " + obj.Name + "\n";
+                List_Work_Detail.Text += "Source: " + obj.Source + "\n";
+                List_Work_Detail.Text += "Destination: " + obj.Destination + "\n";
+                if (obj.Type) { List_Work_Detail.Text += "Type: Complete \n"; }
+                else { List_Work_Detail.Text += "Type: Differential \n"; }
+            }
+        }
+
+        private void Next_btn_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
