@@ -76,8 +76,8 @@
                     <Run Language="fr-fr" Text="Execute Now"/>
                     </TextBlock>
                     <ComboBox x:Name="comboBox2" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="419" Grid.Column="1" Grid.Row="5" Margin="30,0,30,0">
-                        <ComboBoxItem Name="Yes" Content="Complète"/>
-                        <ComboBoxItem Name="No" Content="Différentielle"/>
+                        <ComboBoxItem Name="Yes" Content="Oui"/>
+                        <ComboBoxItem Name="No" Content="Non"/>
                     </ComboBox>
                 </Grid>
 
