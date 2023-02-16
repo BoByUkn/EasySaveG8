@@ -7,42 +7,33 @@ TimeSpan CryptoSoft(string Source, string Destination)
     using (var fin = new FileStream(Source, FileMode.Open))
     using (var fout = new FileStream(Destination, FileMode.Create))
     {
-        byte[] buffer = new byte[4096]; //lis bit par bit le fichier
-        DateTime TimeStart = DateTime.Now;
+        byte[] buffer = new byte[4096];
+        DateTime TimeStart = DateTime.Now; //Get starting time
         while (true)
         {
-            int bytesRead = fin.Read(buffer);
+            int bytesRead = fin.Read(buffer); //Read the file bit by bit
             if (bytesRead == 0)
                 break;
-            EncryptBytes(buffer, bytesRead);
+            EncryptBytes(buffer, bytesRead); //Encrypt the file bit by bit
             fout.Write(buffer, 0, bytesRead);
         }
-        DateTime TimeEnd = DateTime.Now;
-        TimeSpan Duration = TimeStart.Subtract(TimeEnd);
-        double msDuration = Duration.TotalMilliseconds
+        DateTime TimeEnd = DateTime.Now; //Get finish time
+        TimeSpan Duration = TimeStart.Subtract(TimeEnd); //Get the duration of the encrypting
+        double msDuration = Duration.TotalMilliseconds; //and transform it in milliseconds
 
         return Duration;
     }
 }
 
-//const ulong Secret = 7540984602987086044; //la clé de chiffrement
-//var RandomInt64 = new Random();
-//long cipherKey = RandomInt64.NextInt64();
-
-//string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-string filePath = @"C:\Users" + Environment.UserName + @"\AppData\Roaming\EasySave\cipher key.txt";
-static long getKey(string filePath)
+static long getKey(string filePath) //Will get the key by reading the file created by EasySave
 {
     string inputString;
 
-    // Open the file for reading
-    using (StreamReader reader = new StreamReader(filePath))
+    using (StreamReader reader = new StreamReader(filePath)) //Open the file for reading
     {
-        // Read the entire contents of the file as a string
-        inputString = reader.ReadToEnd();
+        inputString = reader.ReadToEnd(); //Read the entire contents of the file as a string
     }
 
-    // Convert the string to a long
     long key;
     if (!long.TryParse(inputString, out key))
     {
@@ -51,21 +42,11 @@ static long getKey(string filePath)
 
     return key;
 }
-long cipherKey = getKey(filePath);
-
-//using (StreamWriter writer = new StreamWriter(filePath))
-
-//{
-//    writer.Write(key);
-//}
+long cipherKey = getKey(@"C:\Users" + Environment.UserName + @"\AppData\Roaming\EasySave\cipher key.txt");
 
 void EncryptBytes(byte[] buffer, int count)
 {
 
     for (int i = 0; i < count; i++)
-        buffer[i] = (byte)(buffer[i] ^ cipherKey); //opération xor
+        buffer[i] = (byte)(buffer[i] ^ cipherKey); //XOR operation bit by bit
 }
-
-
-//CryptoSoft("C:\\Users\\theal\\OneDrive\\Bureau\\screen1.png", "C:\\Users\\theal\\OneDrive\\Bureau\\test1\\screen1.png"); //encrypte
-//CryptoSoft("C:\\Users\\theal\\OneDrive\\Bureau\\test1\\screen1.png", "C:\\Users\\theal\\OneDrive\\Bureau\\test2\\screen1.png"); //décrypte le fichier encrypté pour tester
