@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using EasySave_G8_UI.View_Models;
 using System.Windows.Forms;
+using System.Windows;
 
 namespace EasySave_G8_UI.Views
 {
@@ -27,7 +28,9 @@ namespace EasySave_G8_UI.Views
 
         private void ButtonLogs_Refresh(object sender, EventArgs e)
         {
-            if (LogsButton.Content == "XML")
+            try
+            {
+                if (LogsButton.Content == "XML")
             {
                 ChangeLogs("XML");
             }
@@ -35,34 +38,49 @@ namespace EasySave_G8_UI.Views
             {
                 ChangeLogs("JSON");
             }
+
+            }
+            catch (Exception) { System.Windows.MessageBox.Show("You don't have StateLogs file yet, please launch classic save or work first", "Error", MessageBoxButton.OK, MessageBoxImage.Warning); }
         }
 
         private void ButtonStateLogs_Refresh(object sender, EventArgs e)
         {
-            textBoxLogs.Text = "";
+            try
+            {
+                textBoxLogs.Text = "";
             String file = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\StateLog.json";
             textBoxLogs.AppendText(file + Environment.NewLine);
             textBoxLogs.AppendText(File.ReadAllText(file) + Environment.NewLine);
+            }
+            catch (Exception) { System.Windows.MessageBox.Show("You don't have StateLogs file yet, please launch classic save or work first", "Error", MessageBoxButton.OK, MessageBoxImage.Warning); }
         }
+
 
         private void LogsButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            if (LogsButton.Content == "XML")
-            {
-                LogsButton.Content = "JSON";
-                ChangeLogs("JSON");
+            try 
+            { 
+
+                if (LogsButton.Content == "XML")
+                {
+                    LogsButton.Content = "JSON";
+                    ChangeLogs("JSON");
+                }
+                else
+                {
+                    LogsButton.Content = "XML";
+                    ChangeLogs("XML");
+                }
             }
-            else
-            {
-                LogsButton.Content = "XML";
-                ChangeLogs("XML");
-            }
+            catch (Exception) { System.Windows.MessageBox.Show("You don't have logs files yet, please launch classic save or work first", "Error", MessageBoxButton.OK, MessageBoxImage.Warning); }
         }
 
 
         private void ChangeLogs(string type)
         {
-            String folderPath = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\logs\" + type + @"\" ;// Get the files in the folder
+            try
+            {
+                String folderPath = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\logs\" + type + @"\";// Get the files in the folder
             string[] files = Directory.GetFiles(folderPath);
             textBoxLogs.Clear();// Clear the contents of the text box
             foreach (string file in files)// Loop through the files and add them to the text box
@@ -70,6 +88,8 @@ namespace EasySave_G8_UI.Views
                 textBoxLogs.AppendText(file + Environment.NewLine);
                 textBoxLogs.AppendText(File.ReadAllText(file) + Environment.NewLine);
             }
+            }
+            catch (Exception) { System.Windows.MessageBox.Show("You don't have logs files yet, please launch classic save or work first", "Error", MessageBoxButton.OK, MessageBoxImage.Warning); }
         }
     }
 }
