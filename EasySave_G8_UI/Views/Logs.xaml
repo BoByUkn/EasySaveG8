@@ -9,10 +9,6 @@
       Title="Logs">
 
     <Grid SnapsToDevicePixels="True">
-
-
-
-
         <Border HorizontalAlignment="Center" Height="550" VerticalAlignment="Top" Width="750" Margin="0,75,0,0" Background="#FF283845" CornerRadius="60,60,60,60">
             <Grid>
 
