@@ -15,10 +15,12 @@
 
         <Border HorizontalAlignment="Center" Height="550" VerticalAlignment="Top" Width="750" Margin="0,75,0,0" Background="#FF283845" CornerRadius="60,60,60,60">
             <Grid>
+
                 <StackPanel Orientation="Vertical">
                     <TextBlock Foreground="White" FontSize="35" TextAlignment="Center" VerticalAlignment="Top" HorizontalAlignment="Center" FontFamily="Bahnschrift Condensed" Margin="0,0,0,30" Height="40" Width="157">
                     <Run Language="fr-fr" Name="Logs_Title" Text="Logs"/>
                     </TextBlock>
+
                     <TextBox Name="textBoxLogs" Background="#FFFFFF" BorderBrush="#283845"  HorizontalAlignment="Center" Width="500" Height="375" VerticalAlignment="Top">
                         <TextBox.Resources>
                             <Style TargetType="Border">
@@ -26,7 +28,6 @@
                             </Style>
                         </TextBox.Resources>
                     </TextBox>
-
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
@@ -48,9 +49,17 @@
                                 </Style>
                             </Button.Resources>
                         </Button>
-                        
                     </Grid>
                 </StackPanel>
+                <ItemsControl HorizontalAlignment="Right" Margin="0,73,40,435" Width="42">
+                    <Button x:Name="LogsButton" Width="40" Height="40"  Content="JSON" Click="LogsButton_Click">
+                        <Button.Resources>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="CornerRadius" Value="15"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                </ItemsControl>
             </Grid>
         </Border>
     </Grid>

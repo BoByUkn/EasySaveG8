@@ -95,6 +95,7 @@ namespace EasySave_G8_UI.Views.Works
             
             foreach(Model_PRE obj in obj_list)
             {
+                LabelCurrent.Content= obj.Name;
                 List_Work_Detail.Text = $"{View_Model.VM_GetString_Language("name")} : " + obj.Name + "\n";
                 List_Work_Detail.Text += "Source : " + obj.Source + "\n";
                 List_Work_Detail.Text += "Destination : " + obj.Destination + "\n";
@@ -107,15 +108,10 @@ namespace EasySave_G8_UI.Views.Works
         {
             if (List_Works.SelectedItems.Count == 0 || List_Works.SelectedItems.Count == 1) { return; }
 
-            string CurrentWork = "";
+            string CurrentWork = LabelCurrent.Content.ToString();
             string WorkName = "";
             bool AfterCurrent = false;
             bool WorkNameFound = false;
-
-            foreach (string Item in List_Works.SelectedItems)
-            {
-                if (List_Work_Detail.Text.Contains(Item)) { CurrentWork = Item; }
-            }
 
             while (!WorkNameFound)
             {
@@ -126,22 +122,18 @@ namespace EasySave_G8_UI.Views.Works
                     {
                         WorkName = Item;
                         WorkNameFound = true;
-                    }
-                    else if (AfterCurrent) 
-                    {
-                        WorkName = Item;
-                        WorkNameFound = true;
+                        break;
                     }
                 }
             }
 
             List_Work_Detail.Text = "";
-            
             View_Model ViewModel = new View_Model();
             List<Model_PRE> obj_list = ViewModel.VM_Work_Show(WorkName, false);
 
             foreach (Model_PRE obj in obj_list)
             {
+                LabelCurrent.Content = obj.Name;
                 List_Work_Detail.Text = "Name: " + obj.Name + "\n";
                 List_Work_Detail.Text += "Source: " + obj.Source + "\n";
                 List_Work_Detail.Text += "Destination: " + obj.Destination + "\n";
