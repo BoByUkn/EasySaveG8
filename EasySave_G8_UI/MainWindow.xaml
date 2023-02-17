@@ -13,7 +13,7 @@
             <ColumnDefinition Width="181*"/>
             <ColumnDefinition Width="459*"/>
         </Grid.ColumnDefinitions>
-        
+
         <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Width="345" Background="#FF283845">
             <StackPanel.Resources>
                 <Style x:Key="Flag" TargetType="RadioButton">
@@ -86,10 +86,6 @@
                 </StackPanel>
             </ItemsControl>
         </StackPanel>
-
-        <Frame x:Name="Main" NavigationUIVisibility="Hidden" Navigated="Main_Navigated" Margin="345,0,0,0" Grid.ColumnSpan="2" />
-
-
+        <Frame x:Name="Main" NavigationUIVisibility="Hidden" Margin="345,0,0,0" Grid.ColumnSpan="2" />
     </Grid>
-
 </Window>

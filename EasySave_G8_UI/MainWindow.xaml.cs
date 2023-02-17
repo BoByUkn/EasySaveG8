@@ -26,8 +26,8 @@ namespace EasySave_G8_UI
 
             translate();
             Main.Content = new Dashboard();
-            if ($"{View_Model.VM_GetString_Language("lang")}" == "en") { ENradio.IsChecked = true; }
-            else { FRradio.IsChecked = true; }
+            if ($"{View_Model.VM_GetString_Language("lang")}" == "en") { FRradio.IsChecked = true; }
+            else { ENradio.IsChecked = true; }
         }
 
 
@@ -66,11 +66,6 @@ namespace EasySave_G8_UI
         private void Shutdown_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
-        }
-
-        private void Main_Navigated(object sender, NavigationEventArgs e)
-        {
-
         }
 
         private void EngButton_Checked(object sender, RoutedEventArgs e)

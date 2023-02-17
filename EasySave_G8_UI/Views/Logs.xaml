@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:EasySave_G8_UI.Views"
       mc:Ignorable="d" 
       d:DesignHeight="704" d:DesignWidth="935"
-      Title="Logs">
+      Title="Logs" Height="704" Width="935">
 
     <Grid SnapsToDevicePixels="True">
 

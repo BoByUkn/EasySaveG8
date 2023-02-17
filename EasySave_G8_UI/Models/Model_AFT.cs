@@ -3,6 +3,9 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Xml.Serialization;
+using System.Xml;
+using System.Threading;
 
 namespace EasySave_G8_UI.Models
 {
@@ -20,7 +23,7 @@ namespace EasySave_G8_UI.Models
 
         View_Model VM = new View_Model();
         private double ActualSize2 = 0;
-
+        public Model_AFT(){}
         public Model_AFT(string Name, string Source, string Destination, bool Type) : base(Name, Source, Destination, Type)
         {
             this.Name = Name;
@@ -167,7 +170,8 @@ namespace EasySave_G8_UI.Models
         {
             string utcDateOnly = utcDateDateTime.ToString("dd/MM/yyyy");
             utcDateOnly = utcDateOnly.Replace("/", "-"); //Format the date to allow serializing
-            string fileName = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\logs\" + utcDateOnly + ".json";
+            string fileName = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\logs\JSON\" + utcDateOnly + ".json";
+            string fileName2 = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\logs\XML\" + utcDateOnly + ".xml";
 
             if (File.Exists(fileName))  //Test if log file exists, else it creates it
             {
@@ -179,6 +183,9 @@ namespace EasySave_G8_UI.Models
                 
                 string jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(values, Newtonsoft.Json.Formatting.Indented); //Serialialize the data in JSON form
                 File.WriteAllText(fileName, jsonString); //Write json file
+                XmlSerializer serializer = new XmlSerializer(typeof(List<Model_AFT>));
+                StreamWriter writer = new StreamWriter(fileName2);
+                serializer.Serialize(writer, values);
             }
 
             else if (!File.Exists(fileName))
@@ -187,6 +194,9 @@ namespace EasySave_G8_UI.Models
                 values.Add(this);// Add object ModelAFT in the list values
                 var jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(values, Newtonsoft.Json.Formatting.Indented); //Serialialize the data in JSON form
                 File.WriteAllText(fileName, jsonString); // Write json file
+                XmlSerializer serializer = new XmlSerializer(typeof(List<Model_AFT>));
+                StreamWriter writer = new StreamWriter(fileName2);
+                serializer.Serialize(writer, values);
             }
         }
 
@@ -202,7 +212,7 @@ namespace EasySave_G8_UI.Models
 
                 foreach (Model_StateLogs obj in values) //Loop throught every objects in the deserialized data
                 {
-                    if (obj.Name != statelog.Name) //If we find the save we are looking for in a single work execution
+                    if (!(obj.Name == statelog.Name && obj.Source == statelog.Source && obj.Destination == statelog.Destination && obj.Type == statelog.Type)) //If we find the save we are looking for in a single work execution
                     {
                         new_values.Add(obj);
                     }

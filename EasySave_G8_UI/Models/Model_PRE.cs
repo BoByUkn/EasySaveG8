@@ -13,7 +13,7 @@ namespace EasySave_G8_UI.Models
         public string Source { get; set; }
         public string Destination { get; set; }
         public bool Type { get; set; }
-
+        public Model_PRE() { }
         public Model_PRE(string Name, string Source, string Destination, bool Type)
         {
             this.Name = Name;

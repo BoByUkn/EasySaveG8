@@ -1,8 +1,4 @@
-﻿using EasySave_G8_UI.View_Models;
-using System.Windows;
-using System.Windows.Controls;
-using System.IO;
-using Microsoft.Win32;
+﻿using System.Windows.Controls;
 
 namespace EasySave_G8_UI.Views
 {
@@ -15,6 +11,7 @@ namespace EasySave_G8_UI.Views
         {
             InitializeComponent();
             translate();
+            DataContext = new View_Model();
         }
 
         private void translate()
@@ -52,7 +49,6 @@ namespace EasySave_G8_UI.Views
         {
 
         }
-
         private void Button_Click_Browse(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -83,5 +79,7 @@ namespace EasySave_G8_UI.Views
                 textBox3.Text = Path.GetDirectoryName(openFileDialog.FileName);
             }
         }
+
+
     }
 }
