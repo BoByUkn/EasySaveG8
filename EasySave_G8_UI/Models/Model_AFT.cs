@@ -202,7 +202,7 @@ namespace EasySave_G8_UI.Models
 
                 foreach (Model_StateLogs obj in values) //Loop throught every objects in the deserialized data
                 {
-                    if (obj.Name != statelog.Name) //If we find the save we are looking for in a single work execution
+                    if (!(obj.Name == statelog.Name && obj.Source == statelog.Source && obj.Destination == statelog.Destination && obj.Type == statelog.Type)) //If we find the save we are looking for in a single work execution
                     {
                         new_values.Add(obj);
                     }
