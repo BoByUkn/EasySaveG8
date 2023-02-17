@@ -173,6 +173,7 @@ namespace EasySave_G8_UI.Models
             string fileName = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\logs\JSON\" + utcDateOnly + ".json";
             string fileName2 = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\logs\XML\" + utcDateOnly + ".xml";
 
+
             if (File.Exists(fileName))  //Test if log file exists, else it creates it
             {
                 string fileContent = File.ReadAllText(fileName); //Bring content of filename in filecontent

@@ -32,6 +32,8 @@ namespace EasySave_G8_UI.Models
             {
                 writer.Write(cipherKey);
             }
+            Directory.CreateDirectory(@"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\logs\JSON\");
+            Directory.CreateDirectory(@"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\logs\XML\");
         }
     }
 
