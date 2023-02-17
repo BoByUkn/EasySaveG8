@@ -1,4 +1,8 @@
-﻿using System.Windows.Controls;
+﻿using System.IO;
+using System.Windows;
+using System.Windows.Controls;
+using EasySave_G8_UI.View_Models;
+using Microsoft.Win32;
 
 namespace EasySave_G8_UI.Views
 {
