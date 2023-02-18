@@ -4,6 +4,7 @@ using EasySave_G8_UI.Views;
 using EasySave_G8_UI.Views.Works;
 using System;
 using System.IO;
+using System.Threading;
 using System.Windows;
 using System.Windows.Navigation;
 
@@ -14,9 +15,12 @@ namespace EasySave_G8_UI
     /// </summary>
     public partial class MainWindow : Window
     {
+        private static Mutex _mutex = null;
+
         public MainWindow()
         {
             InitializeComponent();
+            CheckInstance();
             View_Model ViewMODEL = new View_Model();
             string fileName = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave";
             if (!Directory.Exists(fileName)) //Check if mandatory files are present or not. If not, creates them
@@ -25,11 +29,22 @@ namespace EasySave_G8_UI
             }
 
             translate();
+
             Main.Content = new Dashboard();
             if ($"{View_Model.VM_GetString_Language("lang")}" == "en") { FRradio.IsChecked = true; }
             else { ENradio.IsChecked = true; }
         }
 
+        private void CheckInstance()
+        {
+            bool createdNew;
+            _mutex = new Mutex(true, "EasySave G8", out createdNew);
+            if (!createdNew)
+            {
+                Application.Current.Shutdown();
+                MessageBox.Show("Application is already running.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning); return;
+            }
+        }
 
         private void translate()
         {
