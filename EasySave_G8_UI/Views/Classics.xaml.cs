@@ -47,7 +47,7 @@ namespace EasySave_G8_UI.Views
                 else { Type = false; }
 
                 try { ViewModel.VM_Classic(Name, Source, Destination, Type);}
-                catch (Exception) { System.Windows.MessageBox.Show("You can't launch a save without any parameters", "Error", MessageBoxButton.OK, MessageBoxImage.Warning); }
+                catch (Exception) { System.Windows.MessageBox.Show("You can't launch a save without all parameters", "Error", MessageBoxButton.OK, MessageBoxImage.Warning); }
             }
         }
         private void Button_Click_Browse(object sender, RoutedEventArgs e)
