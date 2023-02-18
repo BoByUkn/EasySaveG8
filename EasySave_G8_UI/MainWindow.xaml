@@ -44,38 +44,54 @@
                 <TextBlock x:Name="Version" Foreground="White" TextAlignment="Center" FontSize="16" Background="#FF161E27" Height="41"><Run Language="fr-fr" Text="v2.0"/><LineBreak/><Run/></TextBlock>
             </StackPanel>
 
-            <Button x:Name="Dashboard_btn" Margin="-40,20,10,10" Padding="10.5" HorizontalAlignment="Left" FontSize="22" Height="70" Width="250" Background="#FFDDDDDD" Click="Dashboard_Click">
+            <Button x:Name="Dashboard_btn" Margin="-40,10,10,10" Padding="10.5" HorizontalAlignment="Left" FontSize="22" Height="50" Width="250" Background="#FFDDDDDD" Click="Dashboard_Click">
                 <Button.Resources>
                     <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="35"></Setter>
+                        <Setter Property="CornerRadius" Value="25"></Setter>
                     </Style>
                 </Button.Resources>
             </Button>
-            <Button x:Name="Classics_btn" Margin="-40,20,10,10" Padding="10.5" HorizontalAlignment="Left" FontSize="22" Height="70" Width="250" Click="Classics_Click" Background="#FFDDDDDD" >
+            <Button x:Name="Classics_btn" Margin="-40,10,10,10" Padding="10.5" HorizontalAlignment="Left" FontSize="22" Height="50" Width="250" Click="Classics_Click" Background="#FFDDDDDD" >
                 <Button.Resources>
                     <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="35"></Setter>
+                        <Setter Property="CornerRadius" Value="25"></Setter>
                     </Style>
                 </Button.Resources>
             </Button>
-            <Button x:Name="Works_btn" Margin="-40,20,10,10" Padding="10,5" HorizontalAlignment="Left" FontSize="22" Height="70" Width="250" Background="#FFDDDDDD" Click="Works_Click">
+            <Button x:Name="Works_btn" Margin="-40,10,10,10" Padding="10,5" HorizontalAlignment="Left" FontSize="22" Height="50" Width="250" Background="#FFDDDDDD" Click="Works_Click">
                 <Button.Resources>
                     <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="35"></Setter>
+                        <Setter Property="CornerRadius" Value="25"></Setter>
                     </Style>
                 </Button.Resources>
             </Button>
-            <Button x:Name="Logs_btn" Margin="-40,20,10,10" Padding="10,5" HorizontalAlignment="Left" FontSize="22" Height="70" Width="250" Background="#FFDDDDDD" Click="Logs_Click">
+            <Button x:Name="Logs_btn" Margin="-40,10,10,10" Padding="10,5" HorizontalAlignment="Left" FontSize="22" Height="50" Width="250" Background="#FFDDDDDD" Click="Logs_Click">
                 <Button.Resources>
                     <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="35"></Setter>
+                        <Setter Property="CornerRadius" Value="25"></Setter>
                     </Style>
                 </Button.Resources>
             </Button>
-            <Button x:Name="Shutdown_btn" Margin="-40,20,10,10" Padding="10,5" HorizontalAlignment="Left" FontSize="22" Height="70" Width="250" Background="#FFD9D9D9" Click="Shutdown_Click">
+
+            <Button x:Name="Loading_btn" Margin="-40,10,10,10" Padding="10,5" HorizontalAlignment="Left" FontSize="22" Height="50" Width="250" Background="#FFD9D9D9" Click="Loading_btn_Click">
                 <Button.Resources>
                     <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="35"></Setter>
+                        <Setter Property="CornerRadius" Value="25"></Setter>
+                    </Style>
+                </Button.Resources>
+            </Button>
+            <Button x:Name="Settings_btn" Margin="-40,10,10,10" Padding="10,5" HorizontalAlignment="Left" FontSize="22" Height="50" Width="250" Background="#FFD9D9D9" Click="Settings_btn_Click">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="25"></Setter>
+                    </Style>
+                </Button.Resources>
+            </Button>
+
+            <Button x:Name="Shutdown_btn" Margin="-40,10,10,10" Padding="10,5" HorizontalAlignment="Left" FontSize="22" Height="50" Width="250" Background="#FFD9D9D9" Click="Shutdown_Click">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="25"></Setter>
                     </Style>
                 </Button.Resources>
             </Button>

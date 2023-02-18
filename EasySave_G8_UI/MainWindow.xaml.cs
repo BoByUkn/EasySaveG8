@@ -63,6 +63,16 @@ namespace EasySave_G8_UI
             Main.Content = new Logs();
         }
 
+        private void Loading_btn_Click(object sender, RoutedEventArgs e)
+        {
+            Main.Content = new Loading();
+        }
+
+        private void Settings_btn_Click(object sender, RoutedEventArgs e)
+        {
+            Main.Content = new Settings();
+        }
+
         private void Shutdown_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();

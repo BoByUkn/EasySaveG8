@@ -9,45 +9,47 @@
       Title="Logs">
 
     <Grid SnapsToDevicePixels="True">
-        <Border HorizontalAlignment="Center" Height="550" VerticalAlignment="Top" Width="750" Margin="0,75,0,0" Background="#FF283845" CornerRadius="60,60,60,60">
+        <Border HorizontalAlignment="Center" Height="550" VerticalAlignment="Top" Width="750" Margin="0,75,0,0" Background="#161E27" CornerRadius="60,60,60,60">
             <Grid>
-
                 <StackPanel Orientation="Vertical">
-                    <TextBlock Foreground="White" FontSize="35" TextAlignment="Center" VerticalAlignment="Top" HorizontalAlignment="Center" FontFamily="Bahnschrift Condensed" Margin="0,0,0,30" Height="40" Width="157">
+                    <TextBlock Foreground="White" FontSize="35" TextAlignment="Center" VerticalAlignment="Top" HorizontalAlignment="Center" FontFamily="Bahnschrift Condensed" Margin="0,0,0,0" Height="40" Width="157">
                     <Run Language="fr-fr" Name="Logs_Title" Text="Logs"/>
                     </TextBlock>
+                    <Border HorizontalAlignment="Center" Height="450" VerticalAlignment="Top" Width="700" Margin="0,20,0,0" Background="#FF283845" CornerRadius="60,60,60,60">
+                        <Grid>
+                            <TextBox Name="textBoxLogs" Background="#FFFFFF" BorderBrush="#283845" Margin="0,15,0,0" HorizontalAlignment="Center" Width="500" Height="350" VerticalAlignment="Top">
+                                <TextBox.Resources>
+                                    <Style TargetType="Border">
+                                        <Setter Property="CornerRadius" Value="15"></Setter>
+                                    </Style>
+                                </TextBox.Resources>
+                            </TextBox>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
 
-                    <TextBox Name="textBoxLogs" Background="#FFFFFF" BorderBrush="#283845"  HorizontalAlignment="Center" Width="500" Height="375" VerticalAlignment="Top">
-                        <TextBox.Resources>
-                            <Style TargetType="Border">
-                                <Setter Property="CornerRadius" Value="15"></Setter>
-                            </Style>
-                        </TextBox.Resources>
-                    </TextBox>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
+                                <Button Name="Daily_Logs" Background="#D9D9D9" Grid.Column="0" Content="Daily Logs" Height="50" Click="ButtonLogs_Refresh" FontSize="25" BorderBrush="{x:Null}" Margin="30,360,20,10">
+                                    <Button.Resources>
+                                        <Style TargetType="Border">
+                                            <Setter Property="CornerRadius" Value="15"></Setter>
+                                        </Style>
+                                    </Button.Resources>
+                                </Button>
 
-                        <Button Name="Daily_Logs" Background="#D9D9D9" Grid.Column="0" Content="Daily Logs" Height="50" Click="ButtonLogs_Refresh" FontSize="25" BorderBrush="{x:Null}" Margin="30,40,20,10">
-                            <Button.Resources>
-                                <Style TargetType="Border">
-                                    <Setter Property="CornerRadius" Value="15"></Setter>
-                                </Style>
-                            </Button.Resources>
-                        </Button>
-
-                        <Button Name="State_Logs" Background="#D9D9D9" Grid.Column="1" Content="State Logs" Height="50" Click="ButtonStateLogs_Refresh" FontSize="25" BorderBrush="{x:Null}" Margin="30,40,20,10">
-                            <Button.Resources>
-                                <Style TargetType="Border">
-                                    <Setter Property="CornerRadius" Value="15"></Setter>
-                                </Style>
-                            </Button.Resources>
-                        </Button>
-                    </Grid>
+                                <Button Name="State_Logs" Background="#D9D9D9" Grid.Column="1" Content="State Logs" Height="50" Click="ButtonStateLogs_Refresh" FontSize="25" BorderBrush="{x:Null}" Margin="30,360,20,10">
+                                    <Button.Resources>
+                                        <Style TargetType="Border">
+                                            <Setter Property="CornerRadius" Value="15"></Setter>
+                                        </Style>
+                                    </Button.Resources>
+                                </Button>
+                            </Grid>
+                        </Grid>
+                    </Border>
                 </StackPanel>
-                <ItemsControl HorizontalAlignment="Right" Margin="0,73,40,435" Width="42">
+                <ItemsControl HorizontalAlignment="Right" Margin="0,73,60,435" Width="42">
                     <Button x:Name="LogsButton" Width="40" Height="40"  Content="JSON" Click="LogsButton_Click">
                         <Button.Resources>
                             <Style TargetType="{x:Type Border}">
