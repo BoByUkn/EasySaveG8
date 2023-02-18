@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.IO;
 using Microsoft.Win32;
+using System;
 
 namespace EasySave_G8_UI.Views
 {
@@ -44,15 +45,11 @@ namespace EasySave_G8_UI.Views
                 bool Type;
                 if (indexType == 0) { Type = true; }
                 else { Type = false; }
-                ViewModel.VM_Classic(Name, Source, Destination, Type);
+
+                try { ViewModel.VM_Classic(Name, Source, Destination, Type);}
+                catch (Exception) { System.Windows.MessageBox.Show("You can't launch a save without any parameters", "Error", MessageBoxButton.OK, MessageBoxImage.Warning); }
             }
         }
-
-        private void ProgressBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-
-        }
-
         private void Button_Click_Browse(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();

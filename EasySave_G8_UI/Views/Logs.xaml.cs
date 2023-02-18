@@ -47,7 +47,7 @@ namespace EasySave_G8_UI.Views
         {
             try
             {
-                textBoxLogs.Text = "";
+            textBoxLogs.Text = "";
             String file = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\StateLog.json";
             textBoxLogs.AppendText(file + Environment.NewLine);
             textBoxLogs.AppendText(File.ReadAllText(file) + Environment.NewLine);
@@ -80,7 +80,7 @@ namespace EasySave_G8_UI.Views
         {
             try
             {
-                String folderPath = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\logs\" + type + @"\";// Get the files in the folder
+            String folderPath = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\logs\" + type + @"\";// Get the files in the folder
             string[] files = Directory.GetFiles(folderPath);
             textBoxLogs.Clear();// Clear the contents of the text box
             foreach (string file in files)// Loop through the files and add them to the text box
