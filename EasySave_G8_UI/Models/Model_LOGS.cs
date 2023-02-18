@@ -9,7 +9,7 @@ namespace EasySave_G8_UI.Models
     {
         public List<Model_AFT> Get_Logs(string Date) //Retrieve log file content
         {
-            string fileName = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\logs\" + Date + ".json";
+            string fileName = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\logs\JSON\" + Date + ".json";
 
             List<Model_AFT>? obj_list = new List<Model_AFT>(); //Create the list named obj_list to hold the return list
             List<Model_AFT>? values = new List<Model_AFT>(); //Create the list named values to hold deserialized data
@@ -25,13 +25,22 @@ namespace EasySave_G8_UI.Models
                 }
                 return (obj_list);
             }
-            return (obj_list); //Return empty list if the work is not found
+            return (obj_list); //Return empty list if today's log is not found
         }
 
-        public string[] Show_Logs() //Get all the log files
-        {  
-            string[] files = Directory.GetFiles(@"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\logs\");
-            return files; 
+        public List<Model_StateLogs> Get_StateLogs() 
+        {
+            string fileName = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\StateLog.json";
+
+            List<Model_StateLogs>? obj_list = new List<Model_StateLogs>(); //Create the list named obj_list to hold the return list
+
+            if (File.Exists(fileName))
+            {
+                string fileContent = File.ReadAllText(fileName); //Bring content of filename in filecontent
+                obj_list = JsonConvert.DeserializeObject<List<Model_StateLogs>>(fileContent); //Deserialialize the data in JSON form
+                return (obj_list);
+            }
+            return (obj_list); //Return empty list if statelogs are not found
         }
     }
 

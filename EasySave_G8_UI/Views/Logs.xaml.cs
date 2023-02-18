@@ -1,10 +1,9 @@
 ﻿using System.IO;
 using System;
-using System.Windows.Controls;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using EasySave_G8_UI.View_Models;
-using System.Windows.Forms;
 using System.Windows;
+using System.Collections.Generic;
+using EasySave_G8_UI.Models;
 
 namespace EasySave_G8_UI.Views
 {
@@ -17,6 +16,7 @@ namespace EasySave_G8_UI.Views
         {
             InitializeComponent();
             translate();
+            ButtonLogs_Refresh(null, null);
         }
 
         private void translate()
@@ -30,15 +30,21 @@ namespace EasySave_G8_UI.Views
         {
             try
             {
-                if (LogsButton.Content == "XML")
-            {
-                ChangeLogs("XML");
-            }
-            else
-            {
-                ChangeLogs("JSON");
-            }
-
+                textBoxLogs.Clear();
+                View_Model ViewModel = new View_Model();
+                List<Model_AFT> LogsList = ViewModel.MV_Look_Logs(DateTime.Now.ToString("dd-MM-yyyy"));
+                foreach (Model_AFT Log in LogsList)
+                {
+                    textBoxLogs.AppendText("Name: " + Log.Name);
+                    textBoxLogs.AppendText("\nSource: " + Log.Source);
+                    textBoxLogs.AppendText("\nDestination: " + Log.Destination);
+                    textBoxLogs.AppendText("\nType: " + Log.Type);
+                    textBoxLogs.AppendText("\nDate: " + Log.utcDateString);
+                    textBoxLogs.AppendText("\nDuration: " + Log.millisecondsDuration);
+                    textBoxLogs.AppendText("\nTotal files: " + Log.total_files);
+                    textBoxLogs.AppendText("\nSize: " + Log.Size);
+                    textBoxLogs.AppendText("\n\n");
+                }
             }
             catch (Exception) { System.Windows.MessageBox.Show("You don't have StateLogs file yet, please launch classic save or work first", "Error", MessageBoxButton.OK, MessageBoxImage.Warning); }
         }
@@ -47,49 +53,25 @@ namespace EasySave_G8_UI.Views
         {
             try
             {
-            textBoxLogs.Text = "";
-            String file = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\StateLog.json";
-            textBoxLogs.AppendText(file + Environment.NewLine);
-            textBoxLogs.AppendText(File.ReadAllText(file) + Environment.NewLine);
+                textBoxLogs.Clear();
+                View_Model ViewModel = new View_Model();
+                List<Model_StateLogs> LogsList = ViewModel.MV_Look_StateLogs();
+                foreach (Model_StateLogs Log in LogsList)
+                {
+                    textBoxLogs.AppendText("Name: " + Log.Name);
+                    textBoxLogs.AppendText("\nSource: " + Log.Source);
+                    textBoxLogs.AppendText("\nDestination: " + Log.Destination);
+                    textBoxLogs.AppendText("\nType: " + Log.Type);
+                    textBoxLogs.AppendText("\nDate: " + Log.utcDateString);
+                    textBoxLogs.AppendText("\nDuration: " + Log.millisecondsDuration);
+                    textBoxLogs.AppendText("\nTotal files: " + Log.total_files);
+                    textBoxLogs.AppendText("\nSize: " + Log.Size);
+                    textBoxLogs.AppendText("\nProgression: " + Log.progression);
+                    textBoxLogs.AppendText("\nState: " + Log.State);
+                    textBoxLogs.AppendText("\n\n");
+                }
             }
             catch (Exception) { System.Windows.MessageBox.Show("You don't have StateLogs file yet, please launch classic save or work first", "Error", MessageBoxButton.OK, MessageBoxImage.Warning); }
-        }
-
-
-        private void LogsButton_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            try 
-            { 
-
-                if (LogsButton.Content == "XML")
-                {
-                    LogsButton.Content = "JSON";
-                    ChangeLogs("JSON");
-                }
-                else
-                {
-                    LogsButton.Content = "XML";
-                    ChangeLogs("XML");
-                }
-            }
-            catch (Exception) { System.Windows.MessageBox.Show("You don't have logs files yet, please launch classic save or work first", "Error", MessageBoxButton.OK, MessageBoxImage.Warning); }
-        }
-
-
-        private void ChangeLogs(string type)
-        {
-            try
-            {
-            String folderPath = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\logs\" + type + @"\";// Get the files in the folder
-            string[] files = Directory.GetFiles(folderPath);
-            textBoxLogs.Clear();// Clear the contents of the text box
-            foreach (string file in files)// Loop through the files and add them to the text box
-            {
-                textBoxLogs.AppendText(file + Environment.NewLine);
-                textBoxLogs.AppendText(File.ReadAllText(file) + Environment.NewLine);
-            }
-            }
-            catch (Exception) { System.Windows.MessageBox.Show("You don't have logs files yet, please launch classic save or work first", "Error", MessageBoxButton.OK, MessageBoxImage.Warning); }
         }
     }
 }

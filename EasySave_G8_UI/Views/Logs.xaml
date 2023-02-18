@@ -49,15 +49,7 @@
                         </Grid>
                     </Border>
                 </StackPanel>
-                <ItemsControl HorizontalAlignment="Right" Margin="0,73,60,435" Width="42">
-                    <Button x:Name="LogsButton" Width="40" Height="40"  Content="JSON" Click="LogsButton_Click">
-                        <Button.Resources>
-                            <Style TargetType="{x:Type Border}">
-                                <Setter Property="CornerRadius" Value="15"/>
-                            </Style>
-                        </Button.Resources>
-                    </Button>
-                </ItemsControl>
+                <ItemsControl HorizontalAlignment="Right" Margin="0,73,60,435" Width="42"/>
             </Grid>
         </Border>
     </Grid>

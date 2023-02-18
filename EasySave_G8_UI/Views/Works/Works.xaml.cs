@@ -55,19 +55,25 @@ namespace EasySave_G8_UI.Views.Works
         private void ExecuteSelected_btn_Click(object sender, RoutedEventArgs e)
         {
             View_Model ViewModel = new View_Model();
-            foreach(string WorkName in List_Works.SelectedItems)
+            int i = 0;
+            foreach (string WorkName in List_Works.SelectedItems)
             {
+                i++;
                 ViewModel.VM_Work_Run(WorkName, false);
             }
+            if (i == 0) { MessageBox.Show("Please choose at least one Work in the list to execute it.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning); }
         }
 
         private void Delete_btn_Click(object sender, RoutedEventArgs e)
         {
             View_Model ViewModel = new View_Model();
+            int i = 0;
             foreach (string WorkName in List_Works.SelectedItems)
             {
+                i++;
                 ViewModel.VM_Work_Delete(WorkName);
             }
+            if (i == 0) { MessageBox.Show("Please choose at least one Work in the list to delete it.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning); }
             Works_List();
         }
 

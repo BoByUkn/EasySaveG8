@@ -184,9 +184,11 @@ namespace EasySave_G8_UI.Models
                 
                 string jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(values, Newtonsoft.Json.Formatting.Indented); //Serialialize the data in JSON form
                 File.WriteAllText(fileName, jsonString); //Write json file
+
                 XmlSerializer serializer = new XmlSerializer(typeof(List<Model_AFT>));
                 StreamWriter writer = new StreamWriter(fileName2);
                 serializer.Serialize(writer, values);
+                writer.Close();
             }
 
             else if (!File.Exists(fileName))
@@ -195,9 +197,11 @@ namespace EasySave_G8_UI.Models
                 values.Add(this);// Add object ModelAFT in the list values
                 var jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(values, Newtonsoft.Json.Formatting.Indented); //Serialialize the data in JSON form
                 File.WriteAllText(fileName, jsonString); // Write json file
+
                 XmlSerializer serializer = new XmlSerializer(typeof(List<Model_AFT>));
                 StreamWriter writer = new StreamWriter(fileName2);
                 serializer.Serialize(writer, values);
+                writer.Close();
             }
         }
 

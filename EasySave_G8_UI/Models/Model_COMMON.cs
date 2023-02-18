@@ -21,6 +21,8 @@ namespace EasySave_G8_UI.Models
         {
             Directory.CreateDirectory(@"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave"); //Creates "EasySave" folder in Roaming
             Directory.CreateDirectory(@"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\logs"); //Creates "logs" subfolder
+            Directory.CreateDirectory(@"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\logs\JSON\");
+            Directory.CreateDirectory(@"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\logs\XML\");
             string fileName = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\app_config.json";
             var jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(ModelCOMMON); //Serialialize the data in JSON form
             File.WriteAllText(fileName, jsonString); //Create and append JSON into file
@@ -32,8 +34,6 @@ namespace EasySave_G8_UI.Models
             {
                 writer.Write(cipherKey);
             }
-            Directory.CreateDirectory(@"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\logs\JSON\");
-            Directory.CreateDirectory(@"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\logs\XML\");
         }
     }
 
