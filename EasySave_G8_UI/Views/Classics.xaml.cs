@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using System.IO;
 using Microsoft.Win32;
 using System;
+using static EasySave_G8_UI.Views.Loading;
 
 namespace EasySave_G8_UI.Views
 {
@@ -46,7 +47,10 @@ namespace EasySave_G8_UI.Views
                 if (indexType == 0) { Type = true; }
                 else { Type = false; }
 
-                try { ViewModel.VM_Classic(Name, Source, Destination, Type);}
+                try 
+                { 
+                    ViewModel.VM_Classic(Name, Source, Destination, Type);
+                }
                 catch (Exception) { System.Windows.MessageBox.Show("You can't launch a save without all parameters", "Error", MessageBoxButton.OK, MessageBoxImage.Warning); }
             }
         }

@@ -42,7 +42,38 @@ namespace EasySave_G8_UI.Models
             }
             return (obj_list); //Return empty list if statelogs are not found
         }
+
+        public int Get_StateLogsPercentage(string Name, string Source, string Destination, bool Type)
+        {
+            string fileName = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\StateLogs.json";
+            string fileContent = File.ReadAllText(fileName); // Bring content of filename in filecontent
+            List<Model_StateLogs>? values = new List<Model_StateLogs>(); // Create the list named values
+            values = JsonConvert.DeserializeObject<List<Model_StateLogs>>(fileContent); //Deserialialize the data in JSON form
+            int progression = 0;
+            foreach (Model_StateLogs obj in values) //Loop throught every objects in the deserialized data
+            {
+                if (obj.Name == Name && obj.Source == Source && obj.Destination == Destination && obj.Type == Type) //If we find the save we are looking for in a single work execution
+                {
+                    progression = obj.progression;   
+                }
+            }
+            return progression;
+        }
+
+
+
+
+
+
+        public string Get_StateLogsState(string Name)
+        {
+
+            return "a";
+        }
     }
+
+
+
 
     public class Model_StateLogs : Model_AFT
     {
@@ -55,11 +86,14 @@ namespace EasySave_G8_UI.Models
             this.Destination = Destination;
             this.Type = Type;
             this.Size = 0;
-
             this.file_remain = file_remain;
             this.total_files = Directory.GetFiles(Source, "*.*", SearchOption.AllDirectories).Length;
             this.progression = 0;
             this.State = "STARTED";
         }
     }
+
+
+
+
 }

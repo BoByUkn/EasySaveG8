@@ -92,10 +92,11 @@ namespace EasySave_G8_UI.View_Models
         }
 
         //MV Update the progression bar
-        public void MV_Update_ProgressionBar(int percentage)
+        public int MV_Update_ProgressionBar(String Name, String Source, String Destination, bool type)
         {
-            //View_SAVE ViewSAVE = new View_SAVE();
-            //ViewSAVE.Progression_Bar(percentage);
+            Model_Logs modellogs = new Model_Logs();
+            int progression = modellogs.Get_StateLogsPercentage(Name,Source,Destination,type);
+            return progression;
         }
 
         //MV Show the daily log files content
