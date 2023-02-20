@@ -53,6 +53,10 @@ namespace EasySave_G8_UI.Views.Works
             mainWindow.Main.Content = new Works_Create();
         }
 
+
+
+
+
         private void ExecuteAll_btn_Click(object sender, RoutedEventArgs e)
         {
             View_Model ViewModel = new View_Model();
@@ -66,6 +70,7 @@ namespace EasySave_G8_UI.Views.Works
             View_Model ViewModel = new View_Model();
             int i = 0;
             MainWindow1.Main.Content = Loading1;
+
             foreach (string WorkName in List_Works.SelectedItems)
             {
                 i++;
@@ -88,6 +93,10 @@ namespace EasySave_G8_UI.Views.Works
         {
             Loading1.ProgressBar_Manage();
         }
+
+
+
+
 
         private void Delete_btn_Click(object sender, RoutedEventArgs e)
         {
