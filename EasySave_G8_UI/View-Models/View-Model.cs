@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
+using System.Windows;
 
 namespace EasySave_G8_UI.View_Models
 {
@@ -60,6 +62,9 @@ namespace EasySave_G8_UI.View_Models
             {
                 Model_PRE ModelPRE = new Model_PRE(obj.Name, obj.Source, obj.Destination, obj.Type);
                 ModelPRE.Exec();
+
+                string WorkName = obj.Name;
+                Thread thread = new Thread(MV_AddProgressBar);
             }
         }
 
@@ -117,6 +122,10 @@ namespace EasySave_G8_UI.View_Models
         {
             Model_BLACKLIST ModelBLACKLIST = new Model_BLACKLIST();
             return ModelBLACKLIST.BlacklistTest();
+        }
+
+        public void MV_AddProgressBar()
+        {
         }
     }
 }
