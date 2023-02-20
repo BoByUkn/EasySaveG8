@@ -62,9 +62,6 @@ namespace EasySave_G8_UI.View_Models
             {
                 Model_PRE ModelPRE = new Model_PRE(obj.Name, obj.Source, obj.Destination, obj.Type);
                 ModelPRE.Exec();
-
-                string WorkName = obj.Name;
-                Thread thread = new Thread(MV_AddProgressBar);
             }
         }
 
@@ -141,6 +138,12 @@ namespace EasySave_G8_UI.View_Models
         {
             Model_BLACKLIST ModelBLACKLIST = new Model_BLACKLIST();
             ModelBLACKLIST.BlacklistAdd(ProcessName);
+        }
+
+        public bool VM_StateLogsExists(string Name)
+        {
+            Model_Logs ModelLOGS = new Model_Logs();
+            return ModelLOGS.StatelogExists(Name);
         }
     }
 }
