@@ -30,7 +30,6 @@ namespace EasySave_G8_UI.Views
             Differential.Content = $"{View_Model.VM_GetString_Language("differential")}";
             Browse.Content = $"{View_Model.VM_GetString_Language("browse")}";
             Browse2.Content = $"{View_Model.VM_GetString_Language("browse")}";
-
         }
 
         private void Button_Click_LaunchSave(object sender, RoutedEventArgs e)

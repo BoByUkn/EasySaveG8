@@ -21,6 +21,8 @@ namespace EasySave_G8_UI.Models
         public int file_remain { get; set; }
         public double millisecondsDuration { get; set; }
 
+        private static SemaphoreSlim _semaphore = new SemaphoreSlim(1);
+
         View_Model VM = new View_Model();
         private double ActualSize2 = 0;
         public Model_AFT(){}
@@ -41,6 +43,7 @@ namespace EasySave_G8_UI.Models
         {
             {
                 Model_StateLogs ModelStateLogs = new Model_StateLogs(this.Name, this.Source, this.Destination, this.Type, this.total_files);
+                StateLog(ModelStateLogs);
                 if (File.Exists(Source)) //If it's a file
                 {
                     utcDateStart = DateTime.Now;
@@ -103,7 +106,7 @@ namespace EasySave_G8_UI.Models
             {
                 Model_StateLogs ModelStateLogs = new Model_StateLogs(this.Name, this.Source, this.Destination, this.Type, this.total_files);
                 if (!Directory.Exists(Destination)) { Directory.CreateDirectory(Destination); } //Create the destination directory if it doesn't exist
-                
+                StateLog(ModelStateLogs);
                 if (Directory.Exists(Source))
                 {
                     utcDateStart = DateTime.Now;
@@ -124,9 +127,7 @@ namespace EasySave_G8_UI.Models
                     foreach (string sourceFile in sourceFiles) // Browse each file in the source directory
                     {
                         string destinationFile = sourceFile.Replace(Source, Destination2); // Create a destination path for the file
-
                         ActualSize2 = ActualSize2 + new System.IO.FileInfo(sourceFile).Length;//Increment size with each file
-
                         int percentage = (int)(((double)ActualSize2 / (double)Size) * 100);
                         ModelStateLogs.progression = percentage;
 
@@ -164,11 +165,11 @@ namespace EasySave_G8_UI.Models
 
         public void Logs() //Write backup's logs
         {
+            _semaphore.Wait();
             string utcDateOnly = utcDateDateTime.ToString("dd/MM/yyyy");
             utcDateOnly = utcDateOnly.Replace("/", "-"); //Format the date to allow serializing
             string fileName = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\logs\JSON\" + utcDateOnly + ".json";
             string fileName2 = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\logs\XML\" + utcDateOnly + ".xml";
-
 
             if (File.Exists(fileName))  //Test if log file exists, else it creates it
             {
@@ -199,10 +200,12 @@ namespace EasySave_G8_UI.Models
                 serializer.Serialize(writer, values);
                 writer.Close();
             }
+            _semaphore.Release();
         }
 
-        public void StateLog(Model_StateLogs statelog) //Write backup's state logs
+        private void StateLog(Model_StateLogs statelog) //Write backup's state logs
         {
+            _semaphore.Wait();
             string fileName = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\StateLog.json";
             if (File.Exists(fileName))  //Test if log file exists, else it creates it
             {
@@ -228,6 +231,7 @@ namespace EasySave_G8_UI.Models
                 values.Add(statelog);// Add object Model_StateLogs in the list values
                 var jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(values, Newtonsoft.Json.Formatting.Indented); //Serialialize the data in JSON form
                 File.WriteAllText(fileName, jsonString); // Write json file
+                _semaphore.Release();
             }
         } 
     }

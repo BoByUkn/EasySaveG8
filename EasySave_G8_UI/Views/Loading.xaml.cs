@@ -40,7 +40,7 @@ namespace EasySave_G8_UI.Views
 
             while (true) 
             {
-                Thread.Sleep(1000);
+                Thread.Sleep(500);
                 ProgressBar_Update();
             }
         }

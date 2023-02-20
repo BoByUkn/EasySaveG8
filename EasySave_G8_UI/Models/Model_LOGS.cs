@@ -2,11 +2,14 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 
 namespace EasySave_G8_UI.Models
 {
     public class Model_Logs
     {
+        private static SemaphoreSlim _semaphore = new SemaphoreSlim(1);
+
         public List<Model_AFT> Get_Logs(string Date) //Retrieve log file content
         {
             string fileName = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\logs\JSON\" + Date + ".json";
@@ -45,6 +48,7 @@ namespace EasySave_G8_UI.Models
 
         public int Get_StateLogsPercentage(string Name)
         {
+            _semaphore.Wait();
             string fileName = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\StateLog.json";
             string fileContent = File.ReadAllText(fileName); // Bring content of filename in filecontent
             List<Model_StateLogs>? values = new List<Model_StateLogs>(); // Create the list named values
@@ -57,6 +61,7 @@ namespace EasySave_G8_UI.Models
                     progression = obj.progression;   
                 }
             }
+            _semaphore.Release();
             return progression;
         }
 
