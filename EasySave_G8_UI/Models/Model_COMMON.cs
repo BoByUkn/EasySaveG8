@@ -9,6 +9,8 @@ using System.Resources;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ToolTip;
 using System.Runtime.ConstrainedExecution;
 using System.Windows.Controls;
+using System.Collections.Generic;
+using System.Windows;
 
 namespace EasySave_G8_UI.Models
 {
@@ -26,6 +28,12 @@ namespace EasySave_G8_UI.Models
             string fileName = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\app_config.json";
             var jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(ModelCOMMON); //Serialialize the data in JSON form
             File.WriteAllText(fileName, jsonString); //Create and append JSON into file
+            string fileName2 = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\blackList.json";
+
+            Model_BLACKLIST bLACKLIST= new Model_BLACKLIST();
+            var jsonString2 = JsonConvert.SerializeObject(bLACKLIST); //Serialialize the data in JSON form
+            File.WriteAllText(fileName2, jsonString2); //Create and append JSON into file
+
             var RandomInt64 = new Random();
             long cipherKey = RandomInt64.NextInt64(); //Generates a random 64bit key for CryptoSoft
             string filePath = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\cipherkey.txt"; //Creates a file to store the key
@@ -41,6 +49,7 @@ namespace EasySave_G8_UI.Models
     {
         private static ResourceManager _rm;
         public string lang { get; set; }
+        //public List<string> blacklist { get; set; }
         public Model_LANG(string? lang) { this.lang = lang; }
 
         static Model_LANG() //Initiate Lang RessourceManager
@@ -56,7 +65,12 @@ namespace EasySave_G8_UI.Models
         public void ChangeLanguage() //Change the Language stored in app_config
         {
             string fileName = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\app_config.json";
-            var jsonString = JsonConvert.SerializeObject(this); //Serialialize the data in JSON form
+            
+            string fileContent = File.ReadAllText(fileName); // Bring content of filename in filecontent
+            Model_LANG base_conf = JsonConvert.DeserializeObject<Model_LANG>(fileContent); // Create the list named values
+            base_conf.lang = this.lang;
+
+            var jsonString = JsonConvert.SerializeObject(base_conf); //Serialialize the data in JSON form
             File.WriteAllText(fileName, jsonString); //Create and append JSON into file
             UpdateLanguage();
 
@@ -78,21 +92,23 @@ namespace EasySave_G8_UI.Models
             CultureInfo.CurrentUICulture = cultureInfo;
         }
     }
-
-
     public class Model_BLACKLIST
     {
-        public string[] blacklist { get; set; }
+        public List<string> blacklist { get; set; }
+        public Model_BLACKLIST()
+        {
+            blacklist = new List<string>();
+        }
         public bool BlacklistTest()
         {
-            string[] blacklistProcessus = { "CalculatorApp" };
+            blacklist = BlacklistReturn();
             bool blacklistState = false;
 
             var processes = Process.GetProcesses();
 
             foreach (Process process in Process.GetProcesses())
             {
-                if(Array.IndexOf(blacklistProcessus, process.ProcessName) != -1)
+                if (blacklist.Contains(process.ProcessName))
                 {
                     blacklistState = true;
                 }
@@ -101,13 +117,42 @@ namespace EasySave_G8_UI.Models
 
         }
 
-        public string[] BlacklistReturn()
+        public List<string> BlacklistReturn()
         {
-            string fileName = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\app_config.json";
+            string fileName = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\blackList.json";
             string fileContent = File.ReadAllText(fileName); // Bring content of filename in filecontent
             Model_BLACKLIST base_conf = JsonConvert.DeserializeObject<Model_BLACKLIST>(fileContent); // Create the list named values
             return base_conf.blacklist;
+        }
 
+        public void BlacklistAdd(string ProcessName)
+        {
+            List<string> blacklist = this.BlacklistReturn();
+            bool ProcExistTest = false;
+            string fileName = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\blackList.json";
+            if (blacklist != null)
+            {
+                foreach (string Processname in blacklist)
+                {
+                    if (ProcessName == Processname)
+                    {
+                        ProcExistTest = true;
+                    }
+                }
+                if (ProcExistTest == false)
+                {
+                    blacklist.Add(ProcessName);
+                    this.blacklist = blacklist;
+                    var jsonString = JsonConvert.SerializeObject(this); //Serialialize the data in JSON form
+                    File.WriteAllText(fileName, jsonString); //Create and append JSON into file
+                }
+            }
+            else
+            {
+                blacklist.Add(ProcessName);
+                var jsonString = JsonConvert.SerializeObject(this); //Serialialize the data in JSON form
+                File.WriteAllText(fileName, jsonString); //Create and append JSON into file}
+            }
         }
     }
 }

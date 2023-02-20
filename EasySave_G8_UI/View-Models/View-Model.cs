@@ -114,10 +114,16 @@ namespace EasySave_G8_UI.View_Models
             return list;
         }
 
-        public bool VM_BlackList()
+        public bool VM_BlackListTest()
         {
             Model_BLACKLIST ModelBLACKLIST = new Model_BLACKLIST();
             return ModelBLACKLIST.BlacklistTest();
+        }
+
+        public void VM_BlackListAdd(string ProcessName)
+        {
+            Model_BLACKLIST ModelBLACKLIST = new Model_BLACKLIST();
+            ModelBLACKLIST.BlacklistAdd(ProcessName);
         }
     }
 }

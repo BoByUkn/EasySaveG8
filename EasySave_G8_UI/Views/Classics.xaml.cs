@@ -36,8 +36,8 @@ namespace EasySave_G8_UI.Views
         {
             View_Model ViewModel = new View_Model();
             
-            bool blacklist = ViewModel.VM_BlackList();
-            if(blacklist == false)
+            bool blacklist_state = ViewModel.VM_BlackListTest();
+            if(blacklist_state == false)
             {
                 string Name = this.textBox1.Text;
                 string Source = this.textBox2.Text;
