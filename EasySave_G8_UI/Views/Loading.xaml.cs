@@ -25,6 +25,7 @@ namespace EasySave_G8_UI.Views
         private MainWindow currentMainWindow;
         private Loading currentLoading;
         private View_Model ViewMODEL;
+        private static SemaphoreSlim _semaphore = new SemaphoreSlim(1);
 
         public Loading()
         {
@@ -75,8 +76,14 @@ namespace EasySave_G8_UI.Views
                 {
                     if ((child as FrameworkElement)?.Name == PgName) 
                     {
-                        progressBar = child as ProgressBar;
-                        progressBar.Value = ViewMODEL.MV_Update_ProgressionBar(PgName);
+                        _semaphore.Wait();
+                        try 
+                        {
+                            progressBar = child as ProgressBar;
+                            progressBar.Value = ViewMODEL.MV_Update_ProgressionBar(PgName);
+                        }
+                        catch { Exception ex; }
+                        _semaphore.Release();
                     }
                 }
             });

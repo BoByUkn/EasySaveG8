@@ -43,7 +43,7 @@ namespace EasySave_G8_UI.Models
         {
             {
                 Model_StateLogs ModelStateLogs = new Model_StateLogs(this.Name, this.Source, this.Destination, this.Type, this.total_files);
-                StateLog(ModelStateLogs);
+
                 if (File.Exists(Source)) //If it's a file
                 {
                     utcDateStart = DateTime.Now;
@@ -106,7 +106,6 @@ namespace EasySave_G8_UI.Models
             {
                 Model_StateLogs ModelStateLogs = new Model_StateLogs(this.Name, this.Source, this.Destination, this.Type, this.total_files);
                 if (!Directory.Exists(Destination)) { Directory.CreateDirectory(Destination); } //Create the destination directory if it doesn't exist
-                StateLog(ModelStateLogs);
                 if (Directory.Exists(Source))
                 {
                     utcDateStart = DateTime.Now;
@@ -216,7 +215,7 @@ namespace EasySave_G8_UI.Models
 
                 foreach (Model_StateLogs obj in values) //Loop throught every objects in the deserialized data
                 {
-                    if (!(obj.Name == statelog.Name && obj.Source == statelog.Source && obj.Destination == statelog.Destination && obj.Type == statelog.Type)) //If we find the save we are looking for in a single work execution
+                    if (!(obj.Name == statelog.Name)) //If we find the save we are looking for in a single work execution
                     {
                         new_values.Add(obj);
                     }
@@ -231,8 +230,8 @@ namespace EasySave_G8_UI.Models
                 values.Add(statelog);// Add object Model_StateLogs in the list values
                 var jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(values, Newtonsoft.Json.Formatting.Indented); //Serialialize the data in JSON form
                 File.WriteAllText(fileName, jsonString); // Write json file
-                _semaphore.Release();
             }
-        } 
+            _semaphore.Release();
+        }
     }
 }
