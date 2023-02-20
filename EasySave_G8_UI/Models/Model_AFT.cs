@@ -73,8 +73,6 @@ namespace EasySave_G8_UI.Models
                         ActualSize2 = ActualSize2 + new System.IO.FileInfo(file).Length;//Increment size with each file
                         
                         int percentage = (int)(((double)ActualSize2 / (double)Size) * 100);//progression's percentage of the save
-                        VM.MV_Update_ProgressionBar(percentage); // update progression bar
-
 
                         Directory.CreateDirectory(Path.GetDirectoryName(targetFile)); // Create a directory
                         File.Copy(file, targetFile,true); // Do the copy
@@ -130,8 +128,6 @@ namespace EasySave_G8_UI.Models
                         ActualSize2 = ActualSize2 + new System.IO.FileInfo(sourceFile).Length;//Increment size with each file
 
                         int percentage = (int)(((double)ActualSize2 / (double)Size) * 100);
-                        VM.MV_Update_ProgressionBar(percentage);
-
                         ModelStateLogs.progression = percentage;
 
                         file_remain = file_remain - 1;
