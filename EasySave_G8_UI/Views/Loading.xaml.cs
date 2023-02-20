@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EasySave_G8_UI.View_Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,12 +24,14 @@ namespace EasySave_G8_UI.Views
     {
         private MainWindow currentMainWindow;
         private Loading currentLoading;
+        private View_Model ViewMODEL;
 
         public Loading()
         {
             InitializeComponent();
             currentMainWindow = Application.Current.MainWindow as MainWindow;
             currentLoading = currentMainWindow.Main.Content as Loading;
+            ViewMODEL = new View_Model();
         }
 
         public void ProgressBar_Manage()
@@ -53,6 +56,7 @@ namespace EasySave_G8_UI.Views
                 progressBar.Maximum = 100;
                 progressBar.Margin = new Thickness(20, 20, 20, 20);
                 progressBar.Width = 400;
+                progressBar.Height= 30;
                 progressBar.Name = currentThread.Name;
                 MainStackPanel.Children.Add(progressBar);
             });
@@ -72,7 +76,7 @@ namespace EasySave_G8_UI.Views
                     if ((child as FrameworkElement)?.Name == PgName) 
                     {
                         progressBar = child as ProgressBar;
-                        progressBar.Value++;
+                        progressBar.Value = ViewMODEL.MV_Update_ProgressionBar(PgName);
                     }
                 }
             });

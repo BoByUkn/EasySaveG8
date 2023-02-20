@@ -62,9 +62,6 @@ namespace EasySave_G8_UI.View_Models
             {
                 Model_PRE ModelPRE = new Model_PRE(obj.Name, obj.Source, obj.Destination, obj.Type);
                 ModelPRE.Exec();
-
-                string WorkName = obj.Name;
-                Thread thread = new Thread(MV_AddProgressBar);
             }
         }
 
@@ -97,10 +94,10 @@ namespace EasySave_G8_UI.View_Models
         }
 
         //MV Update the progression bar
-        public int MV_Update_ProgressionBar(String Name, String Source, String Destination, bool type)
+        public int MV_Update_ProgressionBar(String Name)
         {
             Model_Logs modellogs = new Model_Logs();
-            int progression = modellogs.Get_StateLogsPercentage(Name,Source,Destination,type);
+            int progression = modellogs.Get_StateLogsPercentage(Name);
             return progression;
         }
 
@@ -125,8 +122,10 @@ namespace EasySave_G8_UI.View_Models
             return ModelBLACKLIST.BlacklistTest();
         }
 
-        public void MV_AddProgressBar()
+        public bool VM_StateLogsExists(string Name)
         {
+            Model_Logs ModelLOGS = new Model_Logs();
+            return ModelLOGS.StatelogExists(Name);
         }
     }
 }

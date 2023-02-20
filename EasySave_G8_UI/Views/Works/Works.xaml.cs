@@ -70,7 +70,6 @@ namespace EasySave_G8_UI.Views.Works
             View_Model ViewModel = new View_Model();
             int i = 0;
             MainWindow1.Main.Content = Loading1;
-
             foreach (string WorkName in List_Works.SelectedItems)
             {
                 i++;
@@ -78,9 +77,9 @@ namespace EasySave_G8_UI.Views.Works
                 thread_pgbar.Name = WorkName;
                 thread_pgbar.Start();
 
-                //Thread thread_exec = new Thread(() => ViewModel.VM_Work_Run(WorkName, false));
-                //thread_exec.Name = WorkName;
-                //thread_exec.Start();
+                Thread thread_exec = new Thread(() => ViewModel.VM_Work_Run(WorkName, false));
+                thread_exec.Name = WorkName;
+                thread_exec.Start();
             }
             if (i == 0) 
             { 

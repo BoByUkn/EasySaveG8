@@ -43,16 +43,16 @@ namespace EasySave_G8_UI.Models
             return (obj_list); //Return empty list if statelogs are not found
         }
 
-        public int Get_StateLogsPercentage(string Name, string Source, string Destination, bool Type)
+        public int Get_StateLogsPercentage(string Name)
         {
-            string fileName = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\StateLogs.json";
+            string fileName = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\StateLog.json";
             string fileContent = File.ReadAllText(fileName); // Bring content of filename in filecontent
             List<Model_StateLogs>? values = new List<Model_StateLogs>(); // Create the list named values
             values = JsonConvert.DeserializeObject<List<Model_StateLogs>>(fileContent); //Deserialialize the data in JSON form
             int progression = 0;
             foreach (Model_StateLogs obj in values) //Loop throught every objects in the deserialized data
             {
-                if (obj.Name == Name && obj.Source == Source && obj.Destination == Destination && obj.Type == Type) //If we find the save we are looking for in a single work execution
+                if (obj.Name == Name) //If we find the save we are looking for in a single work execution
                 {
                     progression = obj.progression;   
                 }
@@ -60,9 +60,21 @@ namespace EasySave_G8_UI.Models
             return progression;
         }
 
-
-
-
+        public bool StatelogExists(string Name) 
+        {
+            string fileName = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\StateLog.json";
+            string fileContent = File.ReadAllText(fileName); // Bring content of filename in filecontent
+            List<Model_StateLogs>? values = new List<Model_StateLogs>(); // Create the list named values
+            values = JsonConvert.DeserializeObject<List<Model_StateLogs>>(fileContent); //Deserialialize the data in JSON form
+            foreach (Model_StateLogs obj in values) //Loop throught every objects in the deserialized data
+            {
+                if (obj.Name == Name) //If we find the save we are looking for in a single work execution
+                {
+                    return (true);
+                }
+            }
+            return false;
+        }
 
 
         public string Get_StateLogsState(string Name)
