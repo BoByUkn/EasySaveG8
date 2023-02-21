@@ -21,11 +21,12 @@ namespace EasySave_G8_UI.Models
         public int file_remain { get; set; }
         public double millisecondsDuration { get; set; }
         private double ActualSize2 = 0;
-        private Model_Logs ModelLogs {get; set;}
+        private Model_Logs ModelLogs = new Model_Logs();
         
         private SemaphoreSlim _semaphorefiles = new SemaphoreSlim(1);
         private SemaphoreSlim _semaphorelogs = new SemaphoreSlim(1);
 
+        public Model_AFT () { }
         public Model_AFT(string Name, string Source, string Destination, bool Type) : base(Name, Source, Destination, Type)
         {
             this.Name = Name;
@@ -38,7 +39,6 @@ namespace EasySave_G8_UI.Models
             this.Duration = TimeSpan.Zero;
             this.millisecondsDuration=0;
             this.total_files = Directory.GetFiles(Source, "*.*", SearchOption.AllDirectories).Length;
-            ModelLogs = new Model_Logs(); 
         }
 
         public void Run() //Run a backup

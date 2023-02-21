@@ -44,7 +44,12 @@ namespace EasySave_G8_UI.Views
             if(blacklist_state == false)
             {
                 string Name = this.textBox1.Text;
-                if (ViewModel.VM_StateLogsExists(Name)) { System.Windows.MessageBox.Show("A work with that Name already exists. Please use another Name.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning); return; }
+
+                try
+                {
+                    if (ViewModel.VM_StateLogsExists(Name)) { System.Windows.MessageBox.Show("A work with that Name already exists. Please use another Name.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning); return; }
+                }
+                catch { Exception ex; }
 
                 string Source = this.textBox2.Text;
                 string Destination = this.textBox3.Text;

@@ -39,7 +39,7 @@ namespace EasySave_G8_UI.Models
                 finally { _semaphore.Release(); }
 
             }
-            else if (File.Exists(fileName) == false)
+            else if (!File.Exists(fileName))
             {
                 List<Model_StateLogs> values = new List<Model_StateLogs>(); // create the list named values
                 values.Add(statelog);// Add object Model_StateLogs in the list values
