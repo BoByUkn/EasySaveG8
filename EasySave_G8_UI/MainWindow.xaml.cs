@@ -58,6 +58,8 @@ namespace EasySave_G8_UI
             Classics_btn.Content = $"{View_Model.VM_GetString_Language("classics")}";
             Works_btn.Content = $"{View_Model.VM_GetString_Language("works")}";
             Logs_btn.Content = $"{View_Model.VM_GetString_Language("logs")}";
+            Loading_btn.Content = $"{View_Model.VM_GetString_Language("loading")}";
+            Settings_btn.Content = $"{View_Model.VM_GetString_Language("settings")}";
             Shutdown_btn.Content = $"{View_Model.VM_GetString_Language("shutdown")}";
         }
 

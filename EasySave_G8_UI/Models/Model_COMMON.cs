@@ -122,8 +122,8 @@ namespace EasySave_G8_UI.Models
         {
             string fileName = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\blackList.json";
             string fileContent = File.ReadAllText(fileName); // Bring content of filename in filecontent
-            Model_BLACKLIST base_conf = JsonConvert.DeserializeObject<Model_BLACKLIST>(fileContent); // Create the list named values
-            return base_conf.blacklist;
+            Model_BLACKLIST black_list = JsonConvert.DeserializeObject<Model_BLACKLIST>(fileContent); // Create the list named values
+            return black_list.blacklist;
         }
 
         public void BlacklistAdd(string ProcessName)
@@ -152,8 +152,18 @@ namespace EasySave_G8_UI.Models
             {
                 blacklist.Add(ProcessName);
                 var jsonString = JsonConvert.SerializeObject(this); //Serialialize the data in JSON form
-                File.WriteAllText(fileName, jsonString); //Create and append JSON into file}
+                File.WriteAllText(fileName, jsonString); //Create and append JSON into file
             }
+        }
+        
+        public void BlacklistRemove(string ProcessNameRm)
+        {
+            List<string> blacklist = this.BlacklistReturn();
+            string fileName = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\blackList.json";
+            blacklist.Remove(ProcessNameRm);
+            this.blacklist = blacklist;
+            var jsonString = JsonConvert.SerializeObject(this); //Serialialize the data in JSON form
+            File.WriteAllText(fileName, jsonString); //Create and append JSON into file
         }
     }
 }

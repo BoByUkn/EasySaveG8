@@ -56,17 +56,25 @@ namespace EasySave_G8_UI.Views.Works
         private void Save_btn_Click(object sender, RoutedEventArgs e)
         {
             View_Model ViewModel = new View_Model();
-            ViewModel.VM_Work_Delete(Original_WorkName);
-
+            
             bool Type;
-            if (comboBox1.Text == "Complète" || comboBox1.Text == "Complete") { Type = true; }
+            if (comboBox1.SelectedIndex == 0) { Type = true; }
             else { Type = false; }
 
             bool ExeNow;
-            if (comboBox2.Text == "Oui" || comboBox2.Text == "Yes") { ExeNow = true; }
+            if (comboBox2.SelectedIndex == 0) { ExeNow = true; }
             else { ExeNow = false; }
 
-            ViewModel.VM_Work_New(textBox1.Text, textBox2.Text, textBox3.Text, Type, ExeNow);
+            bool blacklist_state = ViewModel.VM_BlackListTest();
+            if (((blacklist_state == false) && (ExeNow == true)) || (ExeNow == false))
+            {
+                ViewModel.VM_Work_Delete(Original_WorkName);
+                ViewModel.VM_Work_New(textBox1.Text, textBox2.Text, textBox3.Text, Type, ExeNow);
+            }
+            else
+            {
+                MessageBox.Show($"{View_Model.VM_GetString_Language("msgbox_blacklist")}", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
 
             var mainWindow = Application.Current.MainWindow as MainWindow;
             mainWindow.Main.Content = new Works();

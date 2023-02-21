@@ -43,10 +43,10 @@
                         <TextBlock Foreground="White" FontSize="16" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0" FontFamily="Bahnschrift Condensed" Grid.Row="1">
                             <Run Language="fr-fr" Text="Blacklist remove"  Name="Dest_Path"/>
                         </TextBlock>
-                        <ComboBox x:Name="Blackist_rm_combobox" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="419" Grid.Column="1" Grid.Row="1" Margin="30,0,30,0">
+                        <ComboBox x:Name="Blacklist_rm_combobox" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="419" Grid.Column="1" Grid.Row="1" Margin="30,0,30,0">
                         </ComboBox>
 
-                        <Button Name="Blacklist_rm_btn" Content="Remove" FontFamily="Bahnschrift Condensed" Height="30" FontSize="15" BorderBrush="{x:Null}" Grid.Column="2" Margin="0,0,30,0"  Grid.Row="1">
+                        <Button Name="Blacklist_rm_btn" Content="Remove" FontFamily="Bahnschrift Condensed" Height="30" FontSize="15" BorderBrush="{x:Null}" Grid.Column="2" Margin="0,0,30,0"  Grid.Row="1" Click="Blacklist_rm_btn_Click">
                             <Button.Resources>
                                 <Style TargetType="Border">
                                     <Setter Property="CornerRadius" Value="5"></Setter>

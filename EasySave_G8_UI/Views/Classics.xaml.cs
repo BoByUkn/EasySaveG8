@@ -71,6 +71,10 @@ namespace EasySave_G8_UI.Views
                 }
                 catch (Exception) { System.Windows.MessageBox.Show("You can't launch a save without all parameters", "Error", MessageBoxButton.OK, MessageBoxImage.Warning); }
             }
+            else
+            {
+                MessageBox.Show($"{View_Model.VM_GetString_Language("msgbox_blacklist")}", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
         }
 
         private void Button_Click_Browse(object sender, RoutedEventArgs e)

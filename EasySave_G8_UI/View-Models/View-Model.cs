@@ -128,6 +128,18 @@ namespace EasySave_G8_UI.View_Models
             ModelBLACKLIST.BlacklistAdd(ProcessName);
         }
 
+        public void VM_BlackListRemove(string ProcessNameRm)
+        {
+            Model_BLACKLIST ModelBLACKLIST = new Model_BLACKLIST();
+            ModelBLACKLIST.BlacklistRemove(ProcessNameRm);
+        }
+
+        public List<string> MV_Blacklist()
+        {
+            Model_BLACKLIST ModelBLACKLIST = new Model_BLACKLIST();
+            return ModelBLACKLIST.BlacklistReturn();
+        }
+
         public bool VM_StateLogsExists(string Name)
         {
             Model_Logs ModelLOGS = new Model_Logs();

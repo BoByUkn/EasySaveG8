@@ -59,7 +59,7 @@ namespace EasySave_G8_UI.Views.Works
             }
             else
             {
-                MessageBox.Show("Erreur : Le travail ne peut pas être exécuté car un processus de la blacklist est en exécution.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show($"{View_Model.VM_GetString_Language("msgbox_blacklist")}", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
 
             var mainWindow = Application.Current.MainWindow as MainWindow;

@@ -177,11 +177,17 @@
   <data name="launch_save" xml:space="preserve">
     <value>Démarrer la sauvegarde</value>
   </data>
+  <data name="loading" xml:space="preserve">
+    <value>Chargement</value>
+  </data>
   <data name="logs" xml:space="preserve">
     <value>Historique</value>
   </data>
   <data name="logs_title" xml:space="preserve">
     <value>Historique</value>
+  </data>
+  <data name="msgbox_blacklist" xml:space="preserve">
+    <value>Erreur : Le travail ne peut pas être exécuté car un processus de la blacklist est en exécution.</value>
   </data>
   <data name="name" xml:space="preserve">
     <value>Nom</value>
@@ -197,6 +203,9 @@
   </data>
   <data name="select_directory" xml:space="preserve">
     <value>Sélectionner un dossier</value>
+  </data>
+  <data name="settings" xml:space="preserve">
+    <value>Réglages</value>
   </data>
   <data name="shutdown" xml:space="preserve">
     <value>Quitter</value>

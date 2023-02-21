@@ -1,4 +1,5 @@
-﻿using EasySave_G8_UI.Models;
+﻿using EasySave_G8_UI;
+using EasySave_G8_UI.Models;
 using EasySave_G8_UI.View_Models;
 using System.Collections.Generic;
 using System.Threading;
@@ -58,16 +59,24 @@ namespace EasySave_G8_UI.Views.Works
         private void ExecuteAll_btn_Click(object sender, RoutedEventArgs e)
         {
             View_Model ViewModel = new View_Model();
-            MainWindow1.Main.Content = MainWindow1.Loading1;
-            foreach (string WorkName in List_Works.Items)
+            bool blacklist_state = ViewModel.VM_BlackListTest();
+            if (blacklist_state == false)
             {
-                Thread thread_pgbar = new Thread(MainWindow1.Loading1.ProgressBar_Manage);
-                thread_pgbar.Name = WorkName;
-                thread_pgbar.Start();
+                MainWindow1.Main.Content = MainWindow1.Loading1;
+                foreach (string WorkName in List_Works.Items)
+                {
+                    Thread thread_pgbar = new Thread(MainWindow1.Loading1.ProgressBar_Manage);
+                    thread_pgbar.Name = WorkName;
+                    thread_pgbar.Start();
 
-                Thread thread_exec = new Thread(() => ViewModel.VM_Work_Run(WorkName));
-                thread_exec.Name = WorkName;
-                thread_exec.Start();
+                    Thread thread_exec = new Thread(() => ViewModel.VM_Work_Run(WorkName));
+                    thread_exec.Name = WorkName;
+                    thread_exec.Start();
+                }
+            }
+            else
+            {
+                MessageBox.Show($"{View_Model.VM_GetString_Language("msgbox_blacklist")}", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 
@@ -75,23 +84,27 @@ namespace EasySave_G8_UI.Views.Works
         {
             View_Model ViewModel = new View_Model();
             int i = 0;
-            MainWindow1.Main.Content = MainWindow1.Loading1;
-            foreach (string WorkName in List_Works.SelectedItems)
+            bool blacklist_state = ViewModel.VM_BlackListTest();
+            if (blacklist_state == false)
             {
-                i++;
-                Thread thread_pgbar = new Thread(MainWindow1.Loading1.ProgressBar_Manage);
-                thread_pgbar.Name = WorkName;
-                thread_pgbar.Start();
+                MainWindow1.Main.Content = MainWindow1.Loading1;
+                foreach (string WorkName in List_Works.SelectedItems)
+                {
+                    i++;
+                    Thread thread_pgbar = new Thread(MainWindow1.Loading1.ProgressBar_Manage);
+                    thread_pgbar.Name = WorkName;
+                    thread_pgbar.Start();
 
-                Thread thread_exec = new Thread(() => ViewModel.VM_Work_Run(WorkName));
-                thread_exec.Name = WorkName;
-                thread_exec.Start();
+                    Thread thread_exec = new Thread(() => ViewModel.VM_Work_Run(WorkName));
+                    thread_exec.Name = WorkName;
+                    thread_exec.Start();
+                }
+                if (i == 0) { MessageBox.Show("Please choose at least one Work in the list to execute it.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning); }
             }
-            if (i == 0) 
-            { 
-                MessageBox.Show("Please choose at least one Work in the list to execute it.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
+            else
+            {
+                MessageBox.Show($"{View_Model.VM_GetString_Language("msgbox_blacklist")}", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+            } 
         }
 
         private void Delete_btn_Click(object sender, RoutedEventArgs e)
