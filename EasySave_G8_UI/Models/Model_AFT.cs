@@ -20,13 +20,12 @@ namespace EasySave_G8_UI.Models
         public int total_files { get; set; }
         public int file_remain { get; set; }
         public double millisecondsDuration { get; set; }
-
-        private SemaphoreSlim _semaphore = new SemaphoreSlim(1);
-        private Model_Logs ModelLogs {get; set;}
-
-        View_Model VM = new View_Model();
         private double ActualSize2 = 0;
-        public Model_AFT(){}
+        private Model_Logs ModelLogs {get; set;}
+        
+        private SemaphoreSlim _semaphorefiles = new SemaphoreSlim(1);
+        private SemaphoreSlim _semaphorelogs = new SemaphoreSlim(1);
+
         public Model_AFT(string Name, string Source, string Destination, bool Type) : base(Name, Source, Destination, Type)
         {
             this.Name = Name;
@@ -50,65 +49,51 @@ namespace EasySave_G8_UI.Models
                 if (File.Exists(Source)) //If it's a file
                 {
                     utcDateStart = DateTime.Now;
-
-                    _semaphore.Wait();
                     File.Copy(Source, Destination, true);
                     Size = new System.IO.FileInfo(Source).Length;
-                    _semaphore.Release();
-
                     utcDateFinish = DateTime.Now;
                 }
                 else if (Directory.Exists(Source)) //If it's a folder
                 {
                     utcDateStart = DateTime.Now;
-                    var files = Directory.GetFiles(Source, "*.*", SearchOption.AllDirectories); //Get folders and files in the source directory
-                    Directory.CreateDirectory(Destination); //Create the destination directory if it doesn't exist
-                    
                     string Destination2;
+                    var files = Directory.GetFiles(Source, "*.*", SearchOption.AllDirectories); //Get folders and files in the source directory
                     Destination2 = Destination + @"\" + Path.GetFileName(Source); //Combine the destination directory with the file name of the source 
-                    Directory.CreateDirectory(Destination2); //Create the destination directory
-                    file_remain = total_files;
 
-                    _semaphore.Wait();
+                    Directory.CreateDirectory(Destination); //Create the destination directory if it doesn't exist
+                    Directory.CreateDirectory(Destination2); //Create the destination directory                    
+                    
+                    file_remain = total_files;
                     foreach (var file in files) //Loop throught every files and copy them
                     {
-                        Size = Size + new System.IO.FileInfo(file).Length;//Increment size with each file
+                        Size = Size + new FileInfo(file).Length;//Increment size with each file
                     }
-                    _semaphore.Release();
-
                     ModelStateLogs.Size = Size;
 
                     foreach (var file in files) //Loop throught every files and copy them
                     {
                         string targetFile = file.Replace(Source, Destination2);
-
-                        ActualSize2 = ActualSize2 + new System.IO.FileInfo(file).Length;//Increment size with each file
-                        
+                        ActualSize2 = ActualSize2 + new FileInfo(file).Length;//Increment size with each file
                         int percentage = (int)(((double)ActualSize2 / (double)Size) * 100);//progression's percentage of the save
-
+                   
                         Directory.CreateDirectory(Path.GetDirectoryName(targetFile)); // Create a directory
-                        _semaphore.Wait();
-                        File.Copy(file, targetFile,true); // Do the copy
-                        _semaphore.Release();
+                        
+                        _semaphorefiles.Wait();
+                        try { File.Copy(file, targetFile, true); } // Do the copy
+                        finally { _semaphorefiles.Release(); }
 
                         file_remain = file_remain - 1; // File remain decrease when a file copy have been done
-
-
                         ModelStateLogs.progression = percentage; // actualize the progression attribute on ModelStateLogs with actual percentage
                         ModelStateLogs.file_remain = file_remain; // actualize the file remain attribute on ModelStateLogs with actual percentage
 
                         ModelLogs.StateLog(ModelStateLogs); // Write the json state logs with new infos (it changes at each iteration)
                     }
-
                     ModelStateLogs.file_remain = file_remain;
                     ModelStateLogs.State = "ENDED";
-                   
                     utcDateFinish = DateTime.Now;
                 }
                 Duration = utcDateFinish.Subtract(utcDateStart);  // Calculation of the result of the arrival date - the departure date to obtain a duration, it's in TimeSpan, it is the result of the subtraction of two DataTime
-
                 millisecondsDuration = Duration.TotalMilliseconds; // Convert Duration in milliseconds
-
                 ModelStateLogs.millisecondsDuration = millisecondsDuration; //add millisecondsDuration to the object ModelStateLogs
                 ModelLogs.StateLog(ModelStateLogs);// Write the JSon State Logs with all info 
             }
@@ -122,7 +107,6 @@ namespace EasySave_G8_UI.Models
                 if (Directory.Exists(Source))
                 {
                     utcDateStart = DateTime.Now;
-
                     string[] sourceFiles = Directory.GetFiles(Source, "*.*", SearchOption.AllDirectories); // Get the list of files in the source directory
                     string Destination2;
 
@@ -142,7 +126,6 @@ namespace EasySave_G8_UI.Models
                         ActualSize2 = ActualSize2 + new System.IO.FileInfo(sourceFile).Length;//Increment size with each file
                         int percentage = (int)(((double)ActualSize2 / (double)Size) * 100);
                         ModelStateLogs.progression = percentage;
-
                         file_remain = file_remain - 1;
 
                         if (File.Exists(destinationFile)) // Check if the file already exists in the backup directory
@@ -152,23 +135,26 @@ namespace EasySave_G8_UI.Models
                             
                             if (sourceFileInfo.LastWriteTime > destinationFileInfo.LastWriteTime) // Check if the file has been modified in the source directory
                             {
-                                File.Copy(sourceFile, destinationFile, true); //Copy the modified file to the backup directory
+                                _semaphorefiles.Wait();
+                                try { File.Copy(sourceFile, destinationFile, true); }//Copy the modified file to the backup directory
+                                finally { _semaphorefiles.Release(); }
                             }
                         }
                         else
                         {
                             Directory.CreateDirectory(Path.GetDirectoryName(destinationFile));// Copy the file that does not exist to the backup directory
-                            File.Copy(sourceFile, destinationFile, false);
+
+                            _semaphorefiles.Wait();
+                            try { File.Copy(sourceFile, destinationFile, false); }
+                            finally { _semaphorefiles.Release(); }
                         }
                         ModelStateLogs.file_remain = file_remain;
                         ModelLogs.StateLog(ModelStateLogs);
-
                     }
                     utcDateFinish = DateTime.Now;
                 }                
                 Duration = utcDateFinish.Subtract(utcDateStart); // Calculation of the result of the arrival date - the departure date to obtain a duration, it's in TimeSpan, it is the result of the subtraction of two DataTime
                 millisecondsDuration = Duration.TotalMilliseconds; // Convert Duration in milliseconds
-
                 ModelStateLogs.millisecondsDuration = millisecondsDuration; //add millisecondsDuration to the object ModelStateLogs
                 ModelStateLogs.State = "ENDED"; // Uptadte status of the save in order to write it in Json state logs
                 ModelLogs.StateLog(ModelStateLogs); // Write the JSon State Logs with all info 
@@ -177,7 +163,6 @@ namespace EasySave_G8_UI.Models
 
         public void Logs() //Write backup's logs
         {
-            _semaphore.Wait();
             string utcDateOnly = utcDateDateTime.ToString("dd/MM/yyyy");
             utcDateOnly = utcDateOnly.Replace("/", "-"); //Format the date to allow serializing
             string fileName = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\logs\JSON\" + utcDateOnly + ".json";
@@ -185,8 +170,11 @@ namespace EasySave_G8_UI.Models
 
             if (File.Exists(fileName))  //Test if log file exists, else it creates it
             {
-                string fileContent = File.ReadAllText(fileName); //Bring content of filename in filecontent
-                
+                string fileContent = null;
+                _semaphorelogs.Wait();
+                try { fileContent = File.ReadAllText(fileName); } //Bring content of filename in filecontent
+                finally { _semaphorelogs.Release(); }
+
                 List<Model_AFT> ?values = new List<Model_AFT>(); //Create the list named values
                 values = JsonConvert.DeserializeObject<List<Model_AFT>>(fileContent); //Deserialialize the data in JSON form
                 values?.Add(this); //Add object ModelAFT in the list values
@@ -195,7 +183,11 @@ namespace EasySave_G8_UI.Models
                 File.WriteAllText(fileName, jsonString); //Write json file
 
                 XmlSerializer serializer = new XmlSerializer(typeof(List<Model_AFT>));
+                
+                _semaphorelogs.Wait();
                 StreamWriter writer = new StreamWriter(fileName2);
+                
+                
                 serializer.Serialize(writer, values);
                 writer.Close();
             }
@@ -212,7 +204,6 @@ namespace EasySave_G8_UI.Models
                 serializer.Serialize(writer, values);
                 writer.Close();
             }
-            _semaphore.Release();
         }
     }
 }

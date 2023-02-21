@@ -53,10 +53,6 @@ namespace EasySave_G8_UI.Views.Works
             mainWindow.Main.Content = new Works_Create();
         }
 
-
-
-
-
         private void ExecuteAll_btn_Click(object sender, RoutedEventArgs e)
         {
             View_Model ViewModel = new View_Model();

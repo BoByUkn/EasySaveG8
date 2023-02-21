@@ -25,7 +25,6 @@ namespace EasySave_G8_UI.Views
         private MainWindow currentMainWindow;
         private Loading currentLoading;
         private View_Model ViewMODEL;
-        private static SemaphoreSlim _semaphore = new SemaphoreSlim(1);
 
         public Loading()
         {
@@ -35,13 +34,15 @@ namespace EasySave_G8_UI.Views
             ViewMODEL = new View_Model();
         }
 
-        public void ProgressBar_Manage()
+        public async void ProgressBar_Manage()
         {
             ProgressBar_New();
-            while (!ProgressBar_Ended()) 
+            Thread.Sleep(100);
+            bool wbool = true;
+            while (wbool) 
             {
-                Thread.Sleep(500);
                 ProgressBar_Update();
+                if (!ProgressBar_Ended()) { wbool = false; }
             }
         }
 

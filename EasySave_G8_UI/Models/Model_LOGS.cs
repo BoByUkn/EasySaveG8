@@ -15,23 +15,29 @@ namespace EasySave_G8_UI.Models
             string fileName = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\StateLog.json";
             if (File.Exists(fileName))  //Test if log file exists, else it creates it
             {
+                string fileContent = null;
                 _semaphore.Wait();
-                string fileContent = File.ReadAllText(fileName); // Bring content of filename in filecontent
+                try { fileContent = File.ReadAllText(fileName); } // Bring content of filename in filecontent
+                finally { _semaphore.Release(); }                
+
                 List<Model_StateLogs>? values = new List<Model_StateLogs>(); // Create the list named values
                 List<Model_StateLogs>? new_values = new List<Model_StateLogs>();
                 values = JsonConvert.DeserializeObject<List<Model_StateLogs>>(fileContent); //Deserialialize the data in JSON form
 
                 foreach (Model_StateLogs obj in values) //Loop throught every objects in the deserialized data
                 {
-                    if (!(obj.Name == statelog.Name)) //If we find the save we are looking for in a single work execution
-                    {
+                    if (!(obj.Name == statelog.Name && obj.Source == statelog.Source && obj.Destination == statelog.Destination && obj.Type == statelog.Type)) //If we find the save we are looking for in a single work execution
+                    { 
                         new_values.Add(obj);
                     }
                 }
                 new_values.Add(statelog);
-                var jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(new_values, Newtonsoft.Json.Formatting.Indented); //Serialialize the data in JSON form
-                File.WriteAllText(fileName, jsonString); // Write json file
-                _semaphore.Release();
+                var jsonString = JsonConvert.SerializeObject(new_values, Formatting.Indented); //Serialialize the data in JSON form
+
+                _semaphore.Wait();
+                try { File.WriteAllText(fileName, jsonString); } // Write json file
+                finally { _semaphore.Release(); }
+
             }
             else if (File.Exists(fileName) == false)
             {
@@ -51,9 +57,9 @@ namespace EasySave_G8_UI.Models
 
             if (File.Exists(fileName))
             {
-                string fileContent = File.ReadAllText(fileName); //Bring content of filename in filecontent
-                values = JsonConvert.DeserializeObject<List<Model_AFT>>(fileContent); //Deserialialize the data in JSON form
+                string fileContent = File.ReadAllText(fileName);
 
+                values = JsonConvert.DeserializeObject<List<Model_AFT>>(fileContent); //Deserialialize the data in JSON form
                 foreach (Model_AFT obj in values) //Loop throught every objects in the deserialized data
                 {
                     obj_list.Add(obj); //Store the object into a list for return
@@ -71,7 +77,10 @@ namespace EasySave_G8_UI.Models
 
             if (File.Exists(fileName))
             {
-                string fileContent = File.ReadAllText(fileName); //Bring content of filename in filecontent
+                string fileContent = null;
+                _semaphore.Wait();
+                try { fileContent = File.ReadAllText(fileName); } //Bring content of filename in filecontent
+                finally { _semaphore.Release(); }
                 obj_list = JsonConvert.DeserializeObject<List<Model_StateLogs>>(fileContent); //Deserialialize the data in JSON form
                 return (obj_list);
             }
@@ -81,10 +90,7 @@ namespace EasySave_G8_UI.Models
         public int Get_StateLogsPercentage(string Name)
         {
             string fileName = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\StateLog.json";
-
-            _semaphore.Wait();
             string fileContent = File.ReadAllText(fileName); // Bring content of filename in filecontent
-            _semaphore.Release();
 
             List<Model_StateLogs>? values = new List<Model_StateLogs>(); // Create the list named values
             values = JsonConvert.DeserializeObject<List<Model_StateLogs>>(fileContent); //Deserialialize the data in JSON form
@@ -102,10 +108,7 @@ namespace EasySave_G8_UI.Models
         public bool StatelogExists(string Name) 
         {
             string fileName = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\StateLog.json";
-
-            _semaphore.Wait();
             string fileContent = File.ReadAllText(fileName); // Bring content of filename in filecontent
-            _semaphore.Release();
 
             List<Model_StateLogs>? values = new List<Model_StateLogs>(); // Create the list named values
             values = JsonConvert.DeserializeObject<List<Model_StateLogs>>(fileContent); //Deserialialize the data in JSON form
@@ -119,14 +122,10 @@ namespace EasySave_G8_UI.Models
             return false;
         }
 
-
         public string Get_StateLogsState(string Name)
         {
             string fileName = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\StateLog.json";
-
-            _semaphore.Wait();
             string fileContent = File.ReadAllText(fileName); // Bring content of filename in filecontent
-            _semaphore.Release();
 
 
             List<Model_StateLogs>? values = new List<Model_StateLogs>(); // Create the list named values
