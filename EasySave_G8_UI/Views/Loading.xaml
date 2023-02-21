@@ -1,0 +1,19 @@
+﻿<Page x:Class="EasySave_G8_UI.Views.Loading"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:EasySave_G8_UI.Views"
+      mc:Ignorable="d" 
+      d:DesignHeight="704" d:DesignWidth="935"
+      Title="Loading">
+    <Grid SnapsToDevicePixels="True">
+        <Border HorizontalAlignment="Center" Height="550" VerticalAlignment="Top" Width="750" Margin="0,75,0,0" Background="#161E27" CornerRadius="60,60,60,60">
+            <StackPanel x:Name="MainStackPanel">
+                <TextBlock Foreground="White" FontSize="35" VerticalAlignment="Top" HorizontalAlignment="Center" FontFamily="Bahnschrift Condensed" Height="40" Width="325" TextAlignment="Center">
+                    <Run Language="fr-fr" Text="Loading" Name="Loading_Title"/>
+                </TextBlock>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Page>

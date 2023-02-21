@@ -1,8 +1,10 @@
-﻿using System.IO;
+﻿using EasySave_G8_UI.View_Models;
 using System.Windows;
 using System.Windows.Controls;
-using EasySave_G8_UI.View_Models;
+using System.IO;
 using Microsoft.Win32;
+using System;
+using static EasySave_G8_UI.Views.Loading;
 
 namespace EasySave_G8_UI.Views
 {
@@ -15,7 +17,6 @@ namespace EasySave_G8_UI.Views
         {
             InitializeComponent();
             translate();
-            DataContext = new View_Model();
         }
 
         private void translate()
@@ -29,30 +30,33 @@ namespace EasySave_G8_UI.Views
             Differential.Content = $"{View_Model.VM_GetString_Language("differential")}";
             Browse.Content = $"{View_Model.VM_GetString_Language("browse")}";
             Browse2.Content = $"{View_Model.VM_GetString_Language("browse")}";
-
         }
+
         private void Button_Click_LaunchSave(object sender, RoutedEventArgs e)
         {
             View_Model ViewModel = new View_Model();
             
-            bool blacklist = ViewModel.VM_BlackList();
-            if(blacklist == false)
+            bool blacklist_state = ViewModel.VM_BlackListTest();
+            if(blacklist_state == false)
             {
                 string Name = this.textBox1.Text;
+                if (ViewModel.VM_StateLogsExists(Name)) { System.Windows.MessageBox.Show("A work with that Name already exists. Please use another Name.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning); return; }
+
                 string Source = this.textBox2.Text;
                 string Destination = this.textBox3.Text;
                 int indexType = this.comboBox1.SelectedIndex;
                 bool Type;
                 if (indexType == 0) { Type = true; }
                 else { Type = false; }
-                ViewModel.VM_Classic(Name, Source, Destination, Type);
+
+                try 
+                { 
+                    ViewModel.VM_Classic(Name, Source, Destination, Type);
+                }
+                catch (Exception) { System.Windows.MessageBox.Show("You can't launch a save without all parameters", "Error", MessageBoxButton.OK, MessageBoxImage.Warning); }
             }
         }
 
-        private void ProgressBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-
-        }
         private void Button_Click_Browse(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -68,6 +72,7 @@ namespace EasySave_G8_UI.Views
                 textBox2.Text = Path.GetDirectoryName(openFileDialog.FileName);
             }
         }
+
         private void Button_Click_Browse2(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -83,7 +88,5 @@ namespace EasySave_G8_UI.Views
                 textBox3.Text = Path.GetDirectoryName(openFileDialog.FileName);
             }
         }
-
-
     }
 }

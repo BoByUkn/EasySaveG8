@@ -1,6 +1,7 @@
 ﻿using EasySave_G8_UI.Models;
 using EasySave_G8_UI.View_Models;
 using System.Collections.Generic;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -11,9 +12,15 @@ namespace EasySave_G8_UI.Views.Works
     /// </summary>
     public partial class Works : Page
     {
+        private MainWindow MainWindow1;
+        private Loading Loading1;
+
         public Works()
         {
             InitializeComponent();
+            MainWindow1 = Application.Current.MainWindow as MainWindow;
+            Loading1 = new Loading();
+                //MainWindow1.Main.Content as Loading;
             Works_List();
             translate();
         }
@@ -46,28 +53,56 @@ namespace EasySave_G8_UI.Views.Works
             mainWindow.Main.Content = new Works_Create();
         }
 
+
+
+
+
         private void ExecuteAll_btn_Click(object sender, RoutedEventArgs e)
         {
             View_Model ViewModel = new View_Model();
             ViewModel.VM_Work_Run("", true);
+
+            MainWindow1.Main.Content = Loading1;
         }
 
         private void ExecuteSelected_btn_Click(object sender, RoutedEventArgs e)
         {
             View_Model ViewModel = new View_Model();
-            foreach(string WorkName in List_Works.SelectedItems)
+            int i = 0;
+            MainWindow1.Main.Content = Loading1;
+            foreach (string WorkName in List_Works.SelectedItems)
             {
-                ViewModel.VM_Work_Run(WorkName, false);
+                i++;
+                //Thread thread_pgbar = new Thread(Work_ProgressBar_Start);
+                //thread_pgbar.Name = WorkName;
+                //thread_pgbar.Start();
+
+                Thread thread_exec = new Thread(() => ViewModel.VM_Work_Run(WorkName, false));
+                thread_exec.Name = WorkName;
+                thread_exec.Start();
             }
+            if (i == 0) 
+            { 
+                MessageBox.Show("Please choose at least one Work in the list to execute it.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+        }
+
+        private void Work_ProgressBar_Start()
+        {
+            Loading1.ProgressBar_Manage();
         }
 
         private void Delete_btn_Click(object sender, RoutedEventArgs e)
         {
             View_Model ViewModel = new View_Model();
+            int i = 0;
             foreach (string WorkName in List_Works.SelectedItems)
             {
+                i++;
                 ViewModel.VM_Work_Delete(WorkName);
             }
+            if (i == 0) { MessageBox.Show("Please choose at least one Work in the list to delete it.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning); }
             Works_List();
         }
 
@@ -85,6 +120,7 @@ namespace EasySave_G8_UI.Views.Works
             if (i == 1) { mainWindow.Main.Content = new Works_Edit(WorkName); }
             else { MessageBox.Show("Please choose a Work in the list to edit it.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning); }
         }
+
         private void List_Works_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             List_Work_Detail.Text = "";
@@ -118,7 +154,7 @@ namespace EasySave_G8_UI.Views.Works
                 foreach (string Item in List_Works.SelectedItems)
                 {
                     if (Item == CurrentWork) { AfterCurrent = true; }
-                    if (Item != CurrentWork && AfterCurrent) 
+                    if (Item != CurrentWork && AfterCurrent)
                     {
                         WorkName = Item;
                         WorkNameFound = true;

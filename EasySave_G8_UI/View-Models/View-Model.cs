@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
+using System.Windows;
 
 namespace EasySave_G8_UI.View_Models
 {
@@ -54,14 +56,6 @@ namespace EasySave_G8_UI.View_Models
         //VM Run a single or all works
         public void VM_Work_Run(string Name, bool AllBool)
         {
-            if (!AllBool)
-            {
-                if (!VM_Work_Exist(Name))
-                {
-                    MV_Work_NotFound();
-                    return;
-                }
-            }
             Model_Works ModelWorks = new Model_Works();
             List<Model_PRE>? obj_list = (ModelWorks.Get_Work(Name, AllBool)); //Use Get_Work to get Work data
             foreach (Model_PRE obj in obj_list) //Loop throught every works in list and execute them
@@ -74,36 +68,8 @@ namespace EasySave_G8_UI.View_Models
         //VM Delete a Work
         public void VM_Work_Delete(string Name)
         {
-            if (!VM_Work_Exist(Name))
-            {
-                MV_Work_NotFound();
-                return;
-            }
             Model_Works ModelWorks = new Model_Works();
             ModelWorks.Delete_Work(Name);
-
-        }
-
-        //VM Edit a Work
-        public void VM_Work_Edit(string Name)
-        {
-            if (!VM_Work_Exist(Name))
-            {
-                MV_Work_NotFound();
-                return;
-            }
-            Model_Works ModelWorks = new Model_Works();
-            List<Model_PRE> obj_list = ModelWorks.Get_Work(Name, false); 
-            ModelWorks.Delete_Work(Name);
-            //View_SAVE ViewSAVE = new View_SAVE();
-            //ViewSAVE.Get_Infos(true, true, obj_list);
-        }
-
-        //MV Show WorkNotFound error
-        public void MV_Work_NotFound()
-        {
-            //View_WORKS ViewWORKS = new View_WORKS();
-            //ViewWORKS.Work_NotFound();
         }
 
         //VM Change app_config Language
@@ -128,13 +94,14 @@ namespace EasySave_G8_UI.View_Models
         }
 
         //MV Update the progression bar
-        public void MV_Update_ProgressionBar(int percentage)
+        public int MV_Update_ProgressionBar(String Name)
         {
-            //View_SAVE ViewSAVE = new View_SAVE();
-            //ViewSAVE.Progression_Bar(percentage);
+            Model_Logs modellogs = new Model_Logs();
+            int progression = modellogs.Get_StateLogsPercentage(Name);
+            return progression;
         }
 
-        //MV Show the log files
+        //MV Show the daily log files content
         public List<Model_AFT> MV_Look_Logs(string Date)
         {
             Model_Logs ModelLogs = new Model_Logs();
@@ -142,18 +109,35 @@ namespace EasySave_G8_UI.View_Models
             return list;
         }
 
-        //MV Show a log file content
-        public string[] MV_Show_Logs()
+        public List<Model_StateLogs> MV_Look_StateLogs()
         {
             Model_Logs ModelLogs = new Model_Logs();
-            string[] files = ModelLogs.Show_Logs();
-            return files;
+            List<Model_StateLogs> list = ModelLogs.Get_StateLogs();
+            return list;
         }
 
-        public bool VM_BlackList()
+        public bool VM_BlackListTest()
         {
             Model_BLACKLIST ModelBLACKLIST = new Model_BLACKLIST();
             return ModelBLACKLIST.BlacklistTest();
+        }
+
+        public void VM_BlackListAdd(string ProcessName)
+        {
+            Model_BLACKLIST ModelBLACKLIST = new Model_BLACKLIST();
+            ModelBLACKLIST.BlacklistAdd(ProcessName);
+        }
+
+        public bool VM_StateLogsExists(string Name)
+        {
+            Model_Logs ModelLOGS = new Model_Logs();
+            return ModelLOGS.StatelogExists(Name);
+        }
+
+        public string VM_StateLogsState(string Name)
+        {
+            Model_Logs ModelLOGS = new Model_Logs();
+            return ModelLOGS.Get_StateLogsState(Name);
         }
     }
 }
