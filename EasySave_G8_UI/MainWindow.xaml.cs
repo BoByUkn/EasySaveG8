@@ -33,6 +33,9 @@ namespace EasySave_G8_UI
             Main.Content = new Dashboard();
             if ($"{View_Model.VM_GetString_Language("lang")}" == "en") { FRradio.IsChecked = true; }
             else { ENradio.IsChecked = true; }
+
+
+            new Loading();
         }
 
         private void CheckInstance()

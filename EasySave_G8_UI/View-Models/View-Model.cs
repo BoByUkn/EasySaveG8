@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
+using System.Windows;
 
 namespace EasySave_G8_UI.View_Models
 {
@@ -92,10 +94,10 @@ namespace EasySave_G8_UI.View_Models
         }
 
         //MV Update the progression bar
-        public int MV_Update_ProgressionBar(String Name, String Source, String Destination, bool type)
+        public int MV_Update_ProgressionBar(String Name)
         {
             Model_Logs modellogs = new Model_Logs();
-            int progression = modellogs.Get_StateLogsPercentage(Name,Source,Destination,type);
+            int progression = modellogs.Get_StateLogsPercentage(Name);
             return progression;
         }
 
@@ -124,6 +126,18 @@ namespace EasySave_G8_UI.View_Models
         {
             Model_BLACKLIST ModelBLACKLIST = new Model_BLACKLIST();
             ModelBLACKLIST.BlacklistAdd(ProcessName);
+        }
+
+        public bool VM_StateLogsExists(string Name)
+        {
+            Model_Logs ModelLOGS = new Model_Logs();
+            return ModelLOGS.StatelogExists(Name);
+        }
+
+        public string VM_StateLogsState(string Name)
+        {
+            Model_Logs ModelLOGS = new Model_Logs();
+            return ModelLOGS.Get_StateLogsState(Name);
         }
     }
 }
