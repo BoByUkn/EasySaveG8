@@ -13,13 +13,11 @@ namespace EasySave_G8_UI.Views.Works
     public partial class Works : Page
     {
         private MainWindow MainWindow1;
-        private Loading Loading1;
 
         public Works()
         {
             InitializeComponent();
             MainWindow1 = Application.Current.MainWindow as MainWindow;
-            Loading1 = new Loading();
                 //MainWindow1.Main.Content as Loading;
             Works_List();
             translate();
@@ -60,16 +58,20 @@ namespace EasySave_G8_UI.Views.Works
         private void ExecuteAll_btn_Click(object sender, RoutedEventArgs e)
         {
             View_Model ViewModel = new View_Model();
-            ViewModel.VM_Work_Run("", true);
-
-            MainWindow1.Main.Content = Loading1;
+            MainWindow1.Main.Content = MainWindow1.Loading1;
+            foreach (string WorkName in List_Works.Items)
+            {
+                Thread thread_exec = new Thread(() => ViewModel.VM_Work_Run(WorkName));
+                thread_exec.Name = WorkName;
+                thread_exec.Start();
+            }
         }
 
         private void ExecuteSelected_btn_Click(object sender, RoutedEventArgs e)
         {
             View_Model ViewModel = new View_Model();
             int i = 0;
-            MainWindow1.Main.Content = Loading1;
+            MainWindow1.Main.Content = MainWindow1.Loading1;
             foreach (string WorkName in List_Works.SelectedItems)
             {
                 i++;
@@ -77,7 +79,7 @@ namespace EasySave_G8_UI.Views.Works
                 //thread_pgbar.Name = WorkName;
                 //thread_pgbar.Start();
 
-                Thread thread_exec = new Thread(() => ViewModel.VM_Work_Run(WorkName, false));
+                Thread thread_exec = new Thread(() => ViewModel.VM_Work_Run(WorkName));
                 thread_exec.Name = WorkName;
                 thread_exec.Start();
             }
@@ -90,7 +92,7 @@ namespace EasySave_G8_UI.Views.Works
 
         private void Work_ProgressBar_Start()
         {
-            Loading1.ProgressBar_Manage();
+            MainWindow1.Loading1.ProgressBar_Manage();
         }
 
         private void Delete_btn_Click(object sender, RoutedEventArgs e)

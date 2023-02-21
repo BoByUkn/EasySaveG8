@@ -16,6 +16,7 @@ namespace EasySave_G8_UI
     public partial class MainWindow : Window
     {
         private static Mutex _mutex = null;
+        public Loading Loading1;
 
         public MainWindow()
         {
@@ -34,8 +35,7 @@ namespace EasySave_G8_UI
             if ($"{View_Model.VM_GetString_Language("lang")}" == "en") { FRradio.IsChecked = true; }
             else { ENradio.IsChecked = true; }
 
-
-            new Loading();
+            Loading1 = new Loading();
         }
 
         private void CheckInstance()

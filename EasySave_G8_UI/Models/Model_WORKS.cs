@@ -8,7 +8,7 @@ namespace EasySave_G8_UI.Models
 {
     public class Model_Works
     {
-        public List<Model_PRE> Get_Work(string? Name, bool AllBool) //Get Work data from work_conf and returns it
+        public List<Model_PRE> Get_Work(string? Name) //Get Work data from work_conf and returns it
         {
             string fileName = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\works_config.json";
             List<Model_PRE>? obj_list = new List<Model_PRE>(); //Create the list named obj_list to hold the return list
@@ -21,15 +21,8 @@ namespace EasySave_G8_UI.Models
 
                 foreach (Model_PRE obj in values) //Loop throught every objects in the deserialized data
                 {
-                    if (!AllBool && obj.Name == Name) //If we find the work we are looking for in a single work execution
-                    {
-                        obj_list.Add(obj); //Store the object into a list for return
-                        return (obj_list);
-                    }
-                    else if (AllBool) //If we want to execute all works
-                    {
-                        obj_list.Add(obj);
-                    }
+                    obj_list.Add(obj); //Store the object into a list for return
+                    return (obj_list);
                 }
             }
             return (obj_list); //Return empty list if the work is not found
