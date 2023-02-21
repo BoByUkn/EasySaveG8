@@ -68,7 +68,6 @@ namespace EasySave_G8_UI.Models
                     {
                         Size = Size + new FileInfo(file).Length;//Increment size with each file
                     }
-                    _semaphore.Release();
 
                     ModelStateLogs.Size = Size;
 

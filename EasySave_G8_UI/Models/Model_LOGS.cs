@@ -89,6 +89,7 @@ namespace EasySave_G8_UI.Models
 
         public int Get_StateLogsPercentage(string Name)
         {
+            string fileName = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\StateLog.json";
             string fileContent = File.ReadAllText(fileName); // Bring content of filename in filecontent
 
             List<Model_StateLogs>? values = new List<Model_StateLogs>(); // Create the list named values

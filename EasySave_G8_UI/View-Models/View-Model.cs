@@ -122,18 +122,6 @@ namespace EasySave_G8_UI.View_Models
             return ModelBLACKLIST.BlacklistTest();
         }
 
-        public bool VM_StateLogsExists(string Name)
-        {
-            Model_Logs ModelLOGS = new Model_Logs();
-            return ModelLOGS.StatelogExists(Name);
-        }
-
-        public string VM_StateLogsState(string Name)
-        {
-            Model_Logs ModelLOGS = new Model_Logs();
-            return ModelLOGS.Get_StateLogsState(Name);
-        }
-
         public void VM_BlackListAdd(string ProcessName)
         {
             Model_BLACKLIST ModelBLACKLIST = new Model_BLACKLIST();
