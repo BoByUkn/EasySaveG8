@@ -21,7 +21,8 @@ namespace EasySave_G8_UI.Models
         public int file_remain { get; set; }
         public double millisecondsDuration { get; set; }
 
-        private static SemaphoreSlim _semaphore = new SemaphoreSlim(1);
+        private SemaphoreSlim _semaphore = new SemaphoreSlim(1);
+        private Model_Logs ModelLogs {get; set;}
 
         View_Model VM = new View_Model();
         private double ActualSize2 = 0;
@@ -38,7 +39,9 @@ namespace EasySave_G8_UI.Models
             this.Duration = TimeSpan.Zero;
             this.millisecondsDuration=0;
             this.total_files = Directory.GetFiles(Source, "*.*", SearchOption.AllDirectories).Length;
+            ModelLogs = new Model_Logs(); 
         }
+
         public void Run() //Run a backup
         {
             {
@@ -48,8 +51,10 @@ namespace EasySave_G8_UI.Models
                 {
                     utcDateStart = DateTime.Now;
 
+                    _semaphore.Wait();
                     File.Copy(Source, Destination, true);
                     Size = new System.IO.FileInfo(Source).Length;
+                    _semaphore.Release();
 
                     utcDateFinish = DateTime.Now;
                 }
@@ -64,11 +69,15 @@ namespace EasySave_G8_UI.Models
                     Directory.CreateDirectory(Destination2); //Create the destination directory
                     file_remain = total_files;
 
+                    _semaphore.Wait();
                     foreach (var file in files) //Loop throught every files and copy them
                     {
                         Size = Size + new System.IO.FileInfo(file).Length;//Increment size with each file
                     }
+                    _semaphore.Release();
+
                     ModelStateLogs.Size = Size;
+
                     foreach (var file in files) //Loop throught every files and copy them
                     {
                         string targetFile = file.Replace(Source, Destination2);
@@ -78,26 +87,30 @@ namespace EasySave_G8_UI.Models
                         int percentage = (int)(((double)ActualSize2 / (double)Size) * 100);//progression's percentage of the save
 
                         Directory.CreateDirectory(Path.GetDirectoryName(targetFile)); // Create a directory
+                        _semaphore.Wait();
                         File.Copy(file, targetFile,true); // Do the copy
+                        _semaphore.Release();
+
                         file_remain = file_remain - 1; // File remain decrease when a file copy have been done
 
 
                         ModelStateLogs.progression = percentage; // actualize the progression attribute on ModelStateLogs with actual percentage
                         ModelStateLogs.file_remain = file_remain; // actualize the file remain attribute on ModelStateLogs with actual percentage
-                        StateLog(ModelStateLogs); // Write the json state logs with new infos (it changes at each iteration)
-                        }
+
+                        ModelLogs.StateLog(ModelStateLogs); // Write the json state logs with new infos (it changes at each iteration)
+                    }
+
                     ModelStateLogs.file_remain = file_remain;
                     ModelStateLogs.State = "ENDED";
                    
                     utcDateFinish = DateTime.Now;
                 }
-                
                 Duration = utcDateFinish.Subtract(utcDateStart);  // Calculation of the result of the arrival date - the departure date to obtain a duration, it's in TimeSpan, it is the result of the subtraction of two DataTime
 
                 millisecondsDuration = Duration.TotalMilliseconds; // Convert Duration in milliseconds
 
                 ModelStateLogs.millisecondsDuration = millisecondsDuration; //add millisecondsDuration to the object ModelStateLogs
-                StateLog(ModelStateLogs);// Write the JSon State Logs with all info 
+                ModelLogs.StateLog(ModelStateLogs);// Write the JSon State Logs with all info 
             }
         }
 
@@ -148,7 +161,7 @@ namespace EasySave_G8_UI.Models
                             File.Copy(sourceFile, destinationFile, false);
                         }
                         ModelStateLogs.file_remain = file_remain;
-                        StateLog(ModelStateLogs);
+                        ModelLogs.StateLog(ModelStateLogs);
 
                     }
                     utcDateFinish = DateTime.Now;
@@ -158,7 +171,7 @@ namespace EasySave_G8_UI.Models
 
                 ModelStateLogs.millisecondsDuration = millisecondsDuration; //add millisecondsDuration to the object ModelStateLogs
                 ModelStateLogs.State = "ENDED"; // Uptadte status of the save in order to write it in Json state logs
-                StateLog(ModelStateLogs); // Write the JSon State Logs with all info 
+                ModelLogs.StateLog(ModelStateLogs); // Write the JSon State Logs with all info 
             }
         }
 
@@ -198,38 +211,6 @@ namespace EasySave_G8_UI.Models
                 StreamWriter writer = new StreamWriter(fileName2);
                 serializer.Serialize(writer, values);
                 writer.Close();
-            }
-            _semaphore.Release();
-        }
-
-        private void StateLog(Model_StateLogs statelog) //Write backup's state logs
-        {
-            _semaphore.Wait();
-            string fileName = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\StateLog.json";
-            if (File.Exists(fileName))  //Test if log file exists, else it creates it
-            {
-                string fileContent = File.ReadAllText(fileName); // Bring content of filename in filecontent
-                List<Model_StateLogs>? values = new List<Model_StateLogs>(); // Create the list named values
-                List<Model_StateLogs>? new_values = new List<Model_StateLogs>();
-                values = JsonConvert.DeserializeObject<List<Model_StateLogs>>(fileContent); //Deserialialize the data in JSON form
-
-                foreach (Model_StateLogs obj in values) //Loop throught every objects in the deserialized data
-                {
-                    if (!(obj.Name == statelog.Name)) //If we find the save we are looking for in a single work execution
-                    {
-                        new_values.Add(obj);
-                    }
-                }
-                new_values.Add(statelog);
-                var jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(new_values, Newtonsoft.Json.Formatting.Indented); //Serialialize the data in JSON form
-                File.WriteAllText(fileName, jsonString); // Write json file
-            }
-            else if (File.Exists(fileName) == false)
-            {
-                List<Model_StateLogs> values = new List<Model_StateLogs>(); // create the list named values
-                values.Add(statelog);// Add object Model_StateLogs in the list values
-                var jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(values, Newtonsoft.Json.Formatting.Indented); //Serialialize the data in JSON form
-                File.WriteAllText(fileName, jsonString); // Write json file
             }
             _semaphore.Release();
         }

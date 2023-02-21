@@ -38,8 +38,7 @@ namespace EasySave_G8_UI.Views
         public void ProgressBar_Manage()
         {
             ProgressBar_New();
-
-            while (true) 
+            while (!ProgressBar_Ended()) 
             {
                 Thread.Sleep(500);
                 ProgressBar_Update();
@@ -76,17 +75,36 @@ namespace EasySave_G8_UI.Views
                 {
                     if ((child as FrameworkElement)?.Name == PgName) 
                     {
-                        _semaphore.Wait();
                         try 
                         {
                             progressBar = child as ProgressBar;
                             progressBar.Value = ViewMODEL.MV_Update_ProgressionBar(PgName);
                         }
                         catch { Exception ex; }
-                        _semaphore.Release();
                     }
                 }
             });
+        }
+
+        private bool ProgressBar_Ended()
+        {
+            Thread currentThread = Thread.CurrentThread;
+            ProgressBar progressBar = null;
+            string PgName = currentThread.Name;
+
+            currentMainWindow.Dispatcher.Invoke(() =>
+            {
+                foreach (var child in MainStackPanel.Children)
+                {
+                    if ((child as FrameworkElement)?.Name == PgName)
+                    {
+                        if (ViewMODEL.VM_StateLogsState(PgName) == "ENDED") { return true; }
+                        else { return false; }
+                    }
+                }
+                return false;
+            });
+            return false;
         }
     }
 }

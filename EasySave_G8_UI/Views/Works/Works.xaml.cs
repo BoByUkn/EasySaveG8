@@ -73,9 +73,9 @@ namespace EasySave_G8_UI.Views.Works
             foreach (string WorkName in List_Works.SelectedItems)
             {
                 i++;
-                Thread thread_pgbar = new Thread(Work_ProgressBar_Start);
-                thread_pgbar.Name = WorkName;
-                thread_pgbar.Start();
+                //Thread thread_pgbar = new Thread(Work_ProgressBar_Start);
+                //thread_pgbar.Name = WorkName;
+                //thread_pgbar.Start();
 
                 Thread thread_exec = new Thread(() => ViewModel.VM_Work_Run(WorkName, false));
                 thread_exec.Name = WorkName;
@@ -92,10 +92,6 @@ namespace EasySave_G8_UI.Views.Works
         {
             Loading1.ProgressBar_Manage();
         }
-
-
-
-
 
         private void Delete_btn_Click(object sender, RoutedEventArgs e)
         {
