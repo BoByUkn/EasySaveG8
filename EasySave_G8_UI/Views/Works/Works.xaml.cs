@@ -93,10 +93,6 @@ namespace EasySave_G8_UI.Views.Works
             Loading1.ProgressBar_Manage();
         }
 
-
-
-
-
         private void Delete_btn_Click(object sender, RoutedEventArgs e)
         {
             View_Model ViewModel = new View_Model();

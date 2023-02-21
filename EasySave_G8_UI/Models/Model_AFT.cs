@@ -68,6 +68,8 @@ namespace EasySave_G8_UI.Models
                     {
                         Size = Size + new FileInfo(file).Length;//Increment size with each file
                     }
+                    _semaphore.Release();
+
                     ModelStateLogs.Size = Size;
 
                     foreach (var file in files) //Loop throught every files and copy them

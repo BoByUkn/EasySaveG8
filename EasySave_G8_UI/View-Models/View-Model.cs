@@ -145,5 +145,11 @@ namespace EasySave_G8_UI.View_Models
             Model_Logs ModelLOGS = new Model_Logs();
             return ModelLOGS.StatelogExists(Name);
         }
+
+        public string VM_StateLogsState(string Name)
+        {
+            Model_Logs ModelLOGS = new Model_Logs();
+            return ModelLOGS.Get_StateLogsState(Name);
+        }
     }
 }
