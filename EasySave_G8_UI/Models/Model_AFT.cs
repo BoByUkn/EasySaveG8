@@ -44,10 +44,8 @@ namespace EasySave_G8_UI.Models
                 if (File.Exists(Source)) //If it's a file
                 {
                     utcDateStart = DateTime.Now;
-
                     File.Copy(Source, Destination, true);
                     Size = new System.IO.FileInfo(Source).Length;
-
                     utcDateFinish = DateTime.Now;
                 }
                 else if (Directory.Exists(Source)) //If it's a folder
@@ -57,7 +55,7 @@ namespace EasySave_G8_UI.Models
                     Directory.CreateDirectory(Destination); //Create the destination directory if it doesn't exist
                     
                     string Destination2;
-                    Destination2 = Destination + @"\" + Path.GetFileName(Source); //Combine the destination directory with the file name of the source 
+                    Destination2 = Destination + @"\" + Path.GetFileName(Source) + "-" + this.Name; //Combine the destination directory with the file name of the source 
                     Directory.CreateDirectory(Destination2); //Create the destination directory
                     file_remain = total_files;
 
@@ -111,7 +109,7 @@ namespace EasySave_G8_UI.Models
                     string[] sourceFiles = Directory.GetFiles(Source, "*.*", SearchOption.AllDirectories); // Get the list of files in the source directory
                     string Destination2;
 
-                    Destination2 = Destination + @"\" + Path.GetFileName(Source); //Combine the destination directory with the file name of the source 
+                    Destination2 = Destination + @"\" + Path.GetFileName(Source) + "-" + this.Name ; //Combine the destination directory with the file name of the source 
                     Directory.CreateDirectory(Destination2); //Create the destination directory
 
                     file_remain = total_files;
