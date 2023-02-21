@@ -151,5 +151,23 @@ namespace EasySave_G8_UI.View_Models
             Model_Logs ModelLOGS = new Model_Logs();
             return ModelLOGS.Get_StateLogsState(Name);
         }
+
+        public void VM_PriorityListAdd(string ProcessName,int Index)
+        {
+            Model_PRIORITY ModelPRIORITY = new Model_PRIORITY();
+            ModelPRIORITY.priorityAdd(ProcessName,Index);
+        }
+
+        public void VM_PriorityListRemove(string ProcessNameRm)
+        {
+            Model_PRIORITY ModelPRIORITY = new Model_PRIORITY();
+            ModelPRIORITY.priorityRemove(ProcessNameRm);
+        }
+
+        public List<string> MV_PriorityListRe()
+        {
+            Model_PRIORITY ModelPRIORITY = new Model_PRIORITY();
+            return ModelPRIORITY.priorityReturn();
+        }
     }
 }

@@ -6,6 +6,7 @@ using System.IO;
 using System.Xml.Serialization;
 using System.Xml;
 using System.Threading;
+using System.Windows.Forms.Design;
 
 namespace EasySave_G8_UI.Models
 {
@@ -48,6 +49,8 @@ namespace EasySave_G8_UI.Models
             {
                 Model_StateLogs ModelStateLogs = new Model_StateLogs(this.Name, this.Source, this.Destination, this.Type, this.total_files);
 
+
+
                 if (File.Exists(Source)) //If it's a file
                 {
                     utcDateStart = DateTime.Now;
@@ -60,7 +63,7 @@ namespace EasySave_G8_UI.Models
                     utcDateStart = DateTime.Now;
                     var files = Directory.GetFiles(Source, "*.*", SearchOption.AllDirectories); //Get folders and files in the source directory
                     string Destination2;
-                    Destination2 = Destination + @"\" + Path.GetFileName(Source) + "-" + this.Name; //Combine the destination directory with the file name of the source 
+                    Destination2 = Destination + @"\" + Path.GetFileName(Source); //Combine the destination directory with the file name of the source 
 
                     Directory.CreateDirectory(Destination); //Create the destination directory if it doesn't exist
                     Directory.CreateDirectory(Destination2); //Create the destination directory                    
@@ -78,7 +81,7 @@ namespace EasySave_G8_UI.Models
                         string targetFile = file.Replace(Source, Destination2);
                         ActualSize2 = ActualSize2 + new FileInfo(file).Length;//Increment size with each file
                         int percentage = (int)(((double)ActualSize2 / (double)Size) * 100);//progression's percentage of the save
-                   
+           
                         Directory.CreateDirectory(Path.GetDirectoryName(targetFile)); // Create a directory
                         
                         File.Copy(file, targetFile, true);  // Do the copy
@@ -111,7 +114,7 @@ namespace EasySave_G8_UI.Models
                     string[] sourceFiles = Directory.GetFiles(Source, "*.*", SearchOption.AllDirectories); // Get the list of files in the source directory
                     string Destination2;
 
-                    Destination2 = Destination + @"\" + Path.GetFileName(Source) + "-" + this.Name ; //Combine the destination directory with the file name of the source 
+                    Destination2 = Destination + @"\" + Path.GetFileName(Source); //Combine the destination directory with the file name of the source 
                     Directory.CreateDirectory(Destination2); //Create the destination directory
 
                     file_remain = total_files;
@@ -215,5 +218,6 @@ namespace EasySave_G8_UI.Models
                 finally { _semaphorexml.Release(); }
             }
         }
+
     }
 }

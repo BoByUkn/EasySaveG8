@@ -16,17 +16,17 @@
                 </TextBlock>
                 <Border HorizontalAlignment="Center" Height="260" VerticalAlignment="Top" Width="700" Margin="0,10,0,0" Background="#FF283845" CornerRadius="60,60,60,60">
                     <Grid Height="350">
-				        <Grid.ColumnDefinitions>
-					        <ColumnDefinition Width="100"/>
-					        <ColumnDefinition/>
-					        <ColumnDefinition Width="100"/>
-				        </Grid.ColumnDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="100"/>
+                        </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition/>
                             <RowDefinition/>
                             <RowDefinition/>
                         </Grid.RowDefinitions>
-                    
+
                         <TextBlock Foreground="White" FontSize="16" Margin="10,50,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0" FontFamily="Bahnschrift Condensed" Grid.Row="0">
                             <Run Language="fr-fr" Text="Blacklist add" Name="Source_Path"/>
                         </TextBlock>
@@ -50,6 +50,45 @@
                             <Button.Resources>
                                 <Style TargetType="Border">
                                     <Setter Property="CornerRadius" Value="5"></Setter>
+                                </Style>
+                            </Button.Resources>
+                        </Button>
+                    </Grid>
+                </Border>
+                <Border Height="260" Width="700" Background="#FF283845" CornerRadius="60,60,60,60">
+                    <Grid Height="350">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="100"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Foreground="White" FontSize="16" Margin="10,50,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0" FontFamily="Bahnschrift Condensed" Grid.Row="0"><Run Language="fr-fr" Text="Prioritylist add" x:Name="Prioritylist_Name"/></TextBlock>
+                        <TextBox x:Name="Prioritylist_add1" TextWrapping="Wrap" Height="30" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" Width="419" Grid.Column="1" Grid.Row="0" Margin="30,50,30,0"/>
+
+                        <Button x:Name="Prioritylist_add_btn1" Content="Add" FontFamily="Bahnschrift Condensed" Height="30" FontSize="15" BorderBrush="{x:Null}" Grid.Column="2" Margin="0,50,30,0"  Grid.Row="0" Click="Prioritylist_add_btn_Click">
+                            <Button.Resources>
+                                <Style TargetType="{x:Type Border}">
+                                    <Setter Property="CornerRadius" Value="5"/>
+                                </Style>
+                            </Button.Resources>
+                        </Button>
+
+                        <TextBlock Foreground="White" FontSize="16" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0" FontFamily="Bahnschrift Condensed" Grid.Row="1"><Run Language="fr-fr" Text="Prioritylist Remove"  x:Name="Prioritylist_path1"/></TextBlock>
+                        <ComboBox x:Name="Prioritylist_rm_combobox1" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="419" Grid.Column="1" Grid.Row="1" Margin="30,0,30,0">
+                        </ComboBox>
+                        <ComboBox x:Name="PriorityNumer_combobox" HorizontalAlignment="Left" VerticalAlignment="Top" Height="20" Width="30" Grid.Column="1" Margin="465,73,0,0">
+                        </ComboBox>
+
+                        <Button x:Name="Prioritylist_rm_btn1" Content="Remove" FontFamily="Bahnschrift Condensed" Height="30" FontSize="15" BorderBrush="{x:Null}" Grid.Column="2" Margin="0,0,30,0"  Grid.Row="1" Click="Prioritylist_rm_btn_Click">
+                            <Button.Resources>
+                                <Style TargetType="{x:Type Border}">
+                                    <Setter Property="CornerRadius" Value="5"/>
                                 </Style>
                             </Button.Resources>
                         </Button>

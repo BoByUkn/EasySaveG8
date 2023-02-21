@@ -1,12 +1,12 @@
-﻿using EasySave_G8_UI.Models;
-using EasySave_G8_UI.View_Models;
+﻿using EasySave_G8_UI.View_Models;
 using EasySave_G8_UI.Views;
 using EasySave_G8_UI.Views.Works;
 using System;
 using System.IO;
 using System.Threading;
 using System.Windows;
-using System.Windows.Navigation;
+using System.Windows.Input;
+using System.Windows.Media;
 
 namespace EasySave_G8_UI
 {
@@ -31,11 +31,22 @@ namespace EasySave_G8_UI
 
             translate();
 
+            this.WindowStyle = WindowStyle.None;
+            this.AllowsTransparency = true;
+
+            this.Background = Brushes.Transparent;
+            this.MouseLeftButtonDown += MainWindow_MouseLeftButtonDown;
+
             Main.Content = new Dashboard();
             if ($"{View_Model.VM_GetString_Language("lang")}" == "en") { FRradio.IsChecked = true; }
             else { ENradio.IsChecked = true; }
 
             Loading1 = new Loading();
+
+        }
+        private void MainWindow_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            this.DragMove();
         }
 
         private void CheckInstance()

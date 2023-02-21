@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -27,8 +28,7 @@ namespace EasySave_G8_UI.Views
         public Settings()
         {
             InitializeComponent();
-            ListRefresh();
-            
+            ListRefresh();   
         }
 
         private void Blacklist_add_btn_Click(object sender, RoutedEventArgs e)
@@ -36,9 +36,7 @@ namespace EasySave_G8_UI.Views
             View_Model ViewModel = new View_Model();
             string ProcessName = Blacklist_add.Text;
             ViewModel.VM_BlackListAdd(ProcessName);
-            //ListRefresh();
             PageRefresh();
-            
         }
 
         private void Blacklist_rm_btn_Click(object sender, RoutedEventArgs e)
@@ -57,8 +55,14 @@ namespace EasySave_G8_UI.Views
             int i;
             for (i = 0; i < blacklist.Count; i++)
             {
-                //Blacklist_rm_combobox.Items.Remove(blacklist[i]);
                 Blacklist_rm_combobox.Items.Add(blacklist[i]);
+            }
+            List<string> prioritylist = ViewModel.MV_PriorityListRe();
+            for (i = 0; i < prioritylist.Count; i++)
+            {
+                PriorityNumer_combobox.Items.Add(i);
+                Prioritylist_rm_combobox1.Items.Add(prioritylist[i]);
+
             }
         }
 
@@ -68,5 +72,25 @@ namespace EasySave_G8_UI.Views
             mainWindow.Main.Content = new Settings();
         }
 
+
+        private void Prioritylist_add_btn_Click(object sender, RoutedEventArgs e)
+        {
+            View_Model ViewModel = new View_Model();
+            string ExtensionName = Prioritylist_add1.Text;
+            int index = PriorityNumer_combobox.SelectedIndex;
+            if (index == -1) { index = 0; }
+            ViewModel.VM_PriorityListAdd(ExtensionName, index);
+            PageRefresh();
+
+        }
+
+        private void Prioritylist_rm_btn_Click(object sender, RoutedEventArgs e)
+        {
+            View_Model ViewModel = new View_Model();
+            string ExtensionName = Prioritylist_rm_combobox1.Text;
+            ViewModel.VM_PriorityListRemove(ExtensionName);
+            ListRefresh();
+            PageRefresh();
+        }
     }
 }

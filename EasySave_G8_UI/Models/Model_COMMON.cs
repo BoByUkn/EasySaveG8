@@ -12,6 +12,8 @@ using System.Windows.Controls;
 using System.Collections.Generic;
 using System.Windows;
 using System.Threading;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
+using static EasySave_G8_UI.Models.Model_BLACKLIST;
 
 namespace EasySave_G8_UI.Models
 {
@@ -29,11 +31,17 @@ namespace EasySave_G8_UI.Models
             string fileName = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\app_config.json";
             var jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(ModelCOMMON); //Serialialize the data in JSON form
             File.WriteAllText(fileName, jsonString); //Create and append JSON into file
-            string fileName2 = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\blackList.json";
 
-            Model_BLACKLIST bLACKLIST= new Model_BLACKLIST();
+            string fileName2 = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\blackList.json";
+            Model_BLACKLIST bLACKLIST = new Model_BLACKLIST();
             var jsonString2 = JsonConvert.SerializeObject(bLACKLIST); //Serialialize the data in JSON form
             File.WriteAllText(fileName2, jsonString2); //Create and append JSON into file
+
+            string fileNamePriorityFiles = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\priority.json";
+            Model_PRIORITY PriorityFiles = new Model_PRIORITY();
+            var jsonStringPriority = JsonConvert.SerializeObject(PriorityFiles); //Serialialize the data in JSON form
+            File.WriteAllText(fileNamePriorityFiles, jsonStringPriority); //Create and append JSON into file
+
 
             var RandomInt64 = new Random();
             long cipherKey = RandomInt64.NextInt64(); //Generates a random 64bit key for CryptoSoft
@@ -66,7 +74,7 @@ namespace EasySave_G8_UI.Models
         public void ChangeLanguage() //Change the Language stored in app_config
         {
             string fileName = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\app_config.json";
-            
+
             string fileContent = File.ReadAllText(fileName); // Bring content of filename in filecontent
             Model_LANG base_conf = JsonConvert.DeserializeObject<Model_LANG>(fileContent); // Create the list named values
             base_conf.lang = this.lang;
@@ -144,6 +152,8 @@ namespace EasySave_G8_UI.Models
                 {
                     blacklist.Add(ProcessName);
                     this.blacklist = blacklist;
+                    Trace.Write(blacklist);
+
                     var jsonString = JsonConvert.SerializeObject(this); //Serialialize the data in JSON form
                     File.WriteAllText(fileName, jsonString); //Create and append JSON into file
                 }
@@ -155,13 +165,74 @@ namespace EasySave_G8_UI.Models
                 File.WriteAllText(fileName, jsonString); //Create and append JSON into file
             }
         }
-        
+
         public void BlacklistRemove(string ProcessNameRm)
         {
             List<string> blacklist = this.BlacklistReturn();
             string fileName = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\blackList.json";
             blacklist.Remove(ProcessNameRm);
             this.blacklist = blacklist;
+            var jsonString = JsonConvert.SerializeObject(this); //Serialialize the data in JSON form
+            File.WriteAllText(fileName, jsonString); //Create and append JSON into file
+        }
+
+    }
+
+
+    public class Model_PRIORITY
+    {
+        public List<string> priority { get; set; }
+        public Model_PRIORITY()
+        {
+            this.priority = new List<string>();
+        }
+
+        public List<string> priorityReturn()
+        {
+            string fileName = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\priority.json";
+            string fileContent = File.ReadAllText(fileName); // Bring content of filename in filecontent
+            Model_PRIORITY base_conf_priority = JsonConvert.DeserializeObject<Model_PRIORITY>(fileContent); // Create the list named values
+            return base_conf_priority.priority;
+        }
+
+        public void priorityAdd(string ExtensionName, int indexToInsert)
+        {
+            List<string> priority = this.priorityReturn();
+            bool ProcExistTest = false;
+            string fileName = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\priority.json";
+            if (priority != null)
+            {
+                foreach (string Extensionname in priority)
+                {
+                    if (Extensionname == ExtensionName)
+                    {
+                        ProcExistTest = true;
+                    }
+                }
+                if (ProcExistTest == false)
+                {
+                    //priority.Insert(indexToInsert, ExtensionName);
+                    priority.Add(ExtensionName);
+                    this.priority = priority;
+                    var jsonString = JsonConvert.SerializeObject(this); //Serialialize the data in JSON form
+                    File.WriteAllText(fileName, jsonString); //Create and append JSON into file
+                }
+            }
+            else
+            {
+                priority.Insert(indexToInsert, ExtensionName);
+                var jsonString = JsonConvert.SerializeObject(this); //Serialialize the data in JSON form
+                File.WriteAllText(fileName, jsonString); //Create and append JSON into file}
+            }
+        }
+
+
+        public void priorityRemove(string PrirorityRm)
+        {
+            List<string> priority = this.priorityReturn();
+            string fileName = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\priority.json";
+            priority.Remove(PrirorityRm);
+            this.priority = priority;
             var jsonString = JsonConvert.SerializeObject(this); //Serialialize the data in JSON form
             File.WriteAllText(fileName, jsonString); //Create and append JSON into file
         }
