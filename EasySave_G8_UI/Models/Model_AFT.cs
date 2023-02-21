@@ -49,7 +49,8 @@ namespace EasySave_G8_UI.Models
             {
                 Model_StateLogs ModelStateLogs = new Model_StateLogs(this.Name, this.Source, this.Destination, this.Type, this.total_files);
 
-
+                Model_PRIORITY model_PRIORITY = new Model_PRIORITY(); // create a new Model_Priority in order to have a priority list
+                List<String> priorityList =model_PRIORITY.priorityReturn();
 
                 if (File.Exists(Source)) //If it's a file
                 {
@@ -72,24 +73,28 @@ namespace EasySave_G8_UI.Models
                     foreach (var file in files) //Loop throught every files and copy them
                     {
                         Size = Size + new FileInfo(file).Length;//Increment size with each file
+                        string targetFile = file.Replace(Source, Destination2);
+
+                        foreach (string ext in priorityList)
+                        {
+                            if (Path.GetExtension(file) == ext)
+                            {
+                                File.Copy(file, targetFile, true);  // Do the copy when the ext is equal tu the extension of the actual file
+                            }
+                        }
                     }
 
                     ModelStateLogs.Size = Size;
-
                     foreach (var file in files) //Loop throught every files and copy them
                     {
                         string targetFile = file.Replace(Source, Destination2);
                         ActualSize2 = ActualSize2 + new FileInfo(file).Length;//Increment size with each file
                         int percentage = (int)(((double)ActualSize2 / (double)Size) * 100);//progression's percentage of the save
-           
                         Directory.CreateDirectory(Path.GetDirectoryName(targetFile)); // Create a directory
-                        
                         File.Copy(file, targetFile, true);  // Do the copy
-
                         file_remain = file_remain - 1; // File remain decrease when a file copy have been done
                         ModelStateLogs.progression = percentage; // actualize the progression attribute on ModelStateLogs with actual percentage
                         ModelStateLogs.file_remain = file_remain; // actualize the file remain attribute on ModelStateLogs with actual percentage
-
                         ModelLogs.StateLog(ModelStateLogs); // Write the json state logs with new infos (it changes at each iteration)
                     }
                     ModelStateLogs.file_remain = file_remain;
@@ -107,6 +112,9 @@ namespace EasySave_G8_UI.Models
         {
             {
                 Model_StateLogs ModelStateLogs = new Model_StateLogs(this.Name, this.Source, this.Destination, this.Type, this.total_files);
+
+                Model_PRIORITY model_PRIORITY = new Model_PRIORITY();
+                List<String> priorityList = model_PRIORITY.priorityReturn();
                 if (!Directory.Exists(Destination)) { Directory.CreateDirectory(Destination); } //Create the destination directory if it doesn't exist
                 if (Directory.Exists(Source))
                 {
@@ -122,6 +130,15 @@ namespace EasySave_G8_UI.Models
                     foreach (var file in sourceFiles) //Loop throught every files and copy them
                     {
                         Size = Size + new System.IO.FileInfo(file).Length;//Increment size with each file
+                        string targetFile = file.Replace(Source, Destination2);
+
+                        foreach (string ext in priorityList)
+                        {
+                            if (Path.GetExtension(file) == ext)
+                            {
+                                File.Copy(file, targetFile, true);  // Do the copy when the ext is equal tu the extension of the actual file
+                            }
+                        }
                     }
                     ModelStateLogs.Size = Size;
                     foreach (string sourceFile in sourceFiles) // Browse each file in the source directory
