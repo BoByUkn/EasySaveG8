@@ -57,6 +57,7 @@ namespace EasySave_G8_UI.Models
                 else if (Directory.Exists(Source)) //If it's a folder
                 {
                     utcDateStart = DateTime.Now;
+                    var files = Directory.GetFiles(Source, "*.*", SearchOption.AllDirectories); //Get folders and files in the source directory
                     string Destination2;
                     Destination2 = Destination + @"\" + Path.GetFileName(Source) + "-" + this.Name; //Combine the destination directory with the file name of the source 
 
