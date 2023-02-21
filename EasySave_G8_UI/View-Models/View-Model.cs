@@ -54,10 +54,10 @@ namespace EasySave_G8_UI.View_Models
         }
 
         //VM Run a single or all works
-        public void VM_Work_Run(string Name, bool AllBool)
+        public void VM_Work_Run(string Name)
         {
             Model_Works ModelWorks = new Model_Works();
-            List<Model_PRE>? obj_list = (ModelWorks.Get_Work(Name, AllBool)); //Use Get_Work to get Work data
+            List<Model_PRE>? obj_list = (ModelWorks.Get_Work(Name, false)); //Use Get_Work to get Work data
             foreach (Model_PRE obj in obj_list) //Loop throught every works in list and execute them
             {
                 Model_PRE ModelPRE = new Model_PRE(obj.Name, obj.Source, obj.Destination, obj.Type);

@@ -5,6 +5,7 @@ using System.IO;
 using Microsoft.Win32;
 using System;
 using static EasySave_G8_UI.Views.Loading;
+using System.Threading;
 
 namespace EasySave_G8_UI.Views
 {
@@ -13,10 +14,13 @@ namespace EasySave_G8_UI.Views
     /// </summary>
     public partial class Classics : Page
     {
+        private MainWindow MainWindow1;
+
         public Classics()
         {
             InitializeComponent();
             translate();
+            MainWindow1 = Application.Current.MainWindow as MainWindow;
         }
 
         private void translate()
@@ -40,7 +44,12 @@ namespace EasySave_G8_UI.Views
             if(blacklist_state == false)
             {
                 string Name = this.textBox1.Text;
-                if (ViewModel.VM_StateLogsExists(Name)) { System.Windows.MessageBox.Show("A work with that Name already exists. Please use another Name.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning); return; }
+
+                try
+                {
+                    if (ViewModel.VM_StateLogsExists(Name)) { System.Windows.MessageBox.Show("A work with that Name already exists. Please use another Name.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning); return; }
+                }
+                catch { Exception ex; }
 
                 string Source = this.textBox2.Text;
                 string Destination = this.textBox3.Text;
@@ -50,8 +59,11 @@ namespace EasySave_G8_UI.Views
                 else { Type = false; }
 
                 try 
-                { 
-                    ViewModel.VM_Classic(Name, Source, Destination, Type);
+                {
+                    MainWindow1.Main.Content = MainWindow1.Loading1;
+                    Thread thread_exec = new Thread(() => ViewModel.VM_Classic(Name, Source, Destination, Type));
+                    thread_exec.Name = Name;
+                    thread_exec.Start();
                 }
                 catch (Exception) { System.Windows.MessageBox.Show("You can't launch a save without all parameters", "Error", MessageBoxButton.OK, MessageBoxImage.Warning); }
             }
