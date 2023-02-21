@@ -37,10 +37,11 @@ namespace EasySave_G8_UI.Views
         public async void ProgressBar_Manage()
         {
             ProgressBar_New();
-            Thread.Sleep(100);
+            Thread.Sleep(500);
             bool wbool = true;
             while (wbool) 
             {
+                Thread.Sleep(100);
                 ProgressBar_Update();
                 if (!ProgressBar_Ended()) { wbool = false; }
             }
@@ -79,7 +80,7 @@ namespace EasySave_G8_UI.Views
                         try 
                         {
                             progressBar = child as ProgressBar;
-                            progressBar.Value = ViewMODEL.MV_Update_ProgressionBar(PgName);
+                            progressBar.Value++; //ViewMODEL.MV_Update_ProgressionBar(PgName);
                         }
                         catch { Exception ex; }
                     }

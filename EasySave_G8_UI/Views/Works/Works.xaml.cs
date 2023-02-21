@@ -61,6 +61,10 @@ namespace EasySave_G8_UI.Views.Works
             MainWindow1.Main.Content = MainWindow1.Loading1;
             foreach (string WorkName in List_Works.Items)
             {
+                Thread thread_pgbar = new Thread(MainWindow1.Loading1.ProgressBar_Manage);
+                thread_pgbar.Name = WorkName;
+                thread_pgbar.Start();
+
                 Thread thread_exec = new Thread(() => ViewModel.VM_Work_Run(WorkName));
                 thread_exec.Name = WorkName;
                 thread_exec.Start();
@@ -75,9 +79,9 @@ namespace EasySave_G8_UI.Views.Works
             foreach (string WorkName in List_Works.SelectedItems)
             {
                 i++;
-                //Thread thread_pgbar = new Thread(Work_ProgressBar_Start);
-                //thread_pgbar.Name = WorkName;
-                //thread_pgbar.Start();
+                Thread thread_pgbar = new Thread(MainWindow1.Loading1.ProgressBar_Manage);
+                thread_pgbar.Name = WorkName;
+                thread_pgbar.Start();
 
                 Thread thread_exec = new Thread(() => ViewModel.VM_Work_Run(WorkName));
                 thread_exec.Name = WorkName;
@@ -88,11 +92,6 @@ namespace EasySave_G8_UI.Views.Works
                 MessageBox.Show("Please choose at least one Work in the list to execute it.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
-        }
-
-        private void Work_ProgressBar_Start()
-        {
-            MainWindow1.Loading1.ProgressBar_Manage();
         }
 
         private void Delete_btn_Click(object sender, RoutedEventArgs e)

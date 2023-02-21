@@ -125,8 +125,10 @@ namespace EasySave_G8_UI.Models
         public string Get_StateLogsState(string Name)
         {
             string fileName = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\StateLog.json";
-            string fileContent = File.ReadAllText(fileName); // Bring content of filename in filecontent
-
+            string fileContent = null;
+            _semaphore.Wait();
+            try { fileContent = File.ReadAllText(fileName); } // Bring content of filename in filecontent
+            finally { _semaphore.Release(); }
 
             List<Model_StateLogs>? values = new List<Model_StateLogs>(); // Create the list named values
             values = JsonConvert.DeserializeObject<List<Model_StateLogs>>(fileContent); //Deserialialize the data in JSON form

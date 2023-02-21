@@ -83,7 +83,7 @@ namespace EasySave_G8_UI
 
         private void Loading_btn_Click(object sender, RoutedEventArgs e)
         {
-            Main.Content = new Loading();
+            Main.Content = Loading1;
         }
 
         private void Settings_btn_Click(object sender, RoutedEventArgs e)

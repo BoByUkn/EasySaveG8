@@ -60,6 +60,10 @@ namespace EasySave_G8_UI.Views
 
                 try 
                 {
+                    Thread thread_pgbar = new Thread(MainWindow1.Loading1.ProgressBar_Manage);
+                    thread_pgbar.Name = Name;
+                    thread_pgbar.Start();
+
                     MainWindow1.Main.Content = MainWindow1.Loading1;
                     Thread thread_exec = new Thread(() => ViewModel.VM_Classic(Name, Source, Destination, Type));
                     thread_exec.Name = Name;

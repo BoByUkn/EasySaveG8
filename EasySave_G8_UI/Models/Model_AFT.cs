@@ -23,8 +23,9 @@ namespace EasySave_G8_UI.Models
         private double ActualSize2 = 0;
         private Model_Logs ModelLogs = new Model_Logs();
         
-        private SemaphoreSlim _semaphorefiles = new SemaphoreSlim(1);
-        private SemaphoreSlim _semaphorelogs = new SemaphoreSlim(1);
+
+        private static SemaphoreSlim _semaphorejson = new SemaphoreSlim(1);
+        private static SemaphoreSlim _semaphorexml = new SemaphoreSlim(1);
 
         public Model_AFT () { }
         public Model_AFT(string Name, string Source, string Destination, bool Type) : base(Name, Source, Destination, Type)
@@ -80,9 +81,7 @@ namespace EasySave_G8_UI.Models
                    
                         Directory.CreateDirectory(Path.GetDirectoryName(targetFile)); // Create a directory
                         
-                        _semaphorefiles.Wait();
-                        try { File.Copy(file, targetFile, true); } // Do the copy
-                        finally { _semaphorefiles.Release(); }
+                        File.Copy(file, targetFile, true);  // Do the copy
 
                         file_remain = file_remain - 1; // File remain decrease when a file copy have been done
                         ModelStateLogs.progression = percentage; // actualize the progression attribute on ModelStateLogs with actual percentage
@@ -137,18 +136,13 @@ namespace EasySave_G8_UI.Models
                             
                             if (sourceFileInfo.LastWriteTime > destinationFileInfo.LastWriteTime) // Check if the file has been modified in the source directory
                             {
-                                _semaphorefiles.Wait();
-                                try { File.Copy(sourceFile, destinationFile, true); }//Copy the modified file to the backup directory
-                                finally { _semaphorefiles.Release(); }
+                                File.Copy(sourceFile, destinationFile, true); //Copy the modified file to the backup directory
                             }
                         }
                         else
                         {
                             Directory.CreateDirectory(Path.GetDirectoryName(destinationFile));// Copy the file that does not exist to the backup directory
-
-                            _semaphorefiles.Wait();
-                            try { File.Copy(sourceFile, destinationFile, false); }
-                            finally { _semaphorefiles.Release(); }
+                            File.Copy(sourceFile, destinationFile, false); 
                         }
                         ModelStateLogs.file_remain = file_remain;
                         ModelLogs.StateLog(ModelStateLogs);
@@ -173,38 +167,52 @@ namespace EasySave_G8_UI.Models
             if (File.Exists(fileName))  //Test if log file exists, else it creates it
             {
                 string fileContent = null;
-                _semaphorelogs.Wait();
+
+                _semaphorejson.Wait();
                 try { fileContent = File.ReadAllText(fileName); } //Bring content of filename in filecontent
-                finally { _semaphorelogs.Release(); }
+                finally { _semaphorejson.Release(); }
 
                 List<Model_AFT> ?values = new List<Model_AFT>(); //Create the list named values
                 values = JsonConvert.DeserializeObject<List<Model_AFT>>(fileContent); //Deserialialize the data in JSON form
                 values?.Add(this); //Add object ModelAFT in the list values
                 
                 string jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(values, Newtonsoft.Json.Formatting.Indented); //Serialialize the data in JSON form
-                File.WriteAllText(fileName, jsonString); //Write json file
+                
+                _semaphorejson.Wait();
+                try { File.WriteAllText(fileName, jsonString); } //Write json file
+                finally { _semaphorejson.Release(); }
 
                 XmlSerializer serializer = new XmlSerializer(typeof(List<Model_AFT>));
-                
-                _semaphorelogs.Wait();
-                StreamWriter writer = new StreamWriter(fileName2);
-                
-                
-                serializer.Serialize(writer, values);
-                writer.Close();
+                _semaphorexml.Wait();
+                try {
+                    StreamWriter writer = new StreamWriter(fileName2);
+                    serializer.Serialize(writer, values);
+                    writer.Close();
+                }
+                finally { _semaphorexml.Release(); }
             }
+
 
             else if (!File.Exists(fileName))
             {
                 List<Model_AFT> values = new List<Model_AFT>(); // create the list named values
                 values.Add(this);// Add object ModelAFT in the list values
-                var jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(values, Newtonsoft.Json.Formatting.Indented); //Serialialize the data in JSON form
-                File.WriteAllText(fileName, jsonString); // Write json file
+                var jsonString = JsonConvert.SerializeObject(values, Newtonsoft.Json.Formatting.Indented); //Serialialize the data in JSON form
+                
+                _semaphorejson.Wait();
+                try { File.WriteAllText(fileName, jsonString); } // Write json file
+                finally { _semaphorejson.Release(); }
 
                 XmlSerializer serializer = new XmlSerializer(typeof(List<Model_AFT>));
-                StreamWriter writer = new StreamWriter(fileName2);
-                serializer.Serialize(writer, values);
-                writer.Close();
+                
+                _semaphorexml.Wait();
+                try
+                {
+                    StreamWriter writer = new StreamWriter(fileName2);
+                    serializer.Serialize(writer, values);
+                    writer.Close();
+                }
+                finally { _semaphorexml.Release(); }
             }
         }
     }
