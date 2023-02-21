@@ -32,7 +32,7 @@
                         </TextBlock>
                         <TextBox x:Name="Blacklist_add" TextWrapping="Wrap" Height="30" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" Width="419" Grid.Column="1" Grid.Row="0" Margin="30,50,30,0"/>
 
-                        <Button Name="Blacklist_add_btn" Content="Add" FontFamily="Bahnschrift Condensed" Height="30" FontSize="15" BorderBrush="{x:Null}" Grid.Column="2" Margin="0,50,30,0"  Grid.Row="0">
+                        <Button Name="Blacklist_add_btn" Content="Add" FontFamily="Bahnschrift Condensed" Height="30" FontSize="15" BorderBrush="{x:Null}" Grid.Column="2" Margin="0,50,30,0"  Grid.Row="0" Click="Blacklist_add_btn_Click">
                             <Button.Resources>
                                 <Style TargetType="Border">
                                     <Setter Property="CornerRadius" Value="5"></Setter>
