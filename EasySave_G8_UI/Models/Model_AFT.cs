@@ -115,7 +115,7 @@ namespace EasySave_G8_UI.Models
                         targetFile = file.Replace(Source, Destination2);
 
                         File.Copy(file, targetFile, true);  // Do the copy of priority Files
-                        Total_CryptoTime += Cryptosoft(targetFile);
+                        //Total_CryptoTime += Cryptosoft(targetFile);
 
                         ActualSize2 = ActualSize2 + new FileInfo(file).Length;//Increment size with each file
                         percentage = (int)(((double)ActualSize2 / (double)Size) * 100);//progression's percentage of the save
@@ -183,22 +183,28 @@ namespace EasySave_G8_UI.Models
                     Directory.CreateDirectory(Destination2); //Create the destination directory
                     file_remain = total_files;
 
+                    List<string> files_NoPriority = new List<string>(sourceFiles); // Convert Tab in List (in order to use Remove Method)
+                    List<string> files_Priority = new List<string>(); //Create list of priorityfiles
+                    string targetFile;
+
                     foreach (var file in sourceFiles) //Loop throught every files and copy them
                     {
                         Size = Size + new System.IO.FileInfo(file).Length;//Increment size with each file
-                        string targetFile = file.Replace(Source, Destination2);
+                        targetFile = file.Replace(Source, Destination2);
 
                         foreach (string ext in priorityList)
                         {
                             if (Path.GetExtension(file) == ext)
                             {
-                                File.Copy(file, targetFile, true);  // Do the copy when the ext is equal tu the extension of the actual file
+                                files_Priority.Add(file); // Add file in priority file
+                                files_NoPriority.Remove(file); // Remove file from the all files in the list files_NoPriority (in order to have only no priority files)
                             }
                         }
                     }
                     ModelStateLogs.Size = Size;
                     string destinationFile;
-                    foreach (string sourceFile in sourceFiles) // Browse each file in the source directory
+
+                    foreach (string sourceFile in files_Priority) // Browse each file in the source directory
                     {
                         destinationFile = sourceFile.Replace(Source, Destination2); // Create a destination path for the file
                         ActualSize2 = ActualSize2 + new System.IO.FileInfo(sourceFile).Length;//Increment size with each file
@@ -213,6 +219,36 @@ namespace EasySave_G8_UI.Models
                             FileInfo sourceFileInfo = new FileInfo(sourceFile); // Get information about source and destination files
                             FileInfo destinationFileInfo = new FileInfo(destinationFile);
                             
+                            if (sourceFileInfo.LastWriteTime > destinationFileInfo.LastWriteTime) // Check if the file has been modified in the source directory
+                            {
+                                File.Copy(sourceFile, destinationFile, true); //Copy the modified file to the backup directory
+                                //Total_CryptoTime += Cryptosoft(destinationFile);
+                            }
+                        }
+                        else
+                        {
+                            Directory.CreateDirectory(Path.GetDirectoryName(destinationFile));// Copy the file that does not exist to the backup directory
+                            File.Copy(sourceFile, destinationFile, false);
+                            //Total_CryptoTime += Cryptosoft(destinationFile);
+                        }
+                        ModelStateLogs.file_remain = file_remain;
+                        ModelLogs.StateLog(ModelStateLogs);
+                    }
+                    foreach (string sourceFile in files_NoPriority) // Browse each file in the source directory
+                    {
+                        destinationFile = sourceFile.Replace(Source, Destination2); // Create a destination path for the file
+                        ActualSize2 = ActualSize2 + new System.IO.FileInfo(sourceFile).Length;//Increment size with each file
+                        percentage = (int)(((double)ActualSize2 / (double)Size) * 100);
+
+                        localworker.ReportProgress(percentage, Name);
+                        ModelStateLogs.progression = percentage;
+                        file_remain--;
+
+                        if (File.Exists(destinationFile)) // Check if the file already exists in the backup directory
+                        {
+                            FileInfo sourceFileInfo = new FileInfo(sourceFile); // Get information about source and destination files
+                            FileInfo destinationFileInfo = new FileInfo(destinationFile);
+
                             if (sourceFileInfo.LastWriteTime > destinationFileInfo.LastWriteTime) // Check if the file has been modified in the source directory
                             {
                                 File.Copy(sourceFile, destinationFile, true); //Copy the modified file to the backup directory
