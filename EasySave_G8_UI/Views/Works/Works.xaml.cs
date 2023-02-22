@@ -60,8 +60,11 @@ namespace EasySave_G8_UI.Views.Works
         {
             View_Model ViewModel = new View_Model();
             bool blacklist_state = ViewModel.VM_BlackListTest();
+            int i = 0;
             if (blacklist_state == false)
             {
+                foreach (string WorkName in List_Works.Items) { i++; }
+                if (i == 0) {MessageBox.Show($"There is no Work to execute.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning); return; };
                 MainWindow1.Main.Content = MainWindow1.Loading1;
                 foreach (string WorkName in List_Works.Items)
                 {
@@ -87,10 +90,12 @@ namespace EasySave_G8_UI.Views.Works
             bool blacklist_state = ViewModel.VM_BlackListTest();
             if (blacklist_state == false)
             {
+                foreach (string WorkName in List_Works.Items) { i++; }
+                if (i == 0) { MessageBox.Show("Please choose at least one Work in the list to execute it.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning); return; }
+
                 MainWindow1.Main.Content = MainWindow1.Loading1;
                 foreach (string WorkName in List_Works.SelectedItems)
                 {
-                    i++;
                     Thread thread_pgbar = new Thread(MainWindow1.Loading1.ProgressBar_Manage);
                     thread_pgbar.Name = WorkName;
                     thread_pgbar.Start();
@@ -99,7 +104,6 @@ namespace EasySave_G8_UI.Views.Works
                     thread_exec.Name = WorkName;
                     thread_exec.Start();
                 }
-                if (i == 0) { MessageBox.Show("Please choose at least one Work in the list to execute it.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning); }
             }
             else
             {
