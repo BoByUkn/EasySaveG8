@@ -18,10 +18,10 @@ namespace EasySave_G8_UI.View_Models
         }
 
         //VM Classic Save
-        public void VM_Classic(string Name, string Source, string Destination, bool Type)
+        public void VM_Classic(string Name, string Source, string Destination, bool Type, object sender)
         {
             Model_PRE ModelPRE = new Model_PRE(Name, Source, Destination, Type);
-            ModelPRE.Exec(null);
+            ModelPRE.Exec(sender);
         }
 
         //VM Check if a Work exists
@@ -47,10 +47,10 @@ namespace EasySave_G8_UI.View_Models
         } 
 
         //VM Create a new work
-        public void VM_Work_New(string Name, string Source, string Destination, bool Type, bool ExeNow)
+        public void VM_Work_New(string Name, string Source, string Destination, bool Type)
         {
             Model_PRE ModelPRE = new Model_PRE(Name, Source, Destination, Type);
-            ModelPRE.Save(ExeNow);
+            ModelPRE.Save();
         }
 
         //VM Run a single or all works
@@ -155,35 +155,33 @@ namespace EasySave_G8_UI.View_Models
             Model_PRIORITY ModelPRIORITY = new Model_PRIORITY();
             return ModelPRIORITY.priorityReturn();
         }
-        public void VM_ExtensionListAdd(string ProcessName, int Index)
-        {
-            //Model_EXTENSION ModelEXTENSION = new Model_EXTENSION();
-            //ModelEXTENSION.ExtensionAdd(ProcessName, Index);
-        }
-
-        public void VM_ExtensionListRemove(string ProcessNameRm)
-        {
-            //Model_EXTENSION ModelEXTENSION = new Model_EXTENSION();
-            //ModelEXTENSION.ExtensionRemove(ProcessNameRm);
-        }
-
-        //public List<string> MV_ExtensionListRe()
+        //public void VM_ExtensionListAdd(string ProcessName, int Index)
         //{
-            //Model_EXTENSION ModelEXTENSION = new Model_EXTENSION();
-            //return ModelEXTENSION.priorityReturn();
+        //    Model_EXTENSION ModelEXTENSION = new Model_EXTENSION();
+        //    ModelEXTENSION.ExtensionAdd(ProcessName, Index);
+        //}
+
+        //public void VM_ExtensionListRemove(string ProcessNameRm)
+        //{
+        //    Model_EXTENSION ModelEXTENSION = new Model_EXTENSION();
+        //    ModelEXTENSION.ExtensionRemove(ProcessNameRm);
         //}
 
         public double MV_NbKoReturn()
         {
-            Model_NBKO modelNbko= new Model_NBKO();
-            double nbKo=modelNbko.NbKoReturn();
+            Model_NBKO modelNbko = new Model_NBKO();
+            double nbKo = modelNbko.NbKoReturn();
             return nbKo;
         }
-
-        public void VM_NbKoSet(double nbko )
+        public void VM_NbKoSet(double nbko)
         {
             Model_NBKO modelNbko = new Model_NBKO();
             modelNbko.NbKoSet(nbko);
         }
+        //public List<string> MV_ExtensionListRe()
+        //{
+        //    Model_EXTENSION ModelEXTENSION = new Model_EXTENSION();
+        //    return ModelEXTENSION.priorityReturn();
+        //}
     }
 }

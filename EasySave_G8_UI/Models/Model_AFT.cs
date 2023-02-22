@@ -108,7 +108,7 @@ namespace EasySave_G8_UI.Models
                             }
                         }
 
-                        if(new FileInfo(file).Length > modelNbKo.NbKoReturn() )
+                        if(new FileInfo(file).Length > modelNbKo.NbKoReturn() && modelNbKo.NbKoReturn() !=0)
                         {
                             files_NoPriority.Remove(file); // Remove file from the all files in the list files_NoPriority (in order to have only no priority files)
                             files_Priority.Remove(file); // Remove file from the all files in the list files_Priority (in order to have only no priority files)
@@ -175,8 +175,10 @@ namespace EasySave_G8_UI.Models
                     ModelStateLogs.file_remain = file_remain;
                     utcDateFinish = DateTime.Now;
                 }
+
                 Duration = utcDateFinish.Subtract(utcDateStart);  // Calculation of the result of the arrival date - the departure date to obtain a duration, it's in TimeSpan, it is the result of the subtraction of two DataTime
                 millisecondsDuration = Duration.TotalMilliseconds; // Convert Duration in milliseconds
+                localworker.ReportProgress(100, Name); // Report end of operation to background worker
                 ModelStateLogs.State = "ENDED";
                 ModelStateLogs.millisecondsDuration = millisecondsDuration; //add millisecondsDuration to the object ModelStateLogs
                 ModelLogs.StateLog(ModelStateLogs);// Write the JSon State Logs with all info 
@@ -325,7 +327,8 @@ namespace EasySave_G8_UI.Models
                        
                     }
                     utcDateFinish = DateTime.Now;
-                }                
+                }
+                localworker.ReportProgress(100, Name); // Report end of operation to background worker
                 Duration = utcDateFinish.Subtract(utcDateStart); // Calculation of the result of the arrival date - the departure date to obtain a duration, it's in TimeSpan, it is the result of the subtraction of two DataTime
                 millisecondsDuration = Duration.TotalMilliseconds; // Convert Duration in milliseconds
                 ModelStateLogs.millisecondsDuration = millisecondsDuration; //add millisecondsDuration to the object ModelStateLogs
@@ -388,7 +391,6 @@ namespace EasySave_G8_UI.Models
                 }
                 finally { _semaphorexml.Release(); }
             }
-
 
             else if (!File.Exists(fileName))
             {

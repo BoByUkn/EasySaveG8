@@ -27,15 +27,16 @@ namespace EasySave_G8_UI.Views
     /// </summary>
     public partial class Settings : Page
     {
+        private View_Model ViewModel;
         public Settings()
         {
             InitializeComponent();
+            ViewModel= new View_Model();
             ListRefresh();   
         }
 
         private void Blacklist_add_btn_Click(object sender, RoutedEventArgs e)
         {
-            View_Model ViewModel = new View_Model();
             string ProcessName = Blacklist_add.Text;
             ViewModel.VM_BlackListAdd(ProcessName);
             PageRefresh();
@@ -43,7 +44,6 @@ namespace EasySave_G8_UI.Views
 
         private void Blacklist_rm_btn_Click(object sender, RoutedEventArgs e)
         {
-            View_Model ViewModel = new View_Model();
             string ProcessNameRm = Blacklist_rm_combobox.Text;
             ViewModel.VM_BlackListRemove(ProcessNameRm);
             ListRefresh();
@@ -52,7 +52,6 @@ namespace EasySave_G8_UI.Views
 
         private void ListRefresh()
         {
-            View_Model ViewModel = new View_Model();
             List<string> blacklist = ViewModel.MV_Blacklist();
             int i;
             for (i = 0; i < blacklist.Count; i++)
@@ -78,7 +77,6 @@ namespace EasySave_G8_UI.Views
 
         private void Prioritylist_add_btn_Click(object sender, RoutedEventArgs e)
         {
-            View_Model ViewModel = new View_Model();
             string ExtensionName = Prioritylist_add1.Text;
             int index = PriorityNumer_combobox.SelectedIndex;
             if (index == -1) { index = 0; }
@@ -89,7 +87,6 @@ namespace EasySave_G8_UI.Views
 
         private void Prioritylist_rm_btn_Click(object sender, RoutedEventArgs e)
         {
-            View_Model ViewModel = new View_Model();
             string ExtensionName = Prioritylist_rm_combobox1.Text;
             ViewModel.VM_PriorityListRemove(ExtensionName);
             ListRefresh();
@@ -109,7 +106,6 @@ namespace EasySave_G8_UI.Views
 
 /*        private void Extensionlist_rm_btn_Click(object sender, RoutedEventArgs e)
         {
-            View_Model ViewModel = new View_Model();
             string CSExtensionName = Extensionlist_rm_combobox1.Text;
             ViewModel.VM_PriorityListRemove(CSExtensionName);
             ListRefresh();
@@ -126,6 +122,18 @@ namespace EasySave_G8_UI.Views
                 MessageBox.Show("Size is Saved !");
                 PageRefresh();
             }
+        }
+        public double MV_NbKoReturn()
+        {
+            Model_NBKO modelNbko = new Model_NBKO();
+            double nbKo = modelNbko.NbKoReturn();
+            return nbKo;
+        }
+
+        public void VM_NbKoSet(double nbko)
+        {
+            Model_NBKO modelNbko = new Model_NBKO();
+            modelNbko.NbKoSet(nbko);
         }
     }
 }

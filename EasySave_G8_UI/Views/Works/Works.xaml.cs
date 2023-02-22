@@ -29,8 +29,7 @@ namespace EasySave_G8_UI.Views.Works
         private void Works_List()
         {
             List_Works.Items.Clear();
-            View_Model ViewMODEL = new View_Model();
-            List<Model_PRE>? WorkList = ViewMODEL.VM_Work_Show(null, true);
+            List<Model_PRE>? WorkList = ViewModel.VM_Work_Show(null, true);
             foreach(Model_PRE obj in WorkList)
             {
                 List_Works.Items.Add(obj.Name);
@@ -45,7 +44,6 @@ namespace EasySave_G8_UI.Views.Works
 
         private void ExecuteAll_btn_Click(object sender, RoutedEventArgs e)
         {
-            View_Model ViewModel = new View_Model();
             bool blacklist_state = ViewModel.VM_BlackListTest();
             int i = 0;
             if (blacklist_state == false)
@@ -60,28 +58,21 @@ namespace EasySave_G8_UI.Views.Works
                     thread_pgbar.Start();
 
                     BackgroundWorker backgroundWorker = new BackgroundWorker();
-                    backgroundWorker.RunWorkerCompleted += BackgroundWorker_RunWorkerCompleted;
                     backgroundWorker.DoWork += BackgroundWorker_DoWork;
                     backgroundWorker.ProgressChanged += BackgroundWorker_ProgressChanged;
                     backgroundWorker.RunWorkerAsync(argument: WorkName);
-
-                    Thread.Sleep(100);
                 }
             }
-            else
-            {
-                MessageBox.Show($"{View_Model.VM_GetString_Language("msgbox_blacklist")}", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }
+            else { MessageBox.Show($"{View_Model.VM_GetString_Language("msgbox_blacklist")}", "Error", MessageBoxButton.OK, MessageBoxImage.Warning); }
         }
 
         private void ExecuteSelected_btn_Click(object sender, RoutedEventArgs e)
         {
-            View_Model ViewModel = new View_Model();
             int i = 0;
             bool blacklist_state = ViewModel.VM_BlackListTest();
             if (blacklist_state == false)
             {
-                foreach (string WorkName in List_Works.Items) { i++; }
+                foreach (string WorkName in List_Works.SelectedItems) { i++; }
                 if (i == 0) { MessageBox.Show("Please choose at least one Work in the list to execute it.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning); return; }
 
                 MainWindow1.Main.Content = MainWindow1.Loading1;
@@ -92,22 +83,12 @@ namespace EasySave_G8_UI.Views.Works
                     thread_pgbar.Start();
 
                     BackgroundWorker backgroundWorker = new BackgroundWorker();
-                    backgroundWorker.RunWorkerCompleted += BackgroundWorker_RunWorkerCompleted;
                     backgroundWorker.DoWork += BackgroundWorker_DoWork;
                     backgroundWorker.ProgressChanged += BackgroundWorker_ProgressChanged;
                     backgroundWorker.RunWorkerAsync(argument: WorkName);
-
-                    Thread.Sleep(100);
                 }
             }
-            else
-            {
-                MessageBox.Show($"{View_Model.VM_GetString_Language("msgbox_blacklist")}", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }
-        }
-
-        private void BackgroundWorker_RunWorkerCompleted(object? sender, RunWorkerCompletedEventArgs e)
-        {
+            else { MessageBox.Show($"{View_Model.VM_GetString_Language("msgbox_blacklist")}", "Error", MessageBoxButton.OK, MessageBoxImage.Warning); }
         }
 
         private void BackgroundWorker_DoWork(object? sender, DoWorkEventArgs e)
@@ -122,7 +103,6 @@ namespace EasySave_G8_UI.Views.Works
 
         private void Delete_btn_Click(object sender, RoutedEventArgs e)
         {
-            View_Model ViewModel = new View_Model();
             int i = 0;
             foreach (string WorkName in List_Works.SelectedItems)
             {
@@ -153,7 +133,6 @@ namespace EasySave_G8_UI.Views.Works
             List_Work_Detail.Text = "";
             if (List_Works.SelectedItems.Count == 0) { return; }
 
-            View_Model ViewModel = new View_Model();
             List<Model_PRE> obj_list = ViewModel.VM_Work_Show((List_Works.Items[List_Works.SelectedIndex].ToString()), false);
             
             foreach(Model_PRE obj in obj_list)
@@ -191,7 +170,6 @@ namespace EasySave_G8_UI.Views.Works
             }
 
             List_Work_Detail.Text = "";
-            View_Model ViewModel = new View_Model();
             List<Model_PRE> obj_list = ViewModel.VM_Work_Show(WorkName, false);
 
             foreach (Model_PRE obj in obj_list)

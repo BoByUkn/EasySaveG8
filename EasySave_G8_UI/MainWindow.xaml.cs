@@ -17,16 +17,17 @@ namespace EasySave_G8_UI
     {
         private static Mutex _mutex = null;
         public Loading Loading1;
+        private View_Model ViewModel;
 
         public MainWindow()
         {
             InitializeComponent();
             CheckInstance();
-            View_Model ViewMODEL = new View_Model();
+            ViewModel = new View_Model();
             string fileName = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave";
             if (!Directory.Exists(fileName)) //Check if mandatory files are present or not. If not, creates them
             {
-                ViewMODEL.VM_Init();
+                ViewModel.VM_Init();
             }
 
             translate();
@@ -62,8 +63,7 @@ namespace EasySave_G8_UI
 
         private void translate()
         {
-            View_Model ViewModelLang = new View_Model();
-            ViewModelLang.VM_Update_Language(); //Get the language from app_conf JSON file
+            ViewModel.VM_Update_Language(); //Get the language from app_conf JSON file
             Main.Content = new Dashboard();
             Dashboard_btn.Content = $"{View_Model.VM_GetString_Language("dashboard")}";
             Classics_btn.Content = $"{View_Model.VM_GetString_Language("classics")}";
@@ -111,15 +111,13 @@ namespace EasySave_G8_UI
 
         private void EngButton_Checked(object sender, RoutedEventArgs e)
         {
-            View_Model ViewModelENG = new View_Model();
-            ViewModelENG.VM_Change_Language("en");
+            ViewModel.VM_Change_Language("en");
             translate();
         }
 
         private void FraButton_Checked(object sender, RoutedEventArgs e)
         {
-            View_Model ViewModelFR = new View_Model();
-            ViewModelFR.VM_Change_Language("fr");
+            ViewModel.VM_Change_Language("fr");
             translate();
         }
     }

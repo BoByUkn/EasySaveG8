@@ -4,6 +4,8 @@ using System.Windows.Controls;
 using System.IO;
 using Microsoft.Win32;
 using System;
+using System.ComponentModel;
+using System.Threading;
 
 namespace EasySave_G8_UI.Views.Works
 {
@@ -12,9 +14,13 @@ namespace EasySave_G8_UI.Views.Works
     /// </summary>
     public partial class Works_Create : Page
     {
+        private MainWindow MainWindow1;
+        private View_Model ViewModel;
         public Works_Create()
         {
             InitializeComponent();
+            ViewModel = new View_Model();
+            MainWindow1 = Application.Current.MainWindow as MainWindow;
             translate();
         }
 
@@ -36,7 +42,6 @@ namespace EasySave_G8_UI.Views.Works
 
         private void Save_btn_Click(object sender, RoutedEventArgs e)
         {
-            View_Model ViewModel = new View_Model();
             string Name = textBox1.Text;
             if (ViewModel.VM_Work_Exist(Name))
             {
@@ -52,20 +57,39 @@ namespace EasySave_G8_UI.Views.Works
             if (comboBox2.SelectedIndex == 0) { ExeNow = true; } 
             else { ExeNow = false; }
 
-            bool blacklist_state = ViewModel.VM_BlackListTest();
-            if (((blacklist_state == false) && (ExeNow == true)) || (ExeNow == false))
+            ViewModel.VM_Work_New(Name, textBox2.Text, textBox3.Text, Type);
+            if(ExeNow)
             {
-                ViewModel.VM_Work_New(Name, textBox2.Text, textBox3.Text, Type, ExeNow);
+                bool blacklist_state = ViewModel.VM_BlackListTest();
+                if (!blacklist_state)
+                {
+                    Thread thread_pgbar = new Thread(MainWindow1.Loading1.ProgressBar_Add);
+                    thread_pgbar.Name = Name;
+                    thread_pgbar.Start();
+
+                    MainWindow1.Main.Content = MainWindow1.Loading1;
+
+                    BackgroundWorker backgroundWorker = new BackgroundWorker();
+                    backgroundWorker.DoWork += BackgroundWorker_DoWork;
+                    backgroundWorker.ProgressChanged += BackgroundWorker_ProgressChanged;
+                    backgroundWorker.RunWorkerAsync(argument: Name);
+                }
+                else { MessageBox.Show($"{View_Model.VM_GetString_Language("msgbox_blacklist")}", "Error", MessageBoxButton.OK, MessageBoxImage.Warning); return; }
             }
-            else
+            else 
             {
-                MessageBox.Show($"{View_Model.VM_GetString_Language("msgbox_blacklist")}", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MainWindow1.Main.Content = new Works();
             }
+        }
 
-            var mainWindow = Application.Current.MainWindow as MainWindow;
-            mainWindow.Main.Content = new Works();
+        private void BackgroundWorker_DoWork(object? sender, DoWorkEventArgs e)
+        {
+            ViewModel.VM_Work_Run((string)e.Argument, sender);
+        }
 
-
+        private void BackgroundWorker_ProgressChanged(object? sender, ProgressChangedEventArgs e)
+        {
+            MainWindow1.Loading1.UpdatePGBar(e);
         }
 
         private void Button_Click_Browse(object sender, RoutedEventArgs e)

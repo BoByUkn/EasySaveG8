@@ -30,7 +30,7 @@ namespace EasySave_G8_UI.Models
             ModelAFT.Logs();
         }
 
-        public void Save(bool ExeNow) //Save a work into work_conf 
+        public void Save() //Save a work into work_conf 
         {
             string fileName = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\works_config.json";
             if (File.Exists(fileName))  //Test if conf file exists, else it creates it and write JSON directly
@@ -49,7 +49,6 @@ namespace EasySave_G8_UI.Models
                 string jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(values, Newtonsoft.Json.Formatting.Indented); //Serialialize the data in JSON form
                 File.WriteAllText(fileName, jsonString); //Write json file
             }
-            if (ExeNow) { Exec(null);}
         }
     }
 }
