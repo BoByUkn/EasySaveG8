@@ -120,6 +120,7 @@ namespace EasySave_G8_UI.Models
                     foreach (var file in files_Priority)
                     {
                         targetFile = file.Replace(Source, Destination2);
+                        Directory.CreateDirectory(Path.GetDirectoryName(targetFile)); // Create a directory
 
                         File.Copy(file, targetFile, true);  // Do the copy of priority Files
                         //Total_CryptoTime += Cryptosoft(targetFile);
@@ -140,7 +141,6 @@ namespace EasySave_G8_UI.Models
                         targetFile = file.Replace(Source, Destination2);
                         ActualSize2 = ActualSize2 + new FileInfo(file).Length;//Increment size with each file
                         percentage = (int)(((double)ActualSize2 / (double)Size) * 100);//progression's percentage of the save
-
                         Directory.CreateDirectory(Path.GetDirectoryName(targetFile)); // Create a directory
 
                         File.Copy(file, targetFile, true);  // Do the copy
@@ -157,6 +157,7 @@ namespace EasySave_G8_UI.Models
                     foreach (var file in files_LessPriority)
                     {
                         targetFile = file.Replace(Source, Destination2);
+                        Directory.CreateDirectory(Path.GetDirectoryName(targetFile)); // Create a directory
 
                         File.Copy(file, targetFile, true);  // Do the copy of priority Files
                         //Total_CryptoTime += Cryptosoft(targetFile);
