@@ -45,12 +45,13 @@ namespace EasySave_G8_UI.Models
 
             var RandomInt64 = new Random();
             long cipherKey = RandomInt64.NextInt64(); //Generates a random 64bit key for CryptoSoft
-            string filePath = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\cipherkey.txt"; //Creates a file to store the key
-            File.Create(filePath).Dispose();
-            using (StreamWriter writer = new StreamWriter(filePath)) //Writes the key into that file
-            {
-                writer.Write(cipherKey);
-            }
+            string filePath = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\cipherkey.txt";
+            //File.Create(filePath); //Creates a file to store the key
+            //using (StreamWriter writer = new StreamWriter(filePath)) //Writes the key into that file
+            //{
+                //writer.Write(cipherKey);
+            //}
+            File.WriteAllText(filePath, cipherKey.ToString());
         }
     }
 
