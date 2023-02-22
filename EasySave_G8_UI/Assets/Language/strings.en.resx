@@ -177,11 +177,17 @@
   <data name="launch_save" xml:space="preserve">
     <value>Launch Save</value>
   </data>
+  <data name="loading" xml:space="preserve">
+    <value>Loading</value>
+  </data>
   <data name="logs" xml:space="preserve">
     <value>Logs</value>
   </data>
   <data name="logs_title" xml:space="preserve">
     <value>Logs</value>
+  </data>
+  <data name="msgbox_blacklist" xml:space="preserve">
+    <value>Error: The work can't be executed because a blacklisted process is running.</value>
   </data>
   <data name="name" xml:space="preserve">
     <value>Name</value>
@@ -197,6 +203,9 @@
   </data>
   <data name="select_directory" xml:space="preserve">
     <value>Select a directory</value>
+  </data>
+  <data name="settings" xml:space="preserve">
+    <value>Settings</value>
   </data>
   <data name="shutdown" xml:space="preserve">
     <value>Shutdown</value>

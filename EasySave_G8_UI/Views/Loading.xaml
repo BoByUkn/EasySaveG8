@@ -9,11 +9,17 @@
       Title="Loading">
     <Grid SnapsToDevicePixels="True">
         <Border HorizontalAlignment="Center" Height="550" VerticalAlignment="Top" Width="750" Margin="0,75,0,0" Background="#161E27" CornerRadius="60,60,60,60">
-            <StackPanel x:Name="MainStackPanel">
+            <Grid>
                 <TextBlock Foreground="White" FontSize="35" VerticalAlignment="Top" HorizontalAlignment="Center" FontFamily="Bahnschrift Condensed" Height="40" Width="325" TextAlignment="Center">
-                    <Run Language="fr-fr" Text="Loading" Name="Loading_Title"/>
+                            <Run Language="fr-fr" Text="Loading" Name="Loading_Title"/>
                 </TextBlock>
-            </StackPanel>
+                <Border HorizontalAlignment="Center" Height="450" VerticalAlignment="Top" Width="700" Margin="0,50,0,0" Background="#FF283845" CornerRadius="60,60,60,60">
+                    <ScrollViewer VerticalScrollBarVisibility="Hidden">
+                        <StackPanel x:Name="MainStackPanel" Grid.Column="1">
+                        </StackPanel>
+                    </ScrollViewer>
+                </Border>
+            </Grid>
         </Border>
     </Grid>
 </Page>

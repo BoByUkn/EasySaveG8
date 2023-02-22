@@ -1,6 +1,8 @@
-﻿using EasySave_G8_UI.Models;
+﻿using EasySave_G8_UI;
+using EasySave_G8_UI.Models;
 using EasySave_G8_UI.View_Models;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
@@ -13,34 +15,21 @@ namespace EasySave_G8_UI.Views.Works
     public partial class Works : Page
     {
         private MainWindow MainWindow1;
-        private Loading Loading1;
+        private View_Model ViewModel;
 
         public Works()
         {
             InitializeComponent();
+            ViewModel = new View_Model();
             MainWindow1 = Application.Current.MainWindow as MainWindow;
-            Loading1 = new Loading();
-                //MainWindow1.Main.Content as Loading;
             Works_List();
             translate();
-        }
-
-        private void translate()
-        {
-            Works_Title.Text = $"{View_Model.VM_GetString_Language("works_title")}";
-            Next_btn.Content = $"{View_Model.VM_GetString_Language("next")}";
-            ExecuteAll_btn.Content = $"{View_Model.VM_GetString_Language("execute_all")}";
-            ExecuteSelected_btn.Content = $"{View_Model.VM_GetString_Language("execute_selection")}";
-            Edit_btn.Content = $"{View_Model.VM_GetString_Language("edit_selection")}";
-            Delete_btn.Content = $"{View_Model.VM_GetString_Language("delete_selection")}";
-            Create_btn.Content = $"{View_Model.VM_GetString_Language("create_work")}";
         }
 
         private void Works_List()
         {
             List_Works.Items.Clear();
-            View_Model ViewMODEL = new View_Model();
-            List<Model_PRE>? WorkList = ViewMODEL.VM_Work_Show(null, true);
+            List<Model_PRE>? WorkList = ViewModel.VM_Work_Show(null, true);
             foreach(Model_PRE obj in WorkList)
             {
                 List_Works.Items.Add(obj.Name);
@@ -53,49 +42,67 @@ namespace EasySave_G8_UI.Views.Works
             mainWindow.Main.Content = new Works_Create();
         }
 
-
-
-
-
         private void ExecuteAll_btn_Click(object sender, RoutedEventArgs e)
         {
-            View_Model ViewModel = new View_Model();
-            ViewModel.VM_Work_Run("", true);
+            bool blacklist_state = ViewModel.VM_BlackListTest();
+            int i = 0;
+            if (blacklist_state == false)
+            {
+                foreach (string WorkName in List_Works.Items) { i++; }
+                if (i == 0) {MessageBox.Show($"There is no Work to execute.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning); return; };
+                MainWindow1.Main.Content = MainWindow1.Loading1;
+                foreach (string WorkName in List_Works.Items)
+                {
+                    Thread thread_pgbar = new Thread(MainWindow1.Loading1.ProgressBar_Add);
+                    thread_pgbar.Name = WorkName;
+                    thread_pgbar.Start();
 
-            MainWindow1.Main.Content = Loading1;
+                    BackgroundWorker backgroundWorker = new BackgroundWorker();
+                    backgroundWorker.DoWork += BackgroundWorker_DoWork;
+                    backgroundWorker.ProgressChanged += BackgroundWorker_ProgressChanged;
+                    backgroundWorker.RunWorkerAsync(argument: WorkName);
+                }
+            }
+            else { MessageBox.Show($"{View_Model.VM_GetString_Language("msgbox_blacklist")}", "Error", MessageBoxButton.OK, MessageBoxImage.Warning); }
         }
 
         private void ExecuteSelected_btn_Click(object sender, RoutedEventArgs e)
         {
-            View_Model ViewModel = new View_Model();
             int i = 0;
-            MainWindow1.Main.Content = Loading1;
-            foreach (string WorkName in List_Works.SelectedItems)
+            bool blacklist_state = ViewModel.VM_BlackListTest();
+            if (blacklist_state == false)
             {
-                i++;
-                //Thread thread_pgbar = new Thread(Work_ProgressBar_Start);
-                //thread_pgbar.Name = WorkName;
-                //thread_pgbar.Start();
+                foreach (string WorkName in List_Works.SelectedItems) { i++; }
+                if (i == 0) { MessageBox.Show("Please choose at least one Work in the list to execute it.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning); return; }
 
-                Thread thread_exec = new Thread(() => ViewModel.VM_Work_Run(WorkName, false));
-                thread_exec.Name = WorkName;
-                thread_exec.Start();
+                MainWindow1.Main.Content = MainWindow1.Loading1;
+                foreach (string WorkName in List_Works.SelectedItems)
+                {
+                    Thread thread_pgbar = new Thread(MainWindow1.Loading1.ProgressBar_Add);
+                    thread_pgbar.Name = WorkName;
+                    thread_pgbar.Start();
+
+                    BackgroundWorker backgroundWorker = new BackgroundWorker();
+                    backgroundWorker.DoWork += BackgroundWorker_DoWork;
+                    backgroundWorker.ProgressChanged += BackgroundWorker_ProgressChanged;
+                    backgroundWorker.RunWorkerAsync(argument: WorkName);
+                }
             }
-            if (i == 0) 
-            { 
-                MessageBox.Show("Please choose at least one Work in the list to execute it.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
+            else { MessageBox.Show($"{View_Model.VM_GetString_Language("msgbox_blacklist")}", "Error", MessageBoxButton.OK, MessageBoxImage.Warning); }
         }
 
-        private void Work_ProgressBar_Start()
+        private void BackgroundWorker_DoWork(object? sender, DoWorkEventArgs e)
         {
-            Loading1.ProgressBar_Manage();
+            ViewModel.VM_Work_Run((string)e.Argument, sender);
+        }
+
+        private void BackgroundWorker_ProgressChanged(object? sender, ProgressChangedEventArgs e)
+        {
+            MainWindow1.Loading1.UpdatePGBar(e);
         }
 
         private void Delete_btn_Click(object sender, RoutedEventArgs e)
         {
-            View_Model ViewModel = new View_Model();
             int i = 0;
             foreach (string WorkName in List_Works.SelectedItems)
             {
@@ -126,7 +133,6 @@ namespace EasySave_G8_UI.Views.Works
             List_Work_Detail.Text = "";
             if (List_Works.SelectedItems.Count == 0) { return; }
 
-            View_Model ViewModel = new View_Model();
             List<Model_PRE> obj_list = ViewModel.VM_Work_Show((List_Works.Items[List_Works.SelectedIndex].ToString()), false);
             
             foreach(Model_PRE obj in obj_list)
@@ -164,7 +170,6 @@ namespace EasySave_G8_UI.Views.Works
             }
 
             List_Work_Detail.Text = "";
-            View_Model ViewModel = new View_Model();
             List<Model_PRE> obj_list = ViewModel.VM_Work_Show(WorkName, false);
 
             foreach (Model_PRE obj in obj_list)
@@ -176,6 +181,16 @@ namespace EasySave_G8_UI.Views.Works
                 if (obj.Type) { List_Work_Detail.Text += "Type: Complete \n"; }
                 else { List_Work_Detail.Text += "Type: Differential \n"; }
             }
+        }
+        private void translate()
+        {
+            Works_Title.Text = $"{View_Model.VM_GetString_Language("works_title")}";
+            Next_btn.Content = $"{View_Model.VM_GetString_Language("next")}";
+            ExecuteAll_btn.Content = $"{View_Model.VM_GetString_Language("execute_all")}";
+            ExecuteSelected_btn.Content = $"{View_Model.VM_GetString_Language("execute_selection")}";
+            Edit_btn.Content = $"{View_Model.VM_GetString_Language("edit_selection")}";
+            Delete_btn.Content = $"{View_Model.VM_GetString_Language("delete_selection")}";
+            Create_btn.Content = $"{View_Model.VM_GetString_Language("create_work")}";
         }
     }
 }

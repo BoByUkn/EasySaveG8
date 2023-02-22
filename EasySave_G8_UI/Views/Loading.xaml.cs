@@ -1,6 +1,7 @@
 ﻿using EasySave_G8_UI.View_Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -24,32 +25,21 @@ namespace EasySave_G8_UI.Views
     {
         private MainWindow currentMainWindow;
         private Loading currentLoading;
-        private View_Model ViewMODEL;
 
         public Loading()
         {
             InitializeComponent();
             currentMainWindow = Application.Current.MainWindow as MainWindow;
             currentLoading = currentMainWindow.Main.Content as Loading;
-            ViewMODEL = new View_Model();
         }
 
-        public async void ProgressBar_Manage()
-        {
-            ProgressBar_New();
-            Thread.Sleep(100);
-            bool wbool = true;
-            while (wbool) 
-            {
-                ProgressBar_Update();
-                if (!ProgressBar_Ended()) { wbool = false; }
-            }
-        }
-
-        public void ProgressBar_New()
+        public async void ProgressBar_Add()
         {
             Thread currentThread = Thread.CurrentThread;
             ProgressBar progressBar = null;
+            Label middle_label = null;
+            Label left_label = null;
+            Label right_label = null;
             MainStackPanel.Dispatcher.Invoke(() =>
             {
                 progressBar = new ProgressBar();
@@ -57,55 +47,76 @@ namespace EasySave_G8_UI.Views
                 progressBar.Maximum = 100;
                 progressBar.Margin = new Thickness(20, 20, 20, 20);
                 progressBar.Width = 400;
-                progressBar.Height= 30;
+                progressBar.Height = 30;
+                progressBar.Foreground = Brushes.DarkCyan;
                 progressBar.Name = currentThread.Name;
                 MainStackPanel.Children.Add(progressBar);
+
+                middle_label = new Label();
+                middle_label.Height = 50;
+                middle_label.HorizontalAlignment = HorizontalAlignment.Center;
+                middle_label.VerticalAlignment = VerticalAlignment.Center;
+                middle_label.FontSize = 20;
+                middle_label.Margin = new Thickness(20, -57, 20, 0);
+                middle_label.Name = currentThread.Name + "label1";
+                MainStackPanel.Children.Add(middle_label);
+
+                left_label = new Label();
+                left_label.Height = 50;
+                left_label.HorizontalAlignment = HorizontalAlignment.Left;
+                left_label.VerticalAlignment = VerticalAlignment.Center;
+                left_label.FontSize = 20;
+                left_label.Margin = new Thickness(50, -58, 20, 0);
+                left_label.Content = currentThread.Name;
+                left_label.Name = currentThread.Name + "label3";
+                left_label.Foreground = Brushes.White;
+                MainStackPanel.Children.Add(left_label);
+
+                right_label = new Label();
+                right_label.Height = 50;
+                right_label.HorizontalAlignment = HorizontalAlignment.Right;
+                right_label.VerticalAlignment = VerticalAlignment.Center;
+                right_label.FontSize = 20;
+                right_label.Margin = new Thickness(20, -58, 40, 0);
+                right_label.Content = "Running...";
+                right_label.Foreground = Brushes.White;
+                right_label.Name = currentThread.Name + "label2";
+                MainStackPanel.Children.Add(right_label);
             });
         }
 
-
-        public void ProgressBar_Update() 
+        public void UpdatePGBar(ProgressChangedEventArgs e)
         {
-            Thread currentThread = Thread.CurrentThread;
             ProgressBar progressBar = null;
-            string PgName = currentThread.Name;
-
-            currentMainWindow.Dispatcher.Invoke(() =>
+            Label label1 = null;
+            Label label2 = null;
+            foreach (var child in MainStackPanel.Children)
             {
-                foreach (var child in MainStackPanel.Children)
+                if ((child as FrameworkElement)?.Name == e.UserState.ToString())
                 {
-                    if ((child as FrameworkElement)?.Name == PgName) 
+                    progressBar = child as ProgressBar;
+                    progressBar.Value = e.ProgressPercentage;
+                }
+                if ((child as FrameworkElement)?.Name == e.UserState.ToString() + "label1")
+                {
+                    label1 = child as Label;
+                    label1.Content = e.ProgressPercentage + "%";
+                }
+                if ((child as FrameworkElement)?.Name == e.UserState.ToString() + "label2")
+                {
+                    if (progressBar.Value == 100)
                     {
-                        try 
-                        {
-                            progressBar = child as ProgressBar;
-                            progressBar.Value = ViewMODEL.MV_Update_ProgressionBar(PgName);
-                        }
-                        catch { Exception ex; }
+                        label2 = child as Label;
+                        label2.Content = "Done !";
                     }
                 }
-            });
-        }
-
-        private bool ProgressBar_Ended()
-        {
-            Thread currentThread = Thread.CurrentThread;
-            ProgressBar progressBar = null;
-            string PgName = currentThread.Name;
-
-            currentMainWindow.Dispatcher.Invoke(() =>
+            }
+            if (e.ProgressPercentage == 100)
             {
-                foreach (var child in MainStackPanel.Children)
-                {
-                    if ((child as FrameworkElement)?.Name == PgName)
-                    {
-                        if (ViewMODEL.VM_StateLogsState(PgName) == "ENDED") { return true; }
-                        else { return false; }
-                    }
-                }
-                return false;
-            });
-            return false;
+                MainStackPanel.Children.Remove(label1);
+                MainStackPanel.Children.Remove(label2);
+                MainStackPanel.Children.Remove(progressBar);
+            }
         }
     }
 }

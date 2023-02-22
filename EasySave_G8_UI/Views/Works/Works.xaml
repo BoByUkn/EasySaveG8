@@ -65,7 +65,7 @@
                                 </Button.Resources>
                             </Button>
                         </StackPanel>
-                        <Button x:Name="Next_btn" HorizontalAlignment="Left" FontSize="15" Content="Next" Width="60" Background="#FFD9D9D9" Margin="277,51,0,468" Grid.Column="1" Click="Next_btn_Click">
+                        <Button x:Name="Next_btn" HorizontalAlignment="Left" FontSize="15" Content="Next" Width="54" Background="#FFD9D9D9" Margin="270,31,0,396" Grid.Column="1" Click="Next_btn_Click">
                             <Button.Resources>
                                 <Style TargetType="{x:Type Border}">
                                     <Setter Property="CornerRadius" Value="15"/>

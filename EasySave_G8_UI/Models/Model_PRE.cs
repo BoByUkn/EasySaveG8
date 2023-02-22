@@ -22,15 +22,15 @@ namespace EasySave_G8_UI.Models
             this.Type = Type;
         }
 
-        public void Exec() //Execute a backup
+        public void Exec(object? sender) //Execute a backup
         {
             Model_AFT ModelAFT = new Model_AFT(this.Name, this.Source, this.Destination, this.Type);
-            if(this.Type == true){ModelAFT.Run();} //Complete backup
-            else if (this.Type == false){ModelAFT.RunDiff();} //Differential backup
+            if(this.Type == true){ModelAFT.Run(sender);} //Complete backup
+            else if (this.Type == false){ModelAFT.RunDiff(sender);} //Differential backup
             ModelAFT.Logs();
         }
 
-        public void Save(bool ExeNow) //Save a work into work_conf 
+        public void Save() //Save a work into work_conf 
         {
             string fileName = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\works_config.json";
             if (File.Exists(fileName))  //Test if conf file exists, else it creates it and write JSON directly
@@ -49,7 +49,6 @@ namespace EasySave_G8_UI.Models
                 string jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(values, Newtonsoft.Json.Formatting.Indented); //Serialialize the data in JSON form
                 File.WriteAllText(fileName, jsonString); //Write json file
             }
-            if (ExeNow) { Exec();}
         }
     }
 }

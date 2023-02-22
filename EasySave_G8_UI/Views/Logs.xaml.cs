@@ -12,9 +12,11 @@ namespace EasySave_G8_UI.Views
     /// </summary>
     public partial class Logs : System.Windows.Controls.Page
     {
+        private View_Model ViewModel;
         public Logs()
         {
             InitializeComponent();
+            ViewModel = new View_Model();
             translate();
             ButtonLogs_Refresh(null, null);
         }
@@ -31,7 +33,6 @@ namespace EasySave_G8_UI.Views
             try
             {
                 textBoxLogs.Clear();
-                View_Model ViewModel = new View_Model();
                 List<Model_AFT> LogsList = ViewModel.MV_Look_Logs(DateTime.Now.ToString("dd-MM-yyyy"));
                 foreach (Model_AFT Log in LogsList)
                 {
@@ -54,7 +55,6 @@ namespace EasySave_G8_UI.Views
             try
             {
                 textBoxLogs.Clear();
-                View_Model ViewModel = new View_Model();
                 List<Model_StateLogs> LogsList = ViewModel.MV_Look_StateLogs();
                 foreach (Model_StateLogs Log in LogsList)
                 {

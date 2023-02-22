@@ -18,10 +18,10 @@ namespace EasySave_G8_UI.View_Models
         }
 
         //VM Classic Save
-        public void VM_Classic(string Name, string Source, string Destination, bool Type)
+        public void VM_Classic(string Name, string Source, string Destination, bool Type, object sender)
         {
             Model_PRE ModelPRE = new Model_PRE(Name, Source, Destination, Type);
-            ModelPRE.Exec();
+            ModelPRE.Exec(sender);
         }
 
         //VM Check if a Work exists
@@ -47,21 +47,21 @@ namespace EasySave_G8_UI.View_Models
         } 
 
         //VM Create a new work
-        public void VM_Work_New(string Name, string Source, string Destination, bool Type, bool ExeNow)
+        public void VM_Work_New(string Name, string Source, string Destination, bool Type)
         {
             Model_PRE ModelPRE = new Model_PRE(Name, Source, Destination, Type);
-            ModelPRE.Save(ExeNow);
+            ModelPRE.Save();
         }
 
         //VM Run a single or all works
-        public void VM_Work_Run(string Name, bool AllBool)
+        public void VM_Work_Run(string Name, object sender)
         {
             Model_Works ModelWorks = new Model_Works();
-            List<Model_PRE>? obj_list = (ModelWorks.Get_Work(Name, AllBool)); //Use Get_Work to get Work data
+            List<Model_PRE>? obj_list = (ModelWorks.Get_Work(Name, false)); //Use Get_Work to get Work data
             foreach (Model_PRE obj in obj_list) //Loop throught every works in list and execute them
             {
                 Model_PRE ModelPRE = new Model_PRE(obj.Name, obj.Source, obj.Destination, obj.Type);
-                ModelPRE.Exec();
+                ModelPRE.Exec(sender);
             }
         }
 
@@ -93,14 +93,6 @@ namespace EasySave_G8_UI.View_Models
             return rtrn_string;
         }
 
-        //MV Update the progression bar
-        public int MV_Update_ProgressionBar(String Name)
-        {
-            Model_Logs modellogs = new Model_Logs();
-            int progression = modellogs.Get_StateLogsPercentage(Name);
-            return progression;
-        }
-
         //MV Show the daily log files content
         public List<Model_AFT> MV_Look_Logs(string Date)
         {
@@ -128,16 +120,68 @@ namespace EasySave_G8_UI.View_Models
             ModelBLACKLIST.BlacklistAdd(ProcessName);
         }
 
+        public void VM_BlackListRemove(string ProcessNameRm)
+        {
+            Model_BLACKLIST ModelBLACKLIST = new Model_BLACKLIST();
+            ModelBLACKLIST.BlacklistRemove(ProcessNameRm);
+        }
+
+        public List<string> MV_Blacklist()
+        {
+            Model_BLACKLIST ModelBLACKLIST = new Model_BLACKLIST();
+            return ModelBLACKLIST.BlacklistReturn();
+        }
+
         public bool VM_StateLogsExists(string Name)
         {
             Model_Logs ModelLOGS = new Model_Logs();
             return ModelLOGS.StatelogExists(Name);
         }
 
-        public string VM_StateLogsState(string Name)
+        public void VM_PriorityListAdd(string ProcessName,int Index)
         {
-            Model_Logs ModelLOGS = new Model_Logs();
-            return ModelLOGS.Get_StateLogsState(Name);
+            Model_PRIORITY ModelPRIORITY = new Model_PRIORITY();
+            ModelPRIORITY.priorityAdd(ProcessName,Index);
         }
+
+        public void VM_PriorityListRemove(string ProcessNameRm)
+        {
+            Model_PRIORITY ModelPRIORITY = new Model_PRIORITY();
+            ModelPRIORITY.priorityRemove(ProcessNameRm);
+        }
+
+        public List<string> MV_PriorityListRe()
+        {
+            Model_PRIORITY ModelPRIORITY = new Model_PRIORITY();
+            return ModelPRIORITY.priorityReturn();
+        }
+        //public void VM_ExtensionListAdd(string ProcessName, int Index)
+        //{
+        //    Model_EXTENSION ModelEXTENSION = new Model_EXTENSION();
+        //    ModelEXTENSION.ExtensionAdd(ProcessName, Index);
+        //}
+
+        //public void VM_ExtensionListRemove(string ProcessNameRm)
+        //{
+        //    Model_EXTENSION ModelEXTENSION = new Model_EXTENSION();
+        //    ModelEXTENSION.ExtensionRemove(ProcessNameRm);
+        //}
+
+        public double MV_NbKoReturn()
+        {
+            Model_NBKO modelNbko = new Model_NBKO();
+            double nbKo = modelNbko.NbKoReturn();
+            return nbKo;
+        }
+        public void VM_NbKoSet(double nbko)
+        {
+            Model_NBKO modelNbko = new Model_NBKO();
+            modelNbko.NbKoSet(nbko);
+        }
+        //public List<string> MV_ExtensionListRe()
+        //{
+        //    Model_EXTENSION ModelEXTENSION = new Model_EXTENSION();
+        //    return ModelEXTENSION.priorityReturn();
+        //}
     }
 }

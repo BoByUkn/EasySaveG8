@@ -5,6 +5,8 @@ using System.IO;
 using Microsoft.Win32;
 using EasySave_G8_UI.Models;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Threading;
 
 namespace EasySave_G8_UI.Views.Works
 {
@@ -14,11 +16,15 @@ namespace EasySave_G8_UI.Views.Works
     public partial class Works_Edit : Page
     {
         private string Original_WorkName { get; set; }
+        private View_Model ViewModel;
+        private MainWindow MainWindow1;
 
         public Works_Edit(string? WorkName)
         {
             InitializeComponent();
             Original_WorkName = WorkName;
+            ViewModel = new View_Model();
+            MainWindow1 = Application.Current.MainWindow as MainWindow;
             Get_Work_Data();
             translate();
         }
@@ -42,7 +48,6 @@ namespace EasySave_G8_UI.Views.Works
         private void Get_Work_Data()
         {
             textBox1.Text = Original_WorkName;
-            View_Model ViewModel = new View_Model();
             List<Model_PRE> Work_List = ViewModel.VM_Work_Show(Original_WorkName, false);
             foreach(Model_PRE obj in Work_List) 
             {
@@ -54,22 +59,50 @@ namespace EasySave_G8_UI.Views.Works
         }
 
         private void Save_btn_Click(object sender, RoutedEventArgs e)
-        {
-            View_Model ViewModel = new View_Model();
-            ViewModel.VM_Work_Delete(Original_WorkName);
-
+        {            
             bool Type;
-            if (comboBox1.Text == "Complète" || comboBox1.Text == "Complete") { Type = true; }
+            if (comboBox1.SelectedIndex == 0) { Type = true; }
             else { Type = false; }
 
             bool ExeNow;
-            if (comboBox2.Text == "Oui" || comboBox2.Text == "Yes") { ExeNow = true; }
+            if (comboBox2.SelectedIndex == 0) { ExeNow = true; }
             else { ExeNow = false; }
 
-            ViewModel.VM_Work_New(textBox1.Text, textBox2.Text, textBox3.Text, Type, ExeNow);
+            ViewModel.VM_Work_Delete(Original_WorkName);
+            ViewModel.VM_Work_New(textBox1.Text, textBox2.Text, textBox3.Text, Type);
 
-            var mainWindow = Application.Current.MainWindow as MainWindow;
-            mainWindow.Main.Content = new Works();
+            if (ExeNow)
+            {
+                bool blacklist_state = ViewModel.VM_BlackListTest();
+                if (!blacklist_state)
+                {
+                    Thread thread_pgbar = new Thread(MainWindow1.Loading1.ProgressBar_Add);
+                    thread_pgbar.Name = textBox1.Text;
+                    thread_pgbar.Start();
+
+                    MainWindow1.Main.Content = MainWindow1.Loading1;
+
+                    BackgroundWorker backgroundWorker = new BackgroundWorker();
+                    backgroundWorker.DoWork += BackgroundWorker_DoWork;
+                    backgroundWorker.ProgressChanged += BackgroundWorker_ProgressChanged;
+                    backgroundWorker.RunWorkerAsync(argument: textBox1.Text);
+                }
+                else { MessageBox.Show($"{View_Model.VM_GetString_Language("msgbox_blacklist")}", "Error", MessageBoxButton.OK, MessageBoxImage.Warning); return; }
+            }
+            else
+            {
+                var mainWindow = Application.Current.MainWindow as MainWindow;
+                mainWindow.Main.Content = new Works();
+            }
+        }
+        private void BackgroundWorker_DoWork(object? sender, DoWorkEventArgs e)
+        {
+            ViewModel.VM_Work_Run((string)e.Argument, sender);
+        }
+
+        private void BackgroundWorker_ProgressChanged(object? sender, ProgressChangedEventArgs e)
+        {
+            MainWindow1.Loading1.UpdatePGBar(e);
         }
 
         private void Button_Click_Browse(object sender, RoutedEventArgs e)

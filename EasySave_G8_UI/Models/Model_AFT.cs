@@ -2,10 +2,11 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Xml.Serialization;
-using System.Xml;
 using System.Threading;
+using System.ComponentModel;
 
 namespace EasySave_G8_UI.Models
 {
@@ -21,11 +22,13 @@ namespace EasySave_G8_UI.Models
         public int file_remain { get; set; }
         public double millisecondsDuration { get; set; }
         private double ActualSize2 = 0;
-        private Model_Logs ModelLogs {get; set;}
+        private Model_Logs ModelLogs = new Model_Logs();
         
-        private SemaphoreSlim _semaphorefiles = new SemaphoreSlim(1);
-        private SemaphoreSlim _semaphorelogs = new SemaphoreSlim(1);
 
+        private static SemaphoreSlim _semaphorejson = new SemaphoreSlim(1);
+        private static SemaphoreSlim _semaphorexml = new SemaphoreSlim(1);
+
+        public Model_AFT () { }
         public Model_AFT(string Name, string Source, string Destination, bool Type) : base(Name, Source, Destination, Type)
         {
             this.Name = Name;
@@ -41,93 +44,205 @@ namespace EasySave_G8_UI.Models
             ModelLogs = new Model_Logs(); 
         }
 
-        public void Run() //Run a backup
+        public void Run(object? sender) //Run a backup
         {
             {
-                Model_StateLogs ModelStateLogs = new Model_StateLogs(this.Name, this.Source, this.Destination, this.Type, this.total_files);
+                int percentage = 0;
+                double Total_CryptoTime = 0;
 
-                if (File.Exists(Source)) //If it's a file
+                Model_StateLogs ModelStateLogs = new Model_StateLogs(this.Name, this.Source, this.Destination, this.Type, this.total_files); //init statelogs
+
+                BackgroundWorker localworker = sender as BackgroundWorker; //localworker initialize
+                localworker.WorkerReportsProgress = true; //allow localworker to report progress
+                localworker.ReportProgress(0, Name); //report inital progress
+
+                Model_PRIORITY model_PRIORITY = new Model_PRIORITY(); // create a new Model_Priority in order to have a priority list
+                List<string> priorityList = model_PRIORITY.priorityReturn();
+
+                if (File.Exists(Source)) //If source is a file only
                 {
-                    utcDateStart = DateTime.Now;
-                    File.Copy(Source, Destination, true);
+                    utcDateStart = DateTime.Now; //Initialize the date
+                    ModelStateLogs.progression = 0; // actualize the progression attribute on ModelStateLogs with actual percentage
+                    ModelStateLogs.file_remain = 1; // actualize the file remain attribute on ModelStateLogs with actual percentage
+                    ModelLogs.StateLog(ModelStateLogs); // Write the json state logs with new infos (it changes at each iteration)
+
+                    File.Copy(Source, Destination, true); //Run the save
+                    //Total_CryptoTime += Cryptosoft(Destination); //Encrypt the file and sum up
+
                     Size = new System.IO.FileInfo(Source).Length;
                     utcDateFinish = DateTime.Now;
+
+                    localworker.ReportProgress(100, Name); //report progress to actualize progressbar
+                    ModelStateLogs.CryptoTime = Total_CryptoTime;
+                    ModelStateLogs.progression = 100; // actualize the progression attribute on ModelStateLogs with actual percentage
+                    ModelStateLogs.file_remain = 0; // actualize the file remain attribute on ModelStateLogs with actual percentage
+                    ModelLogs.StateLog(ModelStateLogs); // Write the json state logs with new infos (it changes at each iteration)
                 }
+
                 else if (Directory.Exists(Source)) //If it's a folder
                 {
-                    utcDateStart = DateTime.Now;
-                    string Destination2;
                     var files = Directory.GetFiles(Source, "*.*", SearchOption.AllDirectories); //Get folders and files in the source directory
-                    Destination2 = Destination + @"\" + Path.GetFileName(Source); //Combine the destination directory with the file name of the source 
+                    List<string> files_NoPriority = new List<string>(files); // Convert Tab in List (in order to use Remove Method)
+                    List<string> files_Priority = new List<string>(); //Create list of priorityfiles
+                    List<string> files_LessPriority = new List<string>(files); // Convert Tab in List (in order to use Remove Method)
+                    string Destination2 = Destination + @"\" + Path.GetFileName(Source); //Combine the destination directory with the file name of the source 
+                    string targetFile;
+                    Model_NBKO modelNbKo = new Model_NBKO();
+
+                    utcDateStart = DateTime.Now;
+                    file_remain = total_files;
 
                     Directory.CreateDirectory(Destination); //Create the destination directory if it doesn't exist
                     Directory.CreateDirectory(Destination2); //Create the destination directory                    
                     
-                    file_remain = total_files;
-                    foreach (var file in files) //Loop throught every files and copy them
+                    foreach (var file in files) //Loop throught every files and add them to Pirority List
                     {
-                        Size = Size + new FileInfo(file).Length;//Increment size with each file
-                    }
+                        Size = Size + new FileInfo(file).Length; //Increment size with each file
+                        targetFile = file.Replace(Source, Destination2);
+                        foreach (string ext in priorityList)
+                        {
+                            if (Path.GetExtension(file) == ext)
+                            {
+                                files_Priority.Add(file); // Add file in priority file
+                                files_NoPriority.Remove(file); // Remove file from the all files in the list files_NoPriority (in order to have only no priority files)
+                            }
+                        }
 
+                        if(new FileInfo(file).Length > modelNbKo.NbKoReturn() && modelNbKo.NbKoReturn() !=0)
+                        {
+                            files_NoPriority.Remove(file); // Remove file from the all files in the list files_NoPriority (in order to have only no priority files)
+                            files_Priority.Remove(file); // Remove file from the all files in the list files_Priority (in order to have only no priority files)
+                            files_LessPriority.Add(file);
+                        }
+                    }
                     ModelStateLogs.Size = Size;
 
-                    foreach (var file in files) //Loop throught every files and copy them
+                    foreach (var file in files_Priority)
                     {
-                        string targetFile = file.Replace(Source, Destination2);
-                        ActualSize2 = ActualSize2 + new FileInfo(file).Length;//Increment size with each file
-                        int percentage = (int)(((double)ActualSize2 / (double)Size) * 100);//progression's percentage of the save
-                   
-                        Directory.CreateDirectory(Path.GetDirectoryName(targetFile)); // Create a directory
-                        
-                        _semaphorefiles.Wait();
-                        try { File.Copy(file, targetFile, true); } // Do the copy
-                        finally { _semaphorefiles.Release(); }
+                        targetFile = file.Replace(Source, Destination2);
 
-                        file_remain = file_remain - 1; // File remain decrease when a file copy have been done
+                        File.Copy(file, targetFile, true);  // Do the copy of priority Files
+                        //Total_CryptoTime += Cryptosoft(targetFile);
+
+                        ActualSize2 = ActualSize2 + new FileInfo(file).Length;//Increment size with each file
+                        percentage = (int)(((double)ActualSize2 / (double)Size) * 100);//progression's percentage of the save
+                        file_remain--; //File remain decrease when a file copy have been done
+
+                        localworker.ReportProgress(percentage, Name); // report progress
+                        ModelStateLogs.CryptoTime = Total_CryptoTime; // actualize cryptotime
                         ModelStateLogs.progression = percentage; // actualize the progression attribute on ModelStateLogs with actual percentage
                         ModelStateLogs.file_remain = file_remain; // actualize the file remain attribute on ModelStateLogs with actual percentage
-
                         ModelLogs.StateLog(ModelStateLogs); // Write the json state logs with new infos (it changes at each iteration)
                     }
+
+                    foreach (var file in files_NoPriority) //Loop throught every files and copy them
+                    {
+                        targetFile = file.Replace(Source, Destination2);
+                        ActualSize2 = ActualSize2 + new FileInfo(file).Length;//Increment size with each file
+                        percentage = (int)(((double)ActualSize2 / (double)Size) * 100);//progression's percentage of the save
+
+                        Directory.CreateDirectory(Path.GetDirectoryName(targetFile)); // Create a directory
+
+                        File.Copy(file, targetFile, true);  // Do the copy
+                        //Total_CryptoTime += Cryptosoft(targetFile);
+
+                        file_remain-- ; // File remain decrease when a file copy have been done
+
+                        localworker.ReportProgress(percentage, Name); //report progress
+                        ModelStateLogs.progression = percentage; // actualize the progression attribute on ModelStateLogs with actual percentage
+                        ModelStateLogs.file_remain = file_remain; // actualize the file remain attribute on ModelStateLogs with actual percentage
+                        ModelLogs.StateLog(ModelStateLogs); // Write the json state logs with new infos (it changes at each iteration)
+                    }
+
+                    foreach (var file in files_LessPriority)
+                    {
+                        targetFile = file.Replace(Source, Destination2);
+
+                        File.Copy(file, targetFile, true);  // Do the copy of priority Files
+                        //Total_CryptoTime += Cryptosoft(targetFile);
+
+                        ActualSize2 = ActualSize2 + new FileInfo(file).Length;//Increment size with each file
+                        percentage = (int)(((double)ActualSize2 / (double)Size) * 100);//progression's percentage of the save
+                        file_remain--; //File remain decrease when a file copy have been done
+
+                        localworker.ReportProgress(percentage, Name); // report progress
+                        ModelStateLogs.CryptoTime = Total_CryptoTime; // actualize cryptotime
+                        ModelStateLogs.progression = percentage; // actualize the progression attribute on ModelStateLogs with actual percentage
+                        ModelStateLogs.file_remain = file_remain; // actualize the file remain attribute on ModelStateLogs with actual percentage
+                        ModelLogs.StateLog(ModelStateLogs); // Write the json state logs with new infos (it changes at each iteration)
+                    }
+
                     ModelStateLogs.file_remain = file_remain;
-                    ModelStateLogs.State = "ENDED";
                     utcDateFinish = DateTime.Now;
                 }
+
                 Duration = utcDateFinish.Subtract(utcDateStart);  // Calculation of the result of the arrival date - the departure date to obtain a duration, it's in TimeSpan, it is the result of the subtraction of two DataTime
                 millisecondsDuration = Duration.TotalMilliseconds; // Convert Duration in milliseconds
+                localworker.ReportProgress(100, Name); // Report end of operation to background worker
+                ModelStateLogs.State = "ENDED";
                 ModelStateLogs.millisecondsDuration = millisecondsDuration; //add millisecondsDuration to the object ModelStateLogs
                 ModelLogs.StateLog(ModelStateLogs);// Write the JSon State Logs with all info 
             }
         }
 
-        public void RunDiff() //Execute a differential backup
+        public void RunDiff(object? sender) //Execute a differential backup
         {
             {
-                Model_StateLogs ModelStateLogs = new Model_StateLogs(this.Name, this.Source, this.Destination, this.Type, this.total_files);
+                int percentage = 0;
+                double Total_CryptoTime = 0;
+
+                Model_StateLogs ModelStateLogs = new Model_StateLogs(this.Name, this.Source, this.Destination, this.Type, this.total_files); //init statelogs
+
+                BackgroundWorker localworker = sender as BackgroundWorker; //localworker initialize
+                localworker.WorkerReportsProgress = true; //allow localworker to report progress
+                localworker.ReportProgress(0, Name); //report inital progress
+
+                Model_PRIORITY model_PRIORITY = new Model_PRIORITY(); // create a new Model_Priority in order to have a priority list
+                List<string> priorityList = model_PRIORITY.priorityReturn();
+
                 if (!Directory.Exists(Destination)) { Directory.CreateDirectory(Destination); } //Create the destination directory if it doesn't exist
                 if (Directory.Exists(Source))
                 {
-                    utcDateStart = DateTime.Now;
+              
                     string[] sourceFiles = Directory.GetFiles(Source, "*.*", SearchOption.AllDirectories); // Get the list of files in the source directory
-                    string Destination2;
+                    string Destination2 = Destination + @"\" + Path.GetFileName(Source); //Combine the destination directory with the file name of the source 
 
-                    Destination2 = Destination + @"\" + Path.GetFileName(Source); //Combine the destination directory with the file name of the source 
+                    utcDateStart = DateTime.Now;
                     Directory.CreateDirectory(Destination2); //Create the destination directory
-
                     file_remain = total_files;
+
+                    List<string> files_NoPriority = new List<string>(sourceFiles); // Convert Tab in List (in order to use Remove Method)
+                    List<string> files_Priority = new List<string>(); //Create list of priorityfiles
+                    List<string> files_LessPriority = new List<string>(sourceFiles); // Convert Tab in List (in order to use Remove Method)
+
+                    string targetFile;
 
                     foreach (var file in sourceFiles) //Loop throught every files and copy them
                     {
                         Size = Size + new System.IO.FileInfo(file).Length;//Increment size with each file
+                        targetFile = file.Replace(Source, Destination2);
+
+                        foreach (string ext in priorityList)
+                        {
+                            if (Path.GetExtension(file) == ext)
+                            {
+                                files_Priority.Add(file); // Add file in priority file
+                                files_NoPriority.Remove(file); // Remove file from the all files in the list files_NoPriority (in order to have only no priority files)
+                            }
+                        }
                     }
                     ModelStateLogs.Size = Size;
-                    foreach (string sourceFile in sourceFiles) // Browse each file in the source directory
+                    string destinationFile;
+
+                    foreach (string sourceFile in files_Priority) // Browse each file in the source directory
                     {
-                        string destinationFile = sourceFile.Replace(Source, Destination2); // Create a destination path for the file
+                        destinationFile = sourceFile.Replace(Source, Destination2); // Create a destination path for the file
                         ActualSize2 = ActualSize2 + new System.IO.FileInfo(sourceFile).Length;//Increment size with each file
-                        int percentage = (int)(((double)ActualSize2 / (double)Size) * 100);
+                        percentage = (int)(((double)ActualSize2 / (double)Size) * 100);
+
+                        localworker.ReportProgress(percentage, Name);
                         ModelStateLogs.progression = percentage;
-                        file_remain = file_remain - 1;
+                        file_remain --;
 
                         if (File.Exists(destinationFile)) // Check if the file already exists in the backup directory
                         {
@@ -136,30 +251,110 @@ namespace EasySave_G8_UI.Models
                             
                             if (sourceFileInfo.LastWriteTime > destinationFileInfo.LastWriteTime) // Check if the file has been modified in the source directory
                             {
-                                _semaphorefiles.Wait();
-                                try { File.Copy(sourceFile, destinationFile, true); }//Copy the modified file to the backup directory
-                                finally { _semaphorefiles.Release(); }
+                                File.Copy(sourceFile, destinationFile, true); //Copy the modified file to the backup directory
+                                //Total_CryptoTime += Cryptosoft(destinationFile);
                             }
                         }
                         else
                         {
                             Directory.CreateDirectory(Path.GetDirectoryName(destinationFile));// Copy the file that does not exist to the backup directory
-
-                            _semaphorefiles.Wait();
-                            try { File.Copy(sourceFile, destinationFile, false); }
-                            finally { _semaphorefiles.Release(); }
+                            File.Copy(sourceFile, destinationFile, false);
+                            //Total_CryptoTime += Cryptosoft(destinationFile);
                         }
                         ModelStateLogs.file_remain = file_remain;
                         ModelLogs.StateLog(ModelStateLogs);
                     }
+                    foreach (string sourceFile in files_NoPriority) // Browse each file in the source directory
+                    {
+                        destinationFile = sourceFile.Replace(Source, Destination2); // Create a destination path for the file
+                        ActualSize2 = ActualSize2 + new System.IO.FileInfo(sourceFile).Length;//Increment size with each file
+                        percentage = (int)(((double)ActualSize2 / (double)Size) * 100);
+
+                        localworker.ReportProgress(percentage, Name);
+                        ModelStateLogs.progression = percentage;
+                        file_remain--;
+
+                        if (File.Exists(destinationFile)) // Check if the file already exists in the backup directory
+                        {
+                            FileInfo sourceFileInfo = new FileInfo(sourceFile); // Get information about source and destination files
+                            FileInfo destinationFileInfo = new FileInfo(destinationFile);
+
+                            if (sourceFileInfo.LastWriteTime > destinationFileInfo.LastWriteTime) // Check if the file has been modified in the source directory
+                            {
+                                File.Copy(sourceFile, destinationFile, true); //Copy the modified file to the backup directory
+                                //Total_CryptoTime += Cryptosoft(destinationFile);
+                            }
+                        }
+                        else
+                        {
+                            Directory.CreateDirectory(Path.GetDirectoryName(destinationFile));// Copy the file that does not exist to the backup directory
+                            File.Copy(sourceFile, destinationFile, false);
+                            //Total_CryptoTime += Cryptosoft(destinationFile);
+                        }
+                        ModelStateLogs.file_remain = file_remain;
+                        ModelLogs.StateLog(ModelStateLogs);
+                    }
+                    foreach (var sourceFile in files_LessPriority)
+                    {
+                       
+                        destinationFile = sourceFile.Replace(Source, Destination2); // Create a destination path for the file
+                        ActualSize2 = ActualSize2 + new System.IO.FileInfo(sourceFile).Length;//Increment size with each file
+                        percentage = (int)(((double)ActualSize2 / (double)Size) * 100);
+
+                        localworker.ReportProgress(percentage, Name);
+                        ModelStateLogs.progression = percentage;
+                        file_remain--;
+
+                        if (File.Exists(destinationFile)) // Check if the file already exists in the backup directory
+                        {
+                            FileInfo sourceFileInfo = new FileInfo(sourceFile); // Get information about source and destination files
+                            FileInfo destinationFileInfo = new FileInfo(destinationFile);
+
+                            if (sourceFileInfo.LastWriteTime > destinationFileInfo.LastWriteTime) // Check if the file has been modified in the source directory
+                            {
+                                File.Copy(sourceFile, destinationFile, true); //Copy the modified file to the backup directory
+                                //Total_CryptoTime += Cryptosoft(destinationFile);
+                            }
+                        }
+                        else
+                        {
+                            Directory.CreateDirectory(Path.GetDirectoryName(destinationFile));// Copy the file that does not exist to the backup directory
+                            File.Copy(sourceFile, destinationFile, false);
+                            //Total_CryptoTime += Cryptosoft(destinationFile);
+                        }
+                        ModelStateLogs.file_remain = file_remain;
+                        ModelLogs.StateLog(ModelStateLogs);
+                       
+                    }
                     utcDateFinish = DateTime.Now;
-                }                
+                }
+                localworker.ReportProgress(100, Name); // Report end of operation to background worker
                 Duration = utcDateFinish.Subtract(utcDateStart); // Calculation of the result of the arrival date - the departure date to obtain a duration, it's in TimeSpan, it is the result of the subtraction of two DataTime
                 millisecondsDuration = Duration.TotalMilliseconds; // Convert Duration in milliseconds
                 ModelStateLogs.millisecondsDuration = millisecondsDuration; //add millisecondsDuration to the object ModelStateLogs
                 ModelStateLogs.State = "ENDED"; // Uptadte status of the save in order to write it in Json state logs
                 ModelLogs.StateLog(ModelStateLogs); // Write the JSon State Logs with all info 
             }
+        }
+
+        private double Cryptosoft(string destination)
+        {
+            string appPath = Directory.GetCurrentDirectory() + @"\cryptosoft.exe";
+            //string destination = Destination + @"\" + Path.GetFileName(Source) + @"\" + Path.GetFileName(Source); //Combine paths to correctlty create the directory
+            
+            DateTime TimeStartCS = DateTime.Now; //Get starting time
+            Process appProcess = new Process(); //Create the process
+
+            appProcess.StartInfo.FileName = appPath; //Starting CryptoSoft
+            appProcess.StartInfo.Arguments = destination; //Pass the argument
+            appProcess.Start(); //Start the process
+            appProcess.WaitForExit(); //Wait for the app to complete
+            appProcess.Close();  //Close the process
+
+            DateTime TimeEndCS = DateTime.Now; //Get finish time
+            TimeSpan DurationCS = TimeStartCS.Subtract(TimeEndCS); //Get the duration of the encrypting
+            double msDurationCS = DurationCS.TotalMilliseconds; //and transform it in milliseconds
+            return msDurationCS;
         }
 
         public void Logs() //Write backup's logs
@@ -172,39 +367,60 @@ namespace EasySave_G8_UI.Models
             if (File.Exists(fileName))  //Test if log file exists, else it creates it
             {
                 string fileContent = null;
-                _semaphorelogs.Wait();
+
+                _semaphorejson.Wait();
                 try { fileContent = File.ReadAllText(fileName); } //Bring content of filename in filecontent
-                finally { _semaphorelogs.Release(); }
+                finally { _semaphorejson.Release(); }
 
                 List<Model_AFT> ?values = new List<Model_AFT>(); //Create the list named values
                 values = JsonConvert.DeserializeObject<List<Model_AFT>>(fileContent); //Deserialialize the data in JSON form
                 values?.Add(this); //Add object ModelAFT in the list values
                 
                 string jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(values, Newtonsoft.Json.Formatting.Indented); //Serialialize the data in JSON form
-                File.WriteAllText(fileName, jsonString); //Write json file
+                
+                _semaphorejson.Wait();
+                try { File.WriteAllText(fileName, jsonString); } //Write json file
+                finally { _semaphorejson.Release(); }
 
                 XmlSerializer serializer = new XmlSerializer(typeof(List<Model_AFT>));
-                
-                _semaphorelogs.Wait();
-                StreamWriter writer = new StreamWriter(fileName2);
-                
-                
-                serializer.Serialize(writer, values);
-                writer.Close();
+                _semaphorexml.Wait();
+                try {
+                    StreamWriter writer = new StreamWriter(fileName2);
+                    serializer.Serialize(writer, values);
+                    writer.Close();
+                }
+                finally { _semaphorexml.Release(); }
             }
 
             else if (!File.Exists(fileName))
             {
                 List<Model_AFT> values = new List<Model_AFT>(); // create the list named values
                 values.Add(this);// Add object ModelAFT in the list values
-                var jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(values, Newtonsoft.Json.Formatting.Indented); //Serialialize the data in JSON form
-                File.WriteAllText(fileName, jsonString); // Write json file
+                var jsonString = JsonConvert.SerializeObject(values, Newtonsoft.Json.Formatting.Indented); //Serialialize the data in JSON form
+                
+                _semaphorejson.Wait();
+                try { File.WriteAllText(fileName, jsonString); } // Write json file
+                finally { _semaphorejson.Release(); }
 
                 XmlSerializer serializer = new XmlSerializer(typeof(List<Model_AFT>));
-                StreamWriter writer = new StreamWriter(fileName2);
-                serializer.Serialize(writer, values);
-                writer.Close();
+                
+                _semaphorexml.Wait();
+                try
+                {
+                    StreamWriter writer = new StreamWriter(fileName2);
+                    serializer.Serialize(writer, values);
+                    writer.Close();
+                }
+                finally { _semaphorexml.Release(); }
             }
         }
+
+
+
+
+
+
+
+
     }
 }
