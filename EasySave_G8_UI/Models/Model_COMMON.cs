@@ -212,8 +212,8 @@ namespace EasySave_G8_UI.Models
                 }
                 if (ProcExistTest == false)
                 {
-                    //priority.Insert(indexToInsert, ExtensionName);
-                    priority.Add(ExtensionName);
+                    priority.Insert(indexToInsert, ExtensionName);
+                    //priority.Add(ExtensionName);
                     this.priority = priority;
                     var jsonString = JsonConvert.SerializeObject(this); //Serialialize the data in JSON form
                     File.WriteAllText(fileName, jsonString); //Create and append JSON into file

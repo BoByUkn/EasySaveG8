@@ -59,15 +59,15 @@ namespace EasySave_G8_UI.Models
 
                     File.Copy(Source, Destination, true); //Run the save
 
-                    string appPath = @"C:\Users\" + Environment.UserName + @"\source\repos\Easy Save G8 UI\EasySave_G8_UI\Models\CryptoSoft\cryptosoft.exe";
-                    string destination = Destination + @"\" + Path.GetFileName(Source) + @"\" + Path.GetFileName(Source); //Combine paths to correctlty create the directory
-                    DateTime TimeStartCS = DateTime.Now; //Get starting time
-                    Process appProcess = new Process(); //Create the process
-                    appProcess.StartInfo.FileName = appPath; //Starting CryptoSoft
-                    appProcess.StartInfo.Arguments = destination; //Pass the argument
-                    appProcess.Start(); //Start the process
-                    appProcess.WaitForExit();  //Wait for the app to complete
-                    appProcess.Close();  //Close the process
+                    //string appPath = @"C:\Users\" + Environment.UserName + @"\source\repos\Easy Save G8 UI\EasySave_G8_UI\Models\CryptoSoft\cryptosoft.exe";
+                    //string destination = Destination + @"\" + Path.GetFileName(Source) + @"\" + Path.GetFileName(Source); //Combine paths to correctlty create the directory
+                    //DateTime TimeStartCS = DateTime.Now; //Get starting time
+                    //Process appProcess = new Process(); //Create the process
+                    //appProcess.StartInfo.FileName = appPath; //Starting CryptoSoft
+                    //appProcess.StartInfo.Arguments = destination; //Pass the argument
+                    //appProcess.Start(); //Start the process
+                    //appProcess.WaitForExit();  //Wait for the app to complete
+                    //appProcess.Close();  //Close the process
 
                     DateTime TimeEndCS = DateTime.Now; //Get finish time
                     TimeSpan DurationCS = TimeStartCS.Subtract(TimeEndCS); //Get the duration of the encrypting
@@ -80,6 +80,10 @@ namespace EasySave_G8_UI.Models
                 {
                     utcDateStart = DateTime.Now;
                     var files = Directory.GetFiles(Source, "*.*", SearchOption.AllDirectories); //Get folders and files in the source directory
+                   
+                    List<string> files_NoPriority = new List<string>(files); // Convert Tab in List (in order to use Remove Method)
+                    List<string> files_Priority = new List<string>(); //Create list of priorityfiles
+
                     string Destination2;
                     Destination2 = Destination + @"\" + Path.GetFileName(Source); //Combine the destination directory with the file name of the source 
 
@@ -87,39 +91,68 @@ namespace EasySave_G8_UI.Models
                     Directory.CreateDirectory(Destination2); //Create the destination directory                    
                     
                     file_remain = total_files;
-                    foreach (var file in files) //Loop throught every files and copy them
+
+                    foreach (var file in files) //Loop throught every files and add them to Pirority List
                     {
-                        Size = Size + new FileInfo(file).Length;//Increment size with each file
+                        Size = Size + new FileInfo(file).Length; //Increment size with each file
                         string targetFile = file.Replace(Source, Destination2);
 
                         foreach (string ext in priorityList)
                         {
                             if (Path.GetExtension(file) == ext)
                             {
-                                File.Copy(file, targetFile, true);  // Do the copy when the ext is equal tu the extension of the actual file
+                                files_Priority.Add(file); // Add file in priority file
+                                files_NoPriority.Remove(file); // Remove file from the all files in the list files_NoPriority (in order to have only no priority files)
                             }
                         }
                     }
 
-                    ModelStateLogs.Size = Size;
-                    foreach (var file in files) //Loop throught every files and copy them
+                    foreach(var file in files_Priority)
                     {
                         string targetFile = file.Replace(Source, Destination2);
+                        File.Copy(file, targetFile, true);  // Do the copy of priority Files
+
                         ActualSize2 = ActualSize2 + new FileInfo(file).Length;//Increment size with each file
                         int percentage = (int)(((double)ActualSize2 / (double)Size) * 100);//progression's percentage of the save
+                        file_remain = file_remain - 1; // File remain decrease when a file copy have been done
+
+                        // string appPath = @"C:\Users\" + Environment.UserName + @"\source\repos\Easy Save G8 UI\EasySave_G8_UI\Models\CryptoSoft\cryptosoft.exe";
+                        // string destination = Destination + @"\" + Path.GetFileName(Source) + @"\" + Path.GetFileName(file); //Combine paths to correctlty create the directory
+                        // DateTime TimeStartCS = DateTime.Now; //Get starting time
+                        // Process appProcess = new Process(); //Create the process
+                        // appProcess.StartInfo.FileName = appPath; //Starting CryptoSoft
+                        // appProcess.StartInfo.Arguments = destination; //Pass the argument
+                        // appProcess.Start(); //Start the process
+                        //appProcess.WaitForExit();  //Wait for the app to complete
+                        //appProcess.Close();  //Close the process
+
+                        ModelStateLogs.progression = percentage; // actualize the progression attribute on ModelStateLogs with actual percentage
+                        ModelStateLogs.file_remain = file_remain; // actualize the file remain attribute on ModelStateLogs with actual percentage
+                        ModelLogs.StateLog(ModelStateLogs); // Write the json state logs with new infos (it changes at each iteration)
+                    }
+
+                    ModelStateLogs.Size = Size;
+                    foreach (var file in files_NoPriority) //Loop throught every files and copy them
+                    {
+                        string targetFile = file.Replace(Source, Destination2);
+                        File.Copy(file, targetFile, true);  // Do the copy
+
+                        ActualSize2 = ActualSize2 + new FileInfo(file).Length;//Increment size with each file
+                        int percentage = (int)(((double)ActualSize2 / (double)Size) * 100);//progression's percentage of the save
+                        file_remain = file_remain - 1; // File remain decrease when a file copy have been done
                         Directory.CreateDirectory(Path.GetDirectoryName(targetFile)); // Create a directory
                         File.Copy(file, targetFile, true);  // Do the copy
                         file_remain = file_remain - 1; // File remain decrease when a file copy have been done
 
-                        string appPath = @"C:\Users\" + Environment.UserName + @"\source\repos\Easy Save G8 UI\EasySave_G8_UI\Models\CryptoSoft\cryptosoft.exe";
-                        string destination = Destination + @"\" + Path.GetFileName(Source)+ @"\"+ Path.GetFileName(file); //Combine paths to correctlty create the directory
-                        DateTime TimeStartCS = DateTime.Now; //Get starting time
-                        Process appProcess = new Process(); //Create the process
-                        appProcess.StartInfo.FileName = appPath; //Starting CryptoSoft
-                        appProcess.StartInfo.Arguments = destination; //Pass the argument
-                        appProcess.Start(); //Start the process
-                        appProcess.WaitForExit();  //Wait for the app to complete
-                        appProcess.Close();  //Close the process
+                        //string appPath = @"C:\Users\" + Environment.UserName + @"\source\repos\Easy Save G8 UI\EasySave_G8_UI\Models\CryptoSoft\cryptosoft.exe";
+                        //string destination = Destination + @"\" + Path.GetFileName(Source)+ @"\"+ Path.GetFileName(file); //Combine paths to correctlty create the directory
+                        //DateTime TimeStartCS = DateTime.Now; //Get starting time
+                        //Process appProcess = new Process(); //Create the process
+                        //appProcess.StartInfo.FileName = appPath; //Starting CryptoSoft
+                        //appProcess.StartInfo.Arguments = destination; //Pass the argument
+                        //appProcess.Start(); //Start the process
+                        //appProcess.WaitForExit();  //Wait for the app to complete
+                        //appProcess.Close();  //Close the process
 
                         DateTime TimeEndCS = DateTime.Now; //Get finish time
                         TimeSpan DurationCS = TimeStartCS.Subtract(TimeEndCS); //Get the duration of the encrypting
