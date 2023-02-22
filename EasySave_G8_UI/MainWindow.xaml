@@ -43,7 +43,7 @@
             </StackPanel.Resources>
             <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Width="345" Background="#FF283845">
                 <TextBlock x:Name="Title" Foreground="White" TextAlignment="Center" FontSize="36" Background="#FF161E27" Height="81"><Run Text="E"/><Run Language="fr-fr" Text="asy Save G8"/><LineBreak/><Run Language="fr-fr"/></TextBlock>
-                <TextBlock x:Name="Version" Foreground="White" TextAlignment="Center" FontSize="16" Background="#FF161E27" Height="41"><Run Language="fr-fr" Text="v2.0"/><LineBreak/><Run/></TextBlock>
+                <TextBlock x:Name="Version" Foreground="White" TextAlignment="Center" FontSize="16" Background="#FF161E27" Height="41"><Run Language="fr-fr" Text="v3.0"/><LineBreak/><Run/></TextBlock>
             </StackPanel>
 
             <Button x:Name="Dashboard_btn" Margin="-40,10,10,10" Padding="10.5" HorizontalAlignment="Left" FontSize="22" Height="50" Width="250" Background="#FFDDDDDD" Click="Dashboard_Click">
