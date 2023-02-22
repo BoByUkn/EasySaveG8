@@ -107,7 +107,7 @@
                         <TextBlock Foreground="White" FontSize="16" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0" FontFamily="Bahnschrift Condensed" Grid.Row="0"><Run Language="fr-fr" Text="Extension Add" x:Name="Extensionlist_add1_txt"/></TextBlock>
                         <TextBox x:Name="Extensionlist_add1" TextWrapping="Wrap" Height="30" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" Width="419" Grid.Column="1" Grid.Row="0" Margin="30,0,30,0"/>
 
-                        <Button x:Name="CryptoPrioty_add_btn" Content="Add" FontFamily="Bahnschrift Condensed" Height="30" FontSize="15" BorderBrush="{x:Null}" Grid.Column="2" Margin="0,0,30,0"  Grid.Row="0" Click="Extensionlist_add_btn_Click">
+                        <Button x:Name="CryptoPrioty_add_btn" Content="Add" FontFamily="Bahnschrift Condensed" Height="30" FontSize="15" BorderBrush="{x:Null}" Grid.Column="2" Margin="0,0,30,0"  Grid.Row="0">
                             <Button.Resources>
                                 <Style TargetType="{x:Type Border}">
                                     <Setter Property="CornerRadius" Value="5"/>
@@ -119,7 +119,7 @@
                         <ComboBox x:Name="Extensionlist_rm_combobox1" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="419" Grid.Column="1" Grid.Row="1" Margin="30,0,30,0">
                         </ComboBox>
 
-                        <Button x:Name="CryptoPrioty_arm_button" Content="Remove" FontFamily="Bahnschrift Condensed" Height="30" FontSize="15" BorderBrush="{x:Null}" Grid.Column="2" Margin="0,0,30,0"  Grid.Row="1" Click="Extensionlist_rm_btn_Click">
+                        <Button x:Name="CryptoPrioty_arm_button" Content="Remove" FontFamily="Bahnschrift Condensed" Height="30" FontSize="15" BorderBrush="{x:Null}" Grid.Column="2" Margin="0,0,30,0"  Grid.Row="1">
                             <Button.Resources>
                                 <Style TargetType="{x:Type Border}">
                                     <Setter Property="CornerRadius" Value="5"/>

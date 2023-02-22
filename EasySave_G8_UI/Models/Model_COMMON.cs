@@ -49,7 +49,7 @@ namespace EasySave_G8_UI.Models
             Model_NBKO modelnbko = new Model_NBKO();
             modelnbko.NbKo = 0;
             var jsonString3 = JsonConvert.SerializeObject(modelnbko); //Serialialize the data in JSON form
-            File.WriteAllText(fileName, jsonString); //Create and append JSON into file
+            File.WriteAllText(fileName3, jsonString3); //Create and append JSON into file
 
             //Create key for cryptosoft
             var RandomInt64 = new Random();
