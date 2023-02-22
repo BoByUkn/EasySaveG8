@@ -63,8 +63,9 @@ namespace EasySave_G8_UI.Views
             {
                 PriorityNumer_combobox.Items.Add(i);
                 Prioritylist_rm_combobox1.Items.Add(prioritylist[i]);
-
             }
+            PriorityNumer_combobox.Items.Add(prioritylist.Count);
+
             Display_Size.Text = ViewModel.MV_NbKoReturn().ToString();
         }
 
