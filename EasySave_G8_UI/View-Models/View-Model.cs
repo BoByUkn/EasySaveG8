@@ -155,5 +155,22 @@ namespace EasySave_G8_UI.View_Models
             Model_PRIORITY ModelPRIORITY = new Model_PRIORITY();
             return ModelPRIORITY.priorityReturn();
         }
+        public void VM_ExtensionListAdd(string ProcessName, int Index)
+        {
+            Model_EXTENSION ModelEXTENSION = new Model_EXTENSION();
+            ModelEXTENSION.ExtensionAdd(ProcessName, Index);
+        }
+
+        public void VM_ExtensionListRemove(string ProcessNameRm)
+        {
+            Model_EXTENSION ModelEXTENSION = new Model_EXTENSION();
+            ModelEXTENSION.ExtensionRemove(ProcessNameRm);
+        }
+
+        public List<string> MV_ExtensionListRe()
+        {
+            Model_EXTENSION ModelEXTENSION = new Model_EXTENSION();
+            return ModelEXTENSION.priorityReturn();
+        }
     }
 }

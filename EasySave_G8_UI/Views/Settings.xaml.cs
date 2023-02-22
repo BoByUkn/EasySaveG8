@@ -92,5 +92,25 @@ namespace EasySave_G8_UI.Views
             ListRefresh();
             PageRefresh();
         }
+
+        private void Extensionlist_add_btn_Click(object sender, RoutedEventArgs e)
+        {
+            View_Model ViewModel = new View_Model();
+            string CSExtensionName = Extensionlist_add1.Text;
+            int index = ExtensionNumer_combobox.SelectedIndex;
+            if (index == -1) { index = 0; }
+            ViewModel.VM_ExtensionListAdd(CSExtensionName, index);
+            PageRefresh();
+
+        }
+
+        private void Extensionlist_rm_btn_Click(object sender, RoutedEventArgs e)
+        {
+            View_Model ViewModel = new View_Model();
+            string CSExtensionName = Extensionlist_rm_combobox1.Text;
+            ViewModel.VM_PriorityListRemove(CSExtensionName);
+            ListRefresh();
+            PageRefresh();
+        }
     }
 }
