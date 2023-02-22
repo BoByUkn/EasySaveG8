@@ -5,9 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Xml.Serialization;
-using System.Xml;
 using System.Threading;
-using System.Windows.Forms.Design;
 using System.ComponentModel;
 
 namespace EasySave_G8_UI.Models
@@ -86,8 +84,10 @@ namespace EasySave_G8_UI.Models
                     var files = Directory.GetFiles(Source, "*.*", SearchOption.AllDirectories); //Get folders and files in the source directory
                     List<string> files_NoPriority = new List<string>(files); // Convert Tab in List (in order to use Remove Method)
                     List<string> files_Priority = new List<string>(); //Create list of priorityfiles
+                    List<string> files_LessPriority = new List<string>(files); // Convert Tab in List (in order to use Remove Method)
                     string Destination2 = Destination + @"\" + Path.GetFileName(Source); //Combine the destination directory with the file name of the source 
                     string targetFile;
+                    Model_NBKO modelNbKo = new Model_NBKO();
 
                     utcDateStart = DateTime.Now;
                     file_remain = total_files;
@@ -106,6 +106,13 @@ namespace EasySave_G8_UI.Models
                                 files_Priority.Add(file); // Add file in priority file
                                 files_NoPriority.Remove(file); // Remove file from the all files in the list files_NoPriority (in order to have only no priority files)
                             }
+                        }
+
+                        if(new FileInfo(file).Length > modelNbKo.NbKoReturn() )
+                        {
+                            files_NoPriority.Remove(file); // Remove file from the all files in the list files_NoPriority (in order to have only no priority files)
+                            files_Priority.Remove(file); // Remove file from the all files in the list files_Priority (in order to have only no priority files)
+                            files_LessPriority.Add(file);
                         }
                     }
                     ModelStateLogs.Size = Size;
@@ -146,6 +153,25 @@ namespace EasySave_G8_UI.Models
                         ModelStateLogs.file_remain = file_remain; // actualize the file remain attribute on ModelStateLogs with actual percentage
                         ModelLogs.StateLog(ModelStateLogs); // Write the json state logs with new infos (it changes at each iteration)
                     }
+
+                    foreach (var file in files_LessPriority)
+                    {
+                        targetFile = file.Replace(Source, Destination2);
+
+                        File.Copy(file, targetFile, true);  // Do the copy of priority Files
+                        //Total_CryptoTime += Cryptosoft(targetFile);
+
+                        ActualSize2 = ActualSize2 + new FileInfo(file).Length;//Increment size with each file
+                        percentage = (int)(((double)ActualSize2 / (double)Size) * 100);//progression's percentage of the save
+                        file_remain--; //File remain decrease when a file copy have been done
+
+                        localworker.ReportProgress(percentage, Name); // report progress
+                        ModelStateLogs.CryptoTime = Total_CryptoTime; // actualize cryptotime
+                        ModelStateLogs.progression = percentage; // actualize the progression attribute on ModelStateLogs with actual percentage
+                        ModelStateLogs.file_remain = file_remain; // actualize the file remain attribute on ModelStateLogs with actual percentage
+                        ModelLogs.StateLog(ModelStateLogs); // Write the json state logs with new infos (it changes at each iteration)
+                    }
+
                     ModelStateLogs.file_remain = file_remain;
                     utcDateFinish = DateTime.Now;
                 }
@@ -185,6 +211,8 @@ namespace EasySave_G8_UI.Models
 
                     List<string> files_NoPriority = new List<string>(sourceFiles); // Convert Tab in List (in order to use Remove Method)
                     List<string> files_Priority = new List<string>(); //Create list of priorityfiles
+                    List<string> files_LessPriority = new List<string>(sourceFiles); // Convert Tab in List (in order to use Remove Method)
+
                     string targetFile;
 
                     foreach (var file in sourceFiles) //Loop throught every files and copy them
@@ -263,6 +291,38 @@ namespace EasySave_G8_UI.Models
                         }
                         ModelStateLogs.file_remain = file_remain;
                         ModelLogs.StateLog(ModelStateLogs);
+                    }
+                    foreach (var sourceFile in files_LessPriority)
+                    {
+                       
+                        destinationFile = sourceFile.Replace(Source, Destination2); // Create a destination path for the file
+                        ActualSize2 = ActualSize2 + new System.IO.FileInfo(sourceFile).Length;//Increment size with each file
+                        percentage = (int)(((double)ActualSize2 / (double)Size) * 100);
+
+                        localworker.ReportProgress(percentage, Name);
+                        ModelStateLogs.progression = percentage;
+                        file_remain--;
+
+                        if (File.Exists(destinationFile)) // Check if the file already exists in the backup directory
+                        {
+                            FileInfo sourceFileInfo = new FileInfo(sourceFile); // Get information about source and destination files
+                            FileInfo destinationFileInfo = new FileInfo(destinationFile);
+
+                            if (sourceFileInfo.LastWriteTime > destinationFileInfo.LastWriteTime) // Check if the file has been modified in the source directory
+                            {
+                                File.Copy(sourceFile, destinationFile, true); //Copy the modified file to the backup directory
+                                //Total_CryptoTime += Cryptosoft(destinationFile);
+                            }
+                        }
+                        else
+                        {
+                            Directory.CreateDirectory(Path.GetDirectoryName(destinationFile));// Copy the file that does not exist to the backup directory
+                            File.Copy(sourceFile, destinationFile, false);
+                            //Total_CryptoTime += Cryptosoft(destinationFile);
+                        }
+                        ModelStateLogs.file_remain = file_remain;
+                        ModelLogs.StateLog(ModelStateLogs);
+                       
                     }
                     utcDateFinish = DateTime.Now;
                 }                
@@ -352,6 +412,13 @@ namespace EasySave_G8_UI.Models
                 finally { _semaphorexml.Release(); }
             }
         }
+
+
+
+
+
+
+
 
     }
 }

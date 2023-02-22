@@ -14,8 +14,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using EasySave_G8_UI.Models;
 using EasySave_G8_UI.View_Models;
 using EasySave_G8_UI.Views.Works;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ScrollBar;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace EasySave_G8_UI.Views
@@ -64,6 +66,7 @@ namespace EasySave_G8_UI.Views
                 Prioritylist_rm_combobox1.Items.Add(prioritylist[i]);
 
             }
+            Display_Size.Text = ViewModel.MV_NbKoReturn().ToString();
         }
 
         private void PageRefresh()
@@ -93,7 +96,7 @@ namespace EasySave_G8_UI.Views
             PageRefresh();
         }
 
-        private void Extensionlist_add_btn_Click(object sender, RoutedEventArgs e)
+        /*private void Extensionlist_add_btn_Click(object sender, RoutedEventArgs e)
         {
             View_Model ViewModel = new View_Model();
             string CSExtensionName = Extensionlist_add1.Text;
@@ -102,15 +105,27 @@ namespace EasySave_G8_UI.Views
             ViewModel.VM_ExtensionListAdd(CSExtensionName, index);
             PageRefresh();
 
-        }
+        }*/
 
-        private void Extensionlist_rm_btn_Click(object sender, RoutedEventArgs e)
+/*        private void Extensionlist_rm_btn_Click(object sender, RoutedEventArgs e)
         {
             View_Model ViewModel = new View_Model();
             string CSExtensionName = Extensionlist_rm_combobox1.Text;
             ViewModel.VM_PriorityListRemove(CSExtensionName);
             ListRefresh();
             PageRefresh();
+        }*/
+
+        private void Size_add_btn_Click(object sender, RoutedEventArgs e)
+        {
+            View_Model ViewModel = new View_Model();
+            double Size;
+            if (Double.TryParse(Size_txbx.Text, out Size))
+            {
+                ViewModel.VM_NbKoSet(Size);
+                MessageBox.Show("Size is Saved !");
+                PageRefresh();
+            }
         }
     }
 }

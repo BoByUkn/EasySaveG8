@@ -157,20 +157,33 @@ namespace EasySave_G8_UI.View_Models
         }
         public void VM_ExtensionListAdd(string ProcessName, int Index)
         {
-            Model_EXTENSION ModelEXTENSION = new Model_EXTENSION();
-            ModelEXTENSION.ExtensionAdd(ProcessName, Index);
+            //Model_EXTENSION ModelEXTENSION = new Model_EXTENSION();
+            //ModelEXTENSION.ExtensionAdd(ProcessName, Index);
         }
 
         public void VM_ExtensionListRemove(string ProcessNameRm)
         {
-            Model_EXTENSION ModelEXTENSION = new Model_EXTENSION();
-            ModelEXTENSION.ExtensionRemove(ProcessNameRm);
+            //Model_EXTENSION ModelEXTENSION = new Model_EXTENSION();
+            //ModelEXTENSION.ExtensionRemove(ProcessNameRm);
         }
 
-        public List<string> MV_ExtensionListRe()
+        //public List<string> MV_ExtensionListRe()
+        //{
+            //Model_EXTENSION ModelEXTENSION = new Model_EXTENSION();
+            //return ModelEXTENSION.priorityReturn();
+        //}
+
+        public double MV_NbKoReturn()
         {
-            Model_EXTENSION ModelEXTENSION = new Model_EXTENSION();
-            return ModelEXTENSION.priorityReturn();
+            Model_NBKO modelNbko= new Model_NBKO();
+            double nbKo=modelNbko.NbKoReturn();
+            return nbKo;
+        }
+
+        public void VM_NbKoSet(double nbko )
+        {
+            Model_NBKO modelNbko = new Model_NBKO();
+            modelNbko.NbKoSet(nbko);
         }
     }
 }

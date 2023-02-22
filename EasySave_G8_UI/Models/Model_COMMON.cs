@@ -32,17 +32,26 @@ namespace EasySave_G8_UI.Models
             var jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(ModelCOMMON); //Serialialize the data in JSON form
             File.WriteAllText(fileName, jsonString); //Create and append JSON into file
 
+            //Create blackList.json
             string fileName2 = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\blackList.json";
             Model_BLACKLIST bLACKLIST = new Model_BLACKLIST();
             var jsonString2 = JsonConvert.SerializeObject(bLACKLIST); //Serialialize the data in JSON form
             File.WriteAllText(fileName2, jsonString2); //Create and append JSON into file
 
+            //Create priority.json
             string fileNamePriorityFiles = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\priority.json";
             Model_PRIORITY PriorityFiles = new Model_PRIORITY();
             var jsonStringPriority = JsonConvert.SerializeObject(PriorityFiles); //Serialialize the data in JSON form
             File.WriteAllText(fileNamePriorityFiles, jsonStringPriority); //Create and append JSON into file
 
+            //Create NbKo.json
+            string fileName3 = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\nbKo.json"; 
+            Model_NBKO modelnbko = new Model_NBKO();
+            modelnbko.NbKo = 0;
+            var jsonString3 = JsonConvert.SerializeObject(modelnbko); //Serialialize the data in JSON form
+            File.WriteAllText(fileName, jsonString); //Create and append JSON into file
 
+            //Create key for cryptosoft
             var RandomInt64 = new Random();
             long cipherKey = RandomInt64.NextInt64(); //Generates a random 64bit key for CryptoSoft
             string filePath = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\cipherkey.txt";
@@ -236,6 +245,27 @@ namespace EasySave_G8_UI.Models
             this.priority = priority;
             var jsonString = JsonConvert.SerializeObject(this); //Serialialize the data in JSON form
             File.WriteAllText(fileName, jsonString); //Create and append JSON into file
+        }
+    }
+
+
+    public class Model_NBKO
+    {
+        public double NbKo;
+        public void NbKoSet(double NbKo)
+        {
+            string fileName = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\nbKo.json";
+            this.NbKo = NbKo;
+            var jsonString = JsonConvert.SerializeObject(this); //Serialialize the data in JSON form
+            File.WriteAllText(fileName, jsonString); //Create and append JSON into file
+        }
+
+        public double NbKoReturn()
+        {
+            string fileName = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\nbKo.json";
+            string fileContent = File.ReadAllText(fileName); // Bring content of filename in filecontent
+            Model_NBKO base_conf_priority = JsonConvert.DeserializeObject<Model_NBKO>(fileContent); // Create the list named values
+            return base_conf_priority.NbKo;
         }
     }
 }
