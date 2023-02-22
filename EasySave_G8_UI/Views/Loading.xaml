@@ -13,7 +13,9 @@
                 <TextBlock Foreground="White" FontSize="35" VerticalAlignment="Top" HorizontalAlignment="Center" FontFamily="Bahnschrift Condensed" Height="40" Width="325" TextAlignment="Center">
                     <Run Language="fr-fr" Text="Loading" Name="Loading_Title"/>
                 </TextBlock>
+
             </StackPanel>
+          
         </Border>
     </Grid>
 </Page>

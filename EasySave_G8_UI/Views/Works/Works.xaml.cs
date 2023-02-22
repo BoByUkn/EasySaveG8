@@ -2,6 +2,7 @@
 using EasySave_G8_UI.Models;
 using EasySave_G8_UI.View_Models;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
@@ -14,25 +15,15 @@ namespace EasySave_G8_UI.Views.Works
     public partial class Works : Page
     {
         private MainWindow MainWindow1;
+        private View_Model ViewModel;
 
         public Works()
         {
             InitializeComponent();
+            ViewModel = new View_Model();
             MainWindow1 = Application.Current.MainWindow as MainWindow;
-                //MainWindow1.Main.Content as Loading;
             Works_List();
             translate();
-        }
-
-        private void translate()
-        {
-            Works_Title.Text = $"{View_Model.VM_GetString_Language("works_title")}";
-            Next_btn.Content = $"{View_Model.VM_GetString_Language("next")}";
-            ExecuteAll_btn.Content = $"{View_Model.VM_GetString_Language("execute_all")}";
-            ExecuteSelected_btn.Content = $"{View_Model.VM_GetString_Language("execute_selection")}";
-            Edit_btn.Content = $"{View_Model.VM_GetString_Language("edit_selection")}";
-            Delete_btn.Content = $"{View_Model.VM_GetString_Language("delete_selection")}";
-            Create_btn.Content = $"{View_Model.VM_GetString_Language("create_work")}";
         }
 
         private void Works_List()
@@ -52,10 +43,6 @@ namespace EasySave_G8_UI.Views.Works
             mainWindow.Main.Content = new Works_Create();
         }
 
-
-
-
-
         private void ExecuteAll_btn_Click(object sender, RoutedEventArgs e)
         {
             View_Model ViewModel = new View_Model();
@@ -68,13 +55,17 @@ namespace EasySave_G8_UI.Views.Works
                 MainWindow1.Main.Content = MainWindow1.Loading1;
                 foreach (string WorkName in List_Works.Items)
                 {
-                    Thread thread_pgbar = new Thread(MainWindow1.Loading1.ProgressBar_Manage);
+                    Thread thread_pgbar = new Thread(MainWindow1.Loading1.ProgressBar_Add);
                     thread_pgbar.Name = WorkName;
                     thread_pgbar.Start();
 
-                    Thread thread_exec = new Thread(() => ViewModel.VM_Work_Run(WorkName));
-                    thread_exec.Name = WorkName;
-                    thread_exec.Start();
+                    BackgroundWorker backgroundWorker = new BackgroundWorker();
+                    backgroundWorker.RunWorkerCompleted += BackgroundWorker_RunWorkerCompleted;
+                    backgroundWorker.DoWork += BackgroundWorker_DoWork;
+                    backgroundWorker.ProgressChanged += BackgroundWorker_ProgressChanged;
+                    backgroundWorker.RunWorkerAsync(argument: WorkName);
+
+                    Thread.Sleep(100);
                 }
             }
             else
@@ -96,19 +87,37 @@ namespace EasySave_G8_UI.Views.Works
                 MainWindow1.Main.Content = MainWindow1.Loading1;
                 foreach (string WorkName in List_Works.SelectedItems)
                 {
-                    Thread thread_pgbar = new Thread(MainWindow1.Loading1.ProgressBar_Manage);
+                    Thread thread_pgbar = new Thread(MainWindow1.Loading1.ProgressBar_Add);
                     thread_pgbar.Name = WorkName;
                     thread_pgbar.Start();
 
-                    Thread thread_exec = new Thread(() => ViewModel.VM_Work_Run(WorkName));
-                    thread_exec.Name = WorkName;
-                    thread_exec.Start();
+                    BackgroundWorker backgroundWorker = new BackgroundWorker();
+                    backgroundWorker.RunWorkerCompleted += BackgroundWorker_RunWorkerCompleted;
+                    backgroundWorker.DoWork += BackgroundWorker_DoWork;
+                    backgroundWorker.ProgressChanged += BackgroundWorker_ProgressChanged;
+                    backgroundWorker.RunWorkerAsync(argument: WorkName);
+
+                    Thread.Sleep(100);
                 }
             }
             else
             {
                 MessageBox.Show($"{View_Model.VM_GetString_Language("msgbox_blacklist")}", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
-            } 
+            }
+        }
+
+        private void BackgroundWorker_RunWorkerCompleted(object? sender, RunWorkerCompletedEventArgs e)
+        {
+        }
+
+        private void BackgroundWorker_DoWork(object? sender, DoWorkEventArgs e)
+        {
+            ViewModel.VM_Work_Run((string)e.Argument, sender);
+        }
+
+        private void BackgroundWorker_ProgressChanged(object? sender, ProgressChangedEventArgs e)
+        {
+            MainWindow1.Loading1.UpdatePGBar(e);
         }
 
         private void Delete_btn_Click(object sender, RoutedEventArgs e)
@@ -194,6 +203,16 @@ namespace EasySave_G8_UI.Views.Works
                 if (obj.Type) { List_Work_Detail.Text += "Type: Complete \n"; }
                 else { List_Work_Detail.Text += "Type: Differential \n"; }
             }
+        }
+        private void translate()
+        {
+            Works_Title.Text = $"{View_Model.VM_GetString_Language("works_title")}";
+            Next_btn.Content = $"{View_Model.VM_GetString_Language("next")}";
+            ExecuteAll_btn.Content = $"{View_Model.VM_GetString_Language("execute_all")}";
+            ExecuteSelected_btn.Content = $"{View_Model.VM_GetString_Language("execute_selection")}";
+            Edit_btn.Content = $"{View_Model.VM_GetString_Language("edit_selection")}";
+            Delete_btn.Content = $"{View_Model.VM_GetString_Language("delete_selection")}";
+            Create_btn.Content = $"{View_Model.VM_GetString_Language("create_work")}";
         }
     }
 }

@@ -21,7 +21,7 @@ namespace EasySave_G8_UI.View_Models
         public void VM_Classic(string Name, string Source, string Destination, bool Type)
         {
             Model_PRE ModelPRE = new Model_PRE(Name, Source, Destination, Type);
-            ModelPRE.Exec();
+            ModelPRE.Exec(null);
         }
 
         //VM Check if a Work exists
@@ -54,14 +54,14 @@ namespace EasySave_G8_UI.View_Models
         }
 
         //VM Run a single or all works
-        public void VM_Work_Run(string Name)
+        public void VM_Work_Run(string Name, object sender)
         {
             Model_Works ModelWorks = new Model_Works();
             List<Model_PRE>? obj_list = (ModelWorks.Get_Work(Name, false)); //Use Get_Work to get Work data
             foreach (Model_PRE obj in obj_list) //Loop throught every works in list and execute them
             {
                 Model_PRE ModelPRE = new Model_PRE(obj.Name, obj.Source, obj.Destination, obj.Type);
-                ModelPRE.Exec();
+                ModelPRE.Exec(sender);
             }
         }
 
@@ -91,14 +91,6 @@ namespace EasySave_G8_UI.View_Models
         {
             string rtrn_string = Model_LANG.GetString(trsl_string);
             return rtrn_string;
-        }
-
-        //MV Update the progression bar
-        public int MV_Update_ProgressionBar(String Name)
-        {
-            Model_Logs modellogs = new Model_Logs();
-            int progression = modellogs.Get_StateLogsPercentage(Name);
-            return progression;
         }
 
         //MV Show the daily log files content
@@ -144,12 +136,6 @@ namespace EasySave_G8_UI.View_Models
         {
             Model_Logs ModelLOGS = new Model_Logs();
             return ModelLOGS.StatelogExists(Name);
-        }
-
-        public string VM_StateLogsState(string Name)
-        {
-            Model_Logs ModelLOGS = new Model_Logs();
-            return ModelLOGS.Get_StateLogsState(Name);
         }
 
         public void VM_PriorityListAdd(string ProcessName,int Index)

@@ -1,6 +1,7 @@
 ﻿using EasySave_G8_UI.View_Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -25,6 +26,7 @@ namespace EasySave_G8_UI.Views
         private MainWindow currentMainWindow;
         private Loading currentLoading;
         private View_Model ViewMODEL;
+        private int PGIndex;
 
         public Loading()
         {
@@ -32,22 +34,10 @@ namespace EasySave_G8_UI.Views
             currentMainWindow = Application.Current.MainWindow as MainWindow;
             currentLoading = currentMainWindow.Main.Content as Loading;
             ViewMODEL = new View_Model();
+            PGIndex = 0;
         }
 
-        public async void ProgressBar_Manage()
-        {
-            ProgressBar_New();
-            Thread.Sleep(500);
-            bool wbool = true;
-            while (wbool) 
-            {
-                Thread.Sleep(100);
-                ProgressBar_Update();
-                if (!ProgressBar_Ended()) { wbool = false; }
-            }
-        }
-
-        public void ProgressBar_New()
+        public async void ProgressBar_Add()
         {
             Thread currentThread = Thread.CurrentThread;
             ProgressBar progressBar = null;
@@ -58,55 +48,24 @@ namespace EasySave_G8_UI.Views
                 progressBar.Maximum = 100;
                 progressBar.Margin = new Thickness(20, 20, 20, 20);
                 progressBar.Width = 400;
-                progressBar.Height= 30;
+                progressBar.Height = 30;
                 progressBar.Name = currentThread.Name;
                 MainStackPanel.Children.Add(progressBar);
             });
         }
 
-
-        public void ProgressBar_Update() 
+        public void UpdatePGBar(ProgressChangedEventArgs e)
         {
-            Thread currentThread = Thread.CurrentThread;
             ProgressBar progressBar = null;
-            string PgName = currentThread.Name;
 
-            currentMainWindow.Dispatcher.Invoke(() =>
+            foreach (var child in MainStackPanel.Children)
             {
-                foreach (var child in MainStackPanel.Children)
+                if ((child as FrameworkElement)?.Name == e.UserState.ToString())
                 {
-                    if ((child as FrameworkElement)?.Name == PgName) 
-                    {
-                        try 
-                        {
-                            progressBar = child as ProgressBar;
-                            progressBar.Value++; //ViewMODEL.MV_Update_ProgressionBar(PgName);
-                        }
-                        catch { Exception ex; }
-                    }
+                    progressBar = child as ProgressBar;
+                    progressBar.Value = e.ProgressPercentage;
                 }
-            });
-        }
-
-        private bool ProgressBar_Ended()
-        {
-            Thread currentThread = Thread.CurrentThread;
-            ProgressBar progressBar = null;
-            string PgName = currentThread.Name;
-
-            currentMainWindow.Dispatcher.Invoke(() =>
-            {
-                foreach (var child in MainStackPanel.Children)
-                {
-                    if ((child as FrameworkElement)?.Name == PgName)
-                    {
-                        if (ViewMODEL.VM_StateLogsState(PgName) == "ENDED") { return true; }
-                        else { return false; }
-                    }
-                }
-                return false;
-            });
-            return false;
+            }
         }
     }
 }
