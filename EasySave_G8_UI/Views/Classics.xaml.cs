@@ -13,7 +13,7 @@ namespace EasySave_G8_UI.Views
     /// Logique d'interaction pour Classics.xaml
     /// </summary>
     public partial class Classics : Page
-    {
+    {   
         private MainWindow MainWindow1;
         private View_Model ViewModel;
 
