@@ -394,28 +394,24 @@ namespace EasySave_G8_UI.Models
 
         private double Cryptosoft(string destination)
         {
-            try
-            {
-                string appPath = Directory.GetCurrentDirectory() + @"\cryptosoft.exe";
-                DateTime TimeStartCS = DateTime.Now; //Get starting time
-                Process appProcess = new Process(); //Create the process
+            string appPath = Directory.GetCurrentDirectory() + @"\cryptosoft.exe";
+            DateTime TimeStartCS = DateTime.Now; //Get starting time
+            Process appProcess = new Process(); //Create the process
 
-                destination = "\"" + destination + "\"";
+            destination = "\"" + destination + "\"";
 
-                appProcess.StartInfo.FileName = appPath; //Starting CryptoSoft
-                appProcess.StartInfo.Arguments = destination; //Pass the argument
-                appProcess.StartInfo.CreateNoWindow= true;
-                appProcess.Start(); //Start the process
-                appProcess.WaitForExit(); //Wait for the app to complete
-                appProcess.Close();  //Close the process
+            appProcess.StartInfo.FileName = appPath; //Starting CryptoSoft
+            appProcess.StartInfo.Arguments = destination; //Pass the argument
+            appProcess.StartInfo.CreateNoWindow= true;
+            appProcess.Start(); //Start the process
+            appProcess.WaitForExit(); //Wait for the app to complete
+            appProcess.Close();  //Close the process
 
-                DateTime TimeEndCS = DateTime.Now; //Get finish time
-                TimeSpan DurationCS = TimeStartCS.Subtract(TimeEndCS); //Get the duration of the encrypting
-                double msDurationCS = DurationCS.TotalMilliseconds; //and transform it in milliseconds
-                return msDurationCS;
-            }
-            catch (Exception) { System.Windows.MessageBox.Show("You don't have CryptoSoft.exe, please put it in the right directory", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);}
-            return -1;
+            DateTime TimeEndCS = DateTime.Now; //Get finish time
+            TimeSpan DurationCS = TimeStartCS.Subtract(TimeEndCS); //Get the duration of the encrypting
+            double msDurationCS = DurationCS.TotalMilliseconds; //and transform it in milliseconds
+            return msDurationCS;
+            
         }
 
         public void Logs() //Write backup's logs

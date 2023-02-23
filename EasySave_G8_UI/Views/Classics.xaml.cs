@@ -46,36 +46,44 @@ namespace EasySave_G8_UI.Views
         private void Button_Click_LaunchSave(object sender, RoutedEventArgs e)
         {            
             bool blacklist_state = ViewModel.VM_BlackListTest();
-            if(blacklist_state == false)
+            string appPath = Directory.GetCurrentDirectory() + @"\cryptosoft.exe";
+
+            if (blacklist_state == false)
             {
-                ClassicName = this.textBox1.Text;
-
-                try
+                if (File.Exists(appPath))
                 {
-                    if (ViewModel.VM_StateLogsExists(ClassicName)) { System.Windows.MessageBox.Show("A work with that Name already exists. Please use another Name.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning); return; }
+                    ClassicName = this.textBox1.Text;
+                    try
+                    {
+                        if (ViewModel.VM_StateLogsExists(ClassicName)) { System.Windows.MessageBox.Show("A work with that Name already exists. Please use another Name.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning); return; }
+                    }
+                    catch { Exception ex; }
+
+                    Source = this.textBox2.Text;
+                    Dest = this.textBox3.Text;
+                    int indexType = this.comboBox1.SelectedIndex;
+                    if (indexType == 0) { Type = true; }
+                    else { Type = false; }
+
+                    try
+                    {
+                        Thread thread_pgbar = new Thread(MainWindow1.Loading1.ProgressBar_Add);
+                        thread_pgbar.Name = ClassicName;
+                        thread_pgbar.Start();
+
+                        MainWindow1.Main.Content = MainWindow1.Loading1;
+
+                        BackgroundWorker backgroundWorker = new BackgroundWorker();
+                        backgroundWorker.DoWork += BackgroundWorker_DoWork;
+                        backgroundWorker.ProgressChanged += BackgroundWorker_ProgressChanged;
+                        backgroundWorker.RunWorkerAsync();
+                    }
+                    catch (Exception) { System.Windows.MessageBox.Show("You can't launch a save without all parameters", "Error", MessageBoxButton.OK, MessageBoxImage.Warning); }
                 }
-                catch { Exception ex; }
-
-                Source = this.textBox2.Text;
-                Dest = this.textBox3.Text;
-                int indexType = this.comboBox1.SelectedIndex;
-                if (indexType == 0) { Type = true; }
-                else { Type = false; }
-
-                try 
+                else
                 {
-                    Thread thread_pgbar = new Thread(MainWindow1.Loading1.ProgressBar_Add);
-                    thread_pgbar.Name = ClassicName;
-                    thread_pgbar.Start();
-
-                    MainWindow1.Main.Content = MainWindow1.Loading1;
-
-                    BackgroundWorker backgroundWorker = new BackgroundWorker();
-                    backgroundWorker.DoWork += BackgroundWorker_DoWork;
-                    backgroundWorker.ProgressChanged += BackgroundWorker_ProgressChanged;
-                    backgroundWorker.RunWorkerAsync();
+                    System.Windows.MessageBox.Show("You don't have CryptoSoft.exe, please put it in the right directory :" + appPath, "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
-                catch (Exception) { System.Windows.MessageBox.Show("You can't launch a save without all parameters", "Error", MessageBoxButton.OK, MessageBoxImage.Warning); }
             }
             else
             {
