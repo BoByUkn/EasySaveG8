@@ -74,9 +74,13 @@ namespace EasySave_G8_UI.Views.Works
             if (ExeNow)
             {
                 bool blacklist_state = ViewModel.VM_BlackListTest();
+                string appPath = Directory.GetCurrentDirectory() + @"\cryptosoft.exe";
+
                 if (!blacklist_state)
                 {
-                    Thread thread_pgbar = new Thread(MainWindow1.Loading1.ProgressBar_Add);
+                    if (File.Exists(appPath))
+                    {
+                        Thread thread_pgbar = new Thread(MainWindow1.Loading1.ProgressBar_Add);
                     thread_pgbar.Name = textBox1.Text;
                     thread_pgbar.Start();
 
@@ -86,6 +90,11 @@ namespace EasySave_G8_UI.Views.Works
                     backgroundWorker.DoWork += BackgroundWorker_DoWork;
                     backgroundWorker.ProgressChanged += BackgroundWorker_ProgressChanged;
                     backgroundWorker.RunWorkerAsync(argument: textBox1.Text);
+                    }
+                    else
+                    {
+                        System.Windows.MessageBox.Show("You don't have CryptoSoft.exe, please put it in the right directory :" + appPath, "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    }
                 }
                 else { MessageBox.Show($"{View_Model.VM_GetString_Language("msgbox_blacklist")}", "Error", MessageBoxButton.OK, MessageBoxImage.Warning); return; }
             }
