@@ -104,10 +104,10 @@
                             <RowDefinition/>
                         </Grid.RowDefinitions>
 
-                        <TextBlock Foreground="White" FontSize="16" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0" FontFamily="Bahnschrift Condensed" Grid.Row="0"><Run Language="fr-fr" Text="Extension Add" x:Name="Extensionlist_add1_txt"/></TextBlock>
+                        <TextBlock Foreground="White" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Left" FontFamily="Bahnschrift Condensed" Width="138" Grid.ColumnSpan="2" Margin="11,0,0,0"><Run Language="fr-fr" Text="CryptoSoft Extension" x:Name="Extensionlist_add1_txt"/></TextBlock>
                         <TextBox x:Name="Extensionlist_add1" TextWrapping="Wrap" Height="30" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" Width="419" Grid.Column="1" Grid.Row="0" Margin="30,0,30,0"/>
 
-                        <Button x:Name="Extensionlist_add_btn" Content="Add" FontFamily="Bahnschrift Condensed" Height="30" FontSize="15" BorderBrush="{x:Null}" Grid.Column="2" Margin="0,0,30,0"  Grid.Row="0">
+                        <Button x:Name="Extensionlist_add_btn" Content="Add" FontFamily="Bahnschrift Condensed" Height="30" FontSize="15" BorderBrush="{x:Null}" Grid.Column="2" Margin="0,0,30,0"  Grid.Row="0" Click="Extensionlist_add_btn_Click">
                             <Button.Resources>
                                 <Style TargetType="{x:Type Border}">
                                     <Setter Property="CornerRadius" Value="5"/>
@@ -140,7 +140,7 @@
                             <RowDefinition/>
                         </Grid.RowDefinitions>
 
-                        <TextBlock Foreground="White" FontSize="16" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0" FontFamily="Bahnschrift Condensed" Grid.Row="0"><Run Language="fr-fr" Text="Size en Ko limit" x:Name="Size_add_txt"/></TextBlock>
+                        <TextBlock Foreground="White" FontSize="16" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0" FontFamily="Bahnschrift Condensed" Grid.Row="0"><Run Language="fr-fr" Text="Limite Size en Ko" x:Name="Size_add_txt"/></TextBlock>
                         <TextBox x:Name="Size_txbx" TextWrapping="Wrap" Height="30" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" Width="419" Grid.Column="1" Grid.Row="0" Margin="30,0,30,0"/>
                         <TextBlock Foreground="White" FontSize="16" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0" FontFamily="Bahnschrift Condensed" Grid.Row="1"><Run Language="fr-fr" Text="Actual Size" x:Name="Actual_Size"/></TextBlock>
                         <TextBox x:Name="Display_Size" IsReadOnly="True"  Height="30" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Left" Width="60" Grid.Column="1" Grid.Row="1" Margin="40,0,30,0"></TextBox>

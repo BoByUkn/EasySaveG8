@@ -44,8 +44,14 @@ namespace EasySave_G8_UI.Models
             var jsonStringPriority = JsonConvert.SerializeObject(PriorityFiles); //Serialialize the data in JSON form
             File.WriteAllText(fileNamePriorityFiles, jsonStringPriority); //Create and append JSON into file
 
+            //Create csextension.json
+            string fileNameCSExtention = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\csextension.json";
+            Model_EXTENSION CSExtentionFiles = new Model_EXTENSION();
+            var jsonStringCSExtention = JsonConvert.SerializeObject(CSExtentionFiles); //Serialialize the data in JSON form
+            File.WriteAllText(fileNameCSExtention, jsonStringCSExtention); //Create and append JSON into file
+
             //Create NbKo.json
-            string fileName3 = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\nbKo.json"; 
+            string fileName3 = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\nbKo.json";
             Model_NBKO modelnbko = new Model_NBKO();
             modelnbko.NbKo = 0;
             var jsonString3 = JsonConvert.SerializeObject(modelnbko); //Serialialize the data in JSON form
@@ -58,7 +64,7 @@ namespace EasySave_G8_UI.Models
             //File.Create(filePath); //Creates a file to store the key
             //using (StreamWriter writer = new StreamWriter(filePath)) //Writes the key into that file
             //{
-                //writer.Write(cipherKey);
+            //writer.Write(cipherKey);
             //}
             File.WriteAllText(filePath, cipherKey.ToString());
         }
@@ -222,7 +228,6 @@ namespace EasySave_G8_UI.Models
                 if (ProcExistTest == false)
                 {
                     priority.Insert(indexToInsert, ExtensionName);
-                    //priority.Add(ExtensionName);
                     this.priority = priority;
                     var jsonString = JsonConvert.SerializeObject(this); //Serialialize the data in JSON form
                     File.WriteAllText(fileName, jsonString); //Create and append JSON into file
@@ -266,6 +271,67 @@ namespace EasySave_G8_UI.Models
             string fileContent = File.ReadAllText(fileName); // Bring content of filename in filecontent
             Model_NBKO base_conf_priority = JsonConvert.DeserializeObject<Model_NBKO>(fileContent); // Create the list named values
             return base_conf_priority.NbKo;
+        }
+    }
+
+
+
+    public class Model_EXTENSION
+    {
+        public List<string> CSExtNameList { get; set; }
+        public Model_EXTENSION()
+        {
+            this.CSExtNameList = new List<string>();
+        }
+
+
+
+
+        public void ExtensionRemove(string ExtName)
+        {
+            List<string> CSExtNameListT = this.ExtensionReturn();
+            string fileName = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\csextension.json";
+            CSExtNameListT.Remove(ExtName);
+            this.CSExtNameList = CSExtNameListT;
+            var jsonString = JsonConvert.SerializeObject(this); //Serialialize the data in JSON form
+            File.WriteAllText(fileName, jsonString); //Create and append JSON into file
+        }
+        public void ExtensionAdd(string ExtName)
+        {
+            List<string> CSExtNameListT = this.ExtensionReturn();
+            bool ProcExistTest = false;
+            string fileName = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\csextension.json";
+            if (CSExtNameListT != null)
+            {
+                foreach (string Extensionname in CSExtNameListT)
+                {
+                    if (Extensionname == ExtName)
+                    {
+                        ProcExistTest = true;
+                    }
+                }
+                if (ProcExistTest == false)
+                {
+                    CSExtNameListT.Add(ExtName);
+                    this.CSExtNameList = CSExtNameListT;
+                    var jsonString = JsonConvert.SerializeObject(this); //Serialialize the data in JSON form
+                    File.WriteAllText(fileName, jsonString); //Create and append JSON into file
+                }
+            }
+            else
+            {
+                CSExtNameListT.Add(ExtName);
+                var jsonString = JsonConvert.SerializeObject(this); //Serialialize the data in JSON form
+                File.WriteAllText(fileName, jsonString); //Create and append JSON into file}
+            }
+        }
+
+        public List<string> ExtensionReturn()
+        {
+            string fileName = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\csextension.json";
+            string fileContent = File.ReadAllText(fileName); // Bring content of filename in filecontent
+            Model_EXTENSION base_conf_priority = JsonConvert.DeserializeObject<Model_EXTENSION>(fileContent); // Create the list named values
+            return base_conf_priority.CSExtNameList;
         }
     }
 }

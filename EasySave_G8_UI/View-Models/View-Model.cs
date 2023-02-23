@@ -153,17 +153,23 @@ namespace EasySave_G8_UI.View_Models
             Model_PRIORITY ModelPRIORITY = new Model_PRIORITY();
             return ModelPRIORITY.priorityReturn();
         }
-        //public void VM_ExtensionListAdd(string ProcessName, int Index)
-        //{
-        //    Model_EXTENSION ModelEXTENSION = new Model_EXTENSION();
-        //    ModelEXTENSION.ExtensionAdd(ProcessName, Index);
-        //}
 
-        //public void VM_ExtensionListRemove(string ProcessNameRm)
-        //{
-        //    Model_EXTENSION ModelEXTENSION = new Model_EXTENSION();
-        //    ModelEXTENSION.ExtensionRemove(ProcessNameRm);
-        //}
+
+        public void VM_ExtensionListAdd(string CSExt)
+        {
+            Model_EXTENSION ModelEXTENSION = new Model_EXTENSION();
+            ModelEXTENSION.ExtensionAdd(CSExt);
+        }
+        public void Extensionlist_rm_btn_Click(string CSExt)
+        {
+            Model_EXTENSION ModelEXTENSION = new Model_EXTENSION();
+            ModelEXTENSION.ExtensionRemove(CSExt);
+        }
+        public List<string> MV_ExtensionListRe()
+        {
+            Model_EXTENSION ModelEXTENSION = new Model_EXTENSION();
+            return ModelEXTENSION.ExtensionReturn();
+        }
 
         public double MV_NbKoReturn()
         {
@@ -176,11 +182,7 @@ namespace EasySave_G8_UI.View_Models
             Model_NBKO modelNbko = new Model_NBKO();
             modelNbko.NbKoSet(nbko);
         }
-        //public List<string> MV_ExtensionListRe()
-        //{
-        //    Model_EXTENSION ModelEXTENSION = new Model_EXTENSION();
-        //    return ModelEXTENSION.priorityReturn();
-        //}
+
 
         //Pauses/continue a specific thread
         public void VM_PauseThreads()
