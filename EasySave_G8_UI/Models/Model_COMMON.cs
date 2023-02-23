@@ -273,9 +273,6 @@ namespace EasySave_G8_UI.Models
             return base_conf_priority.NbKo;
         }
     }
-
-
-
     public class Model_EXTENSION
     {
         public List<string> CSExtNameList { get; set; }
@@ -283,10 +280,6 @@ namespace EasySave_G8_UI.Models
         {
             this.CSExtNameList = new List<string>();
         }
-
-
-
-
         public void ExtensionRemove(string ExtName)
         {
             List<string> CSExtNameListT = this.ExtensionReturn();
@@ -325,7 +318,6 @@ namespace EasySave_G8_UI.Models
                 File.WriteAllText(fileName, jsonString); //Create and append JSON into file}
             }
         }
-
         public List<string> ExtensionReturn()
         {
             string fileName = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\csextension.json";

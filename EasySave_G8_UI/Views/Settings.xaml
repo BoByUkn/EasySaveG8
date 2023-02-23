@@ -119,7 +119,7 @@
                         <ComboBox x:Name="Extensionlist_rm_combobox1" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="419" Grid.Column="1" Grid.Row="1" Margin="30,0,30,0">
                         </ComboBox>
 
-                        <Button x:Name="Extensionlist_rm_btn" Content="Remove" FontFamily="Bahnschrift Condensed" Height="30" FontSize="15" BorderBrush="{x:Null}" Grid.Column="2" Margin="0,0,30,0"  Grid.Row="1">
+                        <Button x:Name="Extensionlist_rm_btn" Content="Remove" FontFamily="Bahnschrift Condensed" Height="30" FontSize="15" BorderBrush="{x:Null}" Grid.Column="2" Margin="0,0,30,0"  Grid.Row="1" Click="Extensionlist_rm_btn_Click">
                             <Button.Resources>
                                 <Style TargetType="{x:Type Border}">
                                     <Setter Property="CornerRadius" Value="5"/>

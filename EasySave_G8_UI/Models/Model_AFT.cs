@@ -71,6 +71,9 @@ namespace EasySave_G8_UI.Models
                 Model_PRIORITY model_PRIORITY = new Model_PRIORITY(); // create a new Model_Priority in order to have a priority list
                 List<string> priorityList = model_PRIORITY.priorityReturn();
 
+                Model_EXTENSION Model_Ext = new Model_EXTENSION(); // create a new Model_Priority in order to have a priority list
+                List<string> CSExtNameList = Model_Ext.ExtensionReturn();
+
                 if (PauseCurrentThread || BlacklistPauseCurrentThread) { ThreadPause(); }
                 if (StopCurrentThread) { localworker.ReportProgress(100, Name); return; }
 
@@ -82,8 +85,14 @@ namespace EasySave_G8_UI.Models
                     ModelLogs.StateLog(ModelStateLogs); // Write the json state logs with new infos (it changes at each iteration)
 
                     File.Copy(Source, Destination, true); //Run the save
-                    Total_CryptoTime += Cryptosoft(Destination); //Encrypt the file and sum up
 
+                    foreach (string ext in CSExtNameList)
+                    {
+                        if (Path.GetExtension(Source) == ext)
+                        {
+                            Total_CryptoTime += Cryptosoft(Destination); //Encrypt the file and sum up
+                        }
+                    }
                     Size = new FileInfo(Source).Length;
                     utcDateFinish = DateTime.Now;
 
@@ -145,7 +154,13 @@ namespace EasySave_G8_UI.Models
                         Directory.CreateDirectory(Path.GetDirectoryName(targetFile)); // Create a directory
 
                         File.Copy(file, targetFile, true);  // Do the copy of priority Files
-                        Total_CryptoTime += Cryptosoft(targetFile);
+                        foreach (string ext in CSExtNameList)
+                        {
+                            if (Path.GetExtension(file) == ext)
+                            {
+                                Total_CryptoTime += Cryptosoft(Destination); //Encrypt the file and sum up
+                            }
+                        }
                         ActualSize2 = ActualSize2 + new FileInfo(file).Length;//Increment size with each file
                         percentage = (int)(((double)ActualSize2 / (double)Size) * 100);//progression's percentage of the save
                         file_remain--; //File remain decrease when a file copy have been done
@@ -168,8 +183,13 @@ namespace EasySave_G8_UI.Models
                         Directory.CreateDirectory(Path.GetDirectoryName(targetFile)); // Create a directory
 
                         File.Copy(file, targetFile, true);  // Do the copy
-                        Total_CryptoTime += Cryptosoft(targetFile);
-
+                        foreach (string ext in CSExtNameList)
+                        {
+                            if (Path.GetExtension(file) == ext)
+                            {
+                                Total_CryptoTime += Cryptosoft(Destination); //Encrypt the file and sum up
+                            }
+                        }
                         file_remain-- ; // File remain decrease when a file copy have been done
 
                         localworker.ReportProgress(percentage, Name); //report progress
@@ -178,7 +198,7 @@ namespace EasySave_G8_UI.Models
                         ModelLogs.StateLog(ModelStateLogs); // Write the json state logs with new infos (it changes at each iteration)
                     }
 
-                    foreach (var file in files_LessPriority)
+                    foreach (var file in files_LessPriority) 
                     {
                         if (PauseCurrentThread || BlacklistPauseCurrentThread) { ThreadPause(); }
                         if (StopCurrentThread) { localworker.ReportProgress(100, Name); return; ; }
@@ -187,7 +207,13 @@ namespace EasySave_G8_UI.Models
                         Directory.CreateDirectory(Path.GetDirectoryName(targetFile)); // Create a directory
 
                         File.Copy(file, targetFile, true);  // Do the copy of priority Files
-                        Total_CryptoTime += Cryptosoft(targetFile);
+                        foreach (string ext in CSExtNameList)
+                        {
+                            if (Path.GetExtension(file) == ext)
+                            {
+                                Total_CryptoTime += Cryptosoft(Destination); //Encrypt the file and sum up
+                            }
+                        }
                         long sizeee = new FileInfo(file).Length;
                         ActualSize2 = ActualSize2 + sizeee;//Increment size with each file
 
@@ -228,6 +254,9 @@ namespace EasySave_G8_UI.Models
                 double Total_CryptoTime = 0;
 
                 Model_StateLogs ModelStateLogs = new Model_StateLogs(this.Name, this.Source, this.Destination, this.Type, this.total_files); //init statelogs
+
+                Model_EXTENSION Model_Ext = new Model_EXTENSION(); // create a new Model_Priority in order to have a priority list
+                List<string> CSExtNameList = Model_Ext.ExtensionReturn();
 
                 BackgroundWorker localworker = sender as BackgroundWorker; //localworker initialize
                 localworker.WorkerReportsProgress = true; //allow localworker to report progress
@@ -297,14 +326,26 @@ namespace EasySave_G8_UI.Models
                             if (sourceFileInfo.LastWriteTime > destinationFileInfo.LastWriteTime) // Check if the file has been modified in the source directory
                             {
                                 File.Copy(sourceFile, destinationFile, true); //Copy the modified file to the backup directory
-                                Total_CryptoTime += Cryptosoft(destinationFile);
+                                foreach (string ext in CSExtNameList)
+                                {
+                                    if (Path.GetExtension(sourceFile) == ext)
+                                    {
+                                        Total_CryptoTime += Cryptosoft(destinationFile); //Encrypt the file and sum up
+                                    }
+                                }
                             }
                         }
                         else
                         {
                             Directory.CreateDirectory(Path.GetDirectoryName(destinationFile));// Copy the file that does not exist to the backup directory
                             File.Copy(sourceFile, destinationFile, false);
-                            Total_CryptoTime += Cryptosoft(destinationFile);
+                            foreach (string ext in CSExtNameList)
+                            {
+                                if (Path.GetExtension(sourceFile) == ext)
+                                {
+                                    Total_CryptoTime += Cryptosoft(destinationFile); //Encrypt the file and sum up
+                                }
+                            }
                         }
                         ModelStateLogs.file_remain = file_remain;
                         ModelLogs.StateLog(ModelStateLogs);
@@ -330,14 +371,26 @@ namespace EasySave_G8_UI.Models
                             if (sourceFileInfo.LastWriteTime > destinationFileInfo.LastWriteTime) // Check if the file has been modified in the source directory
                             {
                                 File.Copy(sourceFile, destinationFile, true); //Copy the modified file to the backup directory
-                                Total_CryptoTime += Cryptosoft(destinationFile);
+                                foreach (string ext in CSExtNameList)
+                                {
+                                    if (Path.GetExtension(sourceFile) == ext)
+                                    {
+                                        Total_CryptoTime += Cryptosoft(destinationFile); //Encrypt the file and sum up
+                                    }
+                                }
                             }
                         }
                         else
                         {
                             Directory.CreateDirectory(Path.GetDirectoryName(destinationFile));// Copy the file that does not exist to the backup directory
                             File.Copy(sourceFile, destinationFile, false);
-                            Total_CryptoTime += Cryptosoft(destinationFile);
+                            foreach (string ext in CSExtNameList)
+                            {
+                                if (Path.GetExtension(sourceFile) == ext)
+                                {
+                                    Total_CryptoTime += Cryptosoft(destinationFile); //Encrypt the file and sum up
+                                }
+                            }
                         }
                         ModelStateLogs.file_remain = file_remain;
                         ModelLogs.StateLog(ModelStateLogs);
@@ -363,14 +416,26 @@ namespace EasySave_G8_UI.Models
                             if (sourceFileInfo.LastWriteTime > destinationFileInfo.LastWriteTime) // Check if the file has been modified in the source directory
                             {
                                 File.Copy(sourceFile, destinationFile, true); //Copy the modified file to the backup directory
-                                Total_CryptoTime += Cryptosoft(destinationFile);
+                                foreach (string ext in CSExtNameList)
+                                {
+                                    if (Path.GetExtension(sourceFile) == ext)
+                                    {
+                                        Total_CryptoTime += Cryptosoft(destinationFile); //Encrypt the file and sum up
+                                    }
+                                }
                             }
                         }
                         else
                         {
                             Directory.CreateDirectory(Path.GetDirectoryName(destinationFile));// Copy the file that does not exist to the backup directory
                             File.Copy(sourceFile, destinationFile, false);
-                            Total_CryptoTime += Cryptosoft(destinationFile);
+                            foreach (string ext in CSExtNameList)
+                            {
+                                if (Path.GetExtension(sourceFile) == ext)
+                                {
+                                    Total_CryptoTime += Cryptosoft(destinationFile); //Encrypt the file and sum up
+                                }
+                            }
                         }
                         ModelStateLogs.file_remain = file_remain;
                         ModelLogs.StateLog(ModelStateLogs);

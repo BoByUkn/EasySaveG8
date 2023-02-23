@@ -87,6 +87,11 @@ namespace EasySave_G8_UI.Views
             }
             PriorityNumer_combobox.Items.Add(prioritylist.Count);
 
+            List<string> CSExtList = ViewModel.MV_ExtensionListRe();
+            for (i = 0; i < CSExtList.Count; i++)
+            {
+                Extensionlist_rm_combobox1.Items.Add(CSExtList[i]);
+            }
             Display_Size.Text = ViewModel.MV_NbKoReturn().ToString();
         }
 
@@ -114,11 +119,10 @@ namespace EasySave_G8_UI.Views
             PageRefresh();
         }
 
-
         private void Extensionlist_rm_btn_Click(object sender, RoutedEventArgs e)
         {
             string CSExtensionName = Extensionlist_rm_combobox1.Text;
-            ViewModel.VM_PriorityListRemove(CSExtensionName);
+            ViewModel.Extensionlist_rm_btn_Click2(CSExtensionName);
             ListRefresh();
             PageRefresh();
         }
@@ -154,5 +158,7 @@ namespace EasySave_G8_UI.Views
             Model_NBKO modelNbko = new Model_NBKO();
             modelNbko.NbKoSet(nbko);
         }
+
+
     }
 }

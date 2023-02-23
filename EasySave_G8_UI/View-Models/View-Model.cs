@@ -160,7 +160,7 @@ namespace EasySave_G8_UI.View_Models
             Model_EXTENSION ModelEXTENSION = new Model_EXTENSION();
             ModelEXTENSION.ExtensionAdd(CSExt);
         }
-        public void Extensionlist_rm_btn_Click(string CSExt)
+        public void Extensionlist_rm_btn_Click2(string CSExt)
         {
             Model_EXTENSION ModelEXTENSION = new Model_EXTENSION();
             ModelEXTENSION.ExtensionRemove(CSExt);
