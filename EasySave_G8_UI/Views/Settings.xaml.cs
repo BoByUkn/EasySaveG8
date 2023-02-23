@@ -32,7 +32,28 @@ namespace EasySave_G8_UI.Views
         {
             InitializeComponent();
             ViewModel= new View_Model();
-            ListRefresh();   
+            ListRefresh();
+            translate();
+        }
+
+        private void translate()
+        {
+            Settings_Title.Text = $"{View_Model.VM_GetString_Language("settings")}";
+            txtBlacklistAdd.Text = $"{View_Model.VM_GetString_Language("blacklist_add")}";
+            Blacklist_add_btn.Content = $"{View_Model.VM_GetString_Language("add")}";
+            txtBlacklistRemove.Text = $"{View_Model.VM_GetString_Language("blacklist_rm")}";
+            Blacklist_rm_btn.Content = $"{View_Model.VM_GetString_Language("remove")}";
+            Prioritylist_Name.Text = $"{View_Model.VM_GetString_Language("prioritylist_add")}";
+            Prioritylist_add_btn1.Content = $"{View_Model.VM_GetString_Language("add")}";
+            Prioritylist_rm.Text = $"{View_Model.VM_GetString_Language("prioritylist_rm")}";
+            Prioritylist_rm_btn1.Content = $"{View_Model.VM_GetString_Language("remove")}";
+            Extensionlist_add1_txt.Text = $"{View_Model.VM_GetString_Language("extensionlist_add")}";
+            Extensionlist_add_btn.Content = $"{View_Model.VM_GetString_Language("add")}";
+            Extensionlist_rm_txt.Text = $"{View_Model.VM_GetString_Language("extensionlist_rm")}";
+            Extensionlist_rm_btn.Content = $"{View_Model.VM_GetString_Language("remove")}";
+            Size_add_txt.Text = $"{View_Model.VM_GetString_Language("size_add")}";
+            Size_add_btn.Content = $"{View_Model.VM_GetString_Language("add")}";
+            Actual_Size.Text = $"{View_Model.VM_GetString_Language("actual_size")}";
         }
 
         private void Blacklist_add_btn_Click(object sender, RoutedEventArgs e)

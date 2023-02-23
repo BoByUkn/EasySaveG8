@@ -117,6 +117,18 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="actual_size" xml:space="preserve">
+    <value>Actual size</value>
+  </data>
+  <data name="add" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="blacklist_add" xml:space="preserve">
+    <value>Add blacklist</value>
+  </data>
+  <data name="blacklist_rm" xml:space="preserve">
+    <value>Remove blacklist</value>
+  </data>
   <data name="browse" xml:space="preserve">
     <value>Browse</value>
   </data>
@@ -171,6 +183,12 @@
   <data name="execute_selection" xml:space="preserve">
     <value>Execute selection</value>
   </data>
+  <data name="extensionlist_add" xml:space="preserve">
+    <value>Add extension</value>
+  </data>
+  <data name="extensionlist_rm" xml:space="preserve">
+    <value>Remove extension</value>
+  </data>
   <data name="lang" xml:space="preserve">
     <value>en</value>
   </data>
@@ -198,6 +216,15 @@
   <data name="no" xml:space="preserve">
     <value>No</value>
   </data>
+  <data name="prioritylist_add" xml:space="preserve">
+    <value>Add priority</value>
+  </data>
+  <data name="prioritylist_rm" xml:space="preserve">
+    <value>Remove priority</value>
+  </data>
+  <data name="remove" xml:space="preserve">
+    <value>Remove</value>
+  </data>
   <data name="save_work" xml:space="preserve">
     <value>Save work</value>
   </data>
@@ -209,6 +236,9 @@
   </data>
   <data name="shutdown" xml:space="preserve">
     <value>Shutdown</value>
+  </data>
+  <data name="size_add" xml:space="preserve">
+    <value>Limit size (Ko)</value>
   </data>
   <data name="source_path" xml:space="preserve">
     <value>Source</value>
