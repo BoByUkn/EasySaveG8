@@ -4,7 +4,6 @@ using System.Windows.Controls;
 using System.IO;
 using Microsoft.Win32;
 using System;
-using static EasySave_G8_UI.Views.Loading;
 using System.Threading;
 using System.ComponentModel;
 
