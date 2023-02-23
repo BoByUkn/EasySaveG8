@@ -3,8 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading;
-using System.Windows;
 
 namespace EasySave_G8_UI.View_Models
 {
@@ -183,5 +181,62 @@ namespace EasySave_G8_UI.View_Models
         //    Model_EXTENSION ModelEXTENSION = new Model_EXTENSION();
         //    return ModelEXTENSION.priorityReturn();
         //}
+
+        //Pauses/continue a specific thread
+        public void VM_PauseThreads()
+        {
+            Model_AFT._semahporeAFTObjects.Wait();
+            try
+            {
+                foreach (Model_AFT obj in Model_AFT.AFTObjects)
+                {
+                    obj.PauseSpecificThread();
+                }
+            }
+            finally { Model_AFT._semahporeAFTObjects.Release(); }
+
+        }
+
+        //Pauses/continue a specific thread
+        public void VM_PauseSpecificThread(string WorkName)
+        {
+            Model_AFT._semahporeAFTObjects.Wait();
+            try
+            {
+                foreach (Model_AFT obj in Model_AFT.AFTObjects)
+                {
+                    if (obj.Name == WorkName) { obj.PauseSpecificThread(); }
+                }
+            }
+            finally { Model_AFT._semahporeAFTObjects.Release(); }
+        }
+
+        //Stop all threads
+        public void VM_StopThreads()
+        {
+            Model_AFT._semahporeAFTObjects.Wait();
+            try
+            {
+                foreach (Model_AFT obj in Model_AFT.AFTObjects)
+                {
+                    obj.StopSpecificThread();
+                }
+            }
+            finally { Model_AFT._semahporeAFTObjects.Release(); }
+        }
+
+        //Stop a specific thread
+        public void VM_StopSpecificThread(string WorkName)
+        {
+            Model_AFT._semahporeAFTObjects.Wait();
+            try
+            {
+                foreach (Model_AFT obj in Model_AFT.AFTObjects)
+                {
+                    if (obj.Name == WorkName) { obj.StopSpecificThread(); }
+                }
+            }
+            finally { Model_AFT._semahporeAFTObjects.Release(); }
+        }
     }
 }

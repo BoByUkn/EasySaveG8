@@ -1,5 +1,4 @@
-﻿using EasySave_G8_UI.View_Models;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -23,10 +22,16 @@ namespace EasySave_G8_UI.Models
         public double millisecondsDuration { get; set; }
         private double ActualSize2 = 0;
         private Model_Logs ModelLogs = new Model_Logs();
-        
+
+        private bool PauseCurrentThread = false;
+        private bool StopCurrentThread = false;
+
+
+        public static List<Model_AFT> AFTObjects = new List<Model_AFT>();
 
         private static SemaphoreSlim _semaphorejson = new SemaphoreSlim(1);
         private static SemaphoreSlim _semaphorexml = new SemaphoreSlim(1);
+        public static SemaphoreSlim _semahporeAFTObjects = new SemaphoreSlim(1);
 
         public Model_AFT () { }
         public Model_AFT(string Name, string Source, string Destination, bool Type) : base(Name, Source, Destination, Type)
@@ -41,12 +46,16 @@ namespace EasySave_G8_UI.Models
             this.Duration = TimeSpan.Zero;
             this.millisecondsDuration=0;
             this.total_files = Directory.GetFiles(Source, "*.*", SearchOption.AllDirectories).Length;
-            ModelLogs = new Model_Logs(); 
+            ModelLogs = new Model_Logs();
         }
 
         public void Run(object? sender) //Run a backup
         {
             {
+                _semahporeAFTObjects.Wait();
+                try { AFTObjects.Add(this); }
+                finally { _semahporeAFTObjects.Release();}
+
                 int percentage = 0;
                 double Total_CryptoTime = 0;
 
@@ -59,6 +68,9 @@ namespace EasySave_G8_UI.Models
                 Model_PRIORITY model_PRIORITY = new Model_PRIORITY(); // create a new Model_Priority in order to have a priority list
                 List<string> priorityList = model_PRIORITY.priorityReturn();
 
+                if (PauseCurrentThread) { ThreadPause(); }
+                if (StopCurrentThread) { localworker.ReportProgress(100, Name); Thread.CurrentThread.Abort(); }
+
                 if (File.Exists(Source)) //If source is a file only
                 {
                     utcDateStart = DateTime.Now; //Initialize the date
@@ -69,7 +81,7 @@ namespace EasySave_G8_UI.Models
                     File.Copy(Source, Destination, true); //Run the save
                     //Total_CryptoTime += Cryptosoft(Destination); //Encrypt the file and sum up
 
-                    Size = new System.IO.FileInfo(Source).Length;
+                    Size = new FileInfo(Source).Length;
                     utcDateFinish = DateTime.Now;
 
                     localworker.ReportProgress(100, Name); //report progress to actualize progressbar
@@ -97,6 +109,9 @@ namespace EasySave_G8_UI.Models
                     
                     foreach (var file in files) //Loop throught every files and add them to Pirority List
                     {
+                        if (PauseCurrentThread) { ThreadPause(); }
+                        if (StopCurrentThread) { localworker.ReportProgress(100, Name); Thread.CurrentThread.Abort(); }
+
                         Size = Size + new FileInfo(file).Length; //Increment size with each file
                         targetFile = file.Replace(Source, Destination2);
                         foreach (string ext in priorityList)
@@ -119,6 +134,9 @@ namespace EasySave_G8_UI.Models
 
                     foreach (var file in files_Priority)
                     {
+                        if (PauseCurrentThread) { ThreadPause(); }
+                        if (StopCurrentThread) { localworker.ReportProgress(100, Name); Thread.CurrentThread.Abort(); }
+
                         targetFile = file.Replace(Source, Destination2);
                         Directory.CreateDirectory(Path.GetDirectoryName(targetFile)); // Create a directory
 
@@ -138,6 +156,9 @@ namespace EasySave_G8_UI.Models
 
                     foreach (var file in files_NoPriority) //Loop throught every files and copy them
                     {
+                        if (PauseCurrentThread) { ThreadPause(); }
+                        if (StopCurrentThread) { localworker.ReportProgress(100, Name); Thread.CurrentThread.Abort(); }
+
                         targetFile = file.Replace(Source, Destination2);
                         ActualSize2 = ActualSize2 + new FileInfo(file).Length;//Increment size with each file
                         percentage = (int)(((double)ActualSize2 / (double)Size) * 100);//progression's percentage of the save
@@ -156,6 +177,9 @@ namespace EasySave_G8_UI.Models
 
                     foreach (var file in files_LessPriority)
                     {
+                        if (PauseCurrentThread) { ThreadPause(); }
+                        if (StopCurrentThread) { localworker.ReportProgress(100, Name); Thread.CurrentThread.Abort(); }
+
                         targetFile = file.Replace(Source, Destination2);
                         Directory.CreateDirectory(Path.GetDirectoryName(targetFile)); // Create a directory
 
@@ -176,6 +200,9 @@ namespace EasySave_G8_UI.Models
                     ModelStateLogs.file_remain = file_remain;
                     utcDateFinish = DateTime.Now;
                 }
+                _semahporeAFTObjects.Wait();
+                try { AFTObjects.Remove(this); }
+                finally { _semahporeAFTObjects.Release(); }
 
                 Duration = utcDateFinish.Subtract(utcDateStart);  // Calculation of the result of the arrival date - the departure date to obtain a duration, it's in TimeSpan, it is the result of the subtraction of two DataTime
                 millisecondsDuration = Duration.TotalMilliseconds; // Convert Duration in milliseconds
@@ -189,6 +216,10 @@ namespace EasySave_G8_UI.Models
         public void RunDiff(object? sender) //Execute a differential backup
         {
             {
+                _semahporeAFTObjects.Wait();
+                try { AFTObjects.Add(this); }
+                finally { _semahporeAFTObjects.Release(); }
+
                 int percentage = 0;
                 double Total_CryptoTime = 0;
 
@@ -200,6 +231,9 @@ namespace EasySave_G8_UI.Models
 
                 Model_PRIORITY model_PRIORITY = new Model_PRIORITY(); // create a new Model_Priority in order to have a priority list
                 List<string> priorityList = model_PRIORITY.priorityReturn();
+
+                if (PauseCurrentThread) { ThreadPause(); }
+                if (StopCurrentThread) { localworker.ReportProgress(100, Name); Thread.CurrentThread.Abort(); }
 
                 if (!Directory.Exists(Destination)) { Directory.CreateDirectory(Destination); } //Create the destination directory if it doesn't exist
                 if (Directory.Exists(Source))
@@ -220,6 +254,9 @@ namespace EasySave_G8_UI.Models
 
                     foreach (var file in sourceFiles) //Loop throught every files and copy them
                     {
+                        if (PauseCurrentThread) { ThreadPause(); }
+                        if (StopCurrentThread) { localworker.ReportProgress(100, Name); Thread.CurrentThread.Abort(); }
+
                         Size = Size + new System.IO.FileInfo(file).Length;//Increment size with each file
                         targetFile = file.Replace(Source, Destination2);
 
@@ -237,6 +274,9 @@ namespace EasySave_G8_UI.Models
 
                     foreach (string sourceFile in files_Priority) // Browse each file in the source directory
                     {
+                        if (PauseCurrentThread) { ThreadPause(); }
+                        if (StopCurrentThread) { localworker.ReportProgress(100, Name); Thread.CurrentThread.Abort(); }
+
                         destinationFile = sourceFile.Replace(Source, Destination2); // Create a destination path for the file
                         ActualSize2 = ActualSize2 + new System.IO.FileInfo(sourceFile).Length;//Increment size with each file
                         percentage = (int)(((double)ActualSize2 / (double)Size) * 100);
@@ -267,6 +307,9 @@ namespace EasySave_G8_UI.Models
                     }
                     foreach (string sourceFile in files_NoPriority) // Browse each file in the source directory
                     {
+                        if (PauseCurrentThread) { ThreadPause(); }
+                        if (StopCurrentThread) { localworker.ReportProgress(100, Name); Thread.CurrentThread.Abort(); }
+
                         destinationFile = sourceFile.Replace(Source, Destination2); // Create a destination path for the file
                         ActualSize2 = ActualSize2 + new System.IO.FileInfo(sourceFile).Length;//Increment size with each file
                         percentage = (int)(((double)ActualSize2 / (double)Size) * 100);
@@ -297,7 +340,9 @@ namespace EasySave_G8_UI.Models
                     }
                     foreach (var sourceFile in files_LessPriority)
                     {
-                       
+                        if (PauseCurrentThread) { ThreadPause(); }
+                        if (StopCurrentThread) { localworker.ReportProgress(100, Name); Thread.CurrentThread.Abort(); }
+
                         destinationFile = sourceFile.Replace(Source, Destination2); // Create a destination path for the file
                         ActualSize2 = ActualSize2 + new System.IO.FileInfo(sourceFile).Length;//Increment size with each file
                         percentage = (int)(((double)ActualSize2 / (double)Size) * 100);
@@ -330,6 +375,11 @@ namespace EasySave_G8_UI.Models
                     utcDateFinish = DateTime.Now;
                 }
                 localworker.ReportProgress(100, Name); // Report end of operation to background worker
+
+                _semahporeAFTObjects.Wait();
+                try { AFTObjects.Remove(this); }
+                finally { _semahporeAFTObjects.Release(); }
+
                 Duration = utcDateFinish.Subtract(utcDateStart); // Calculation of the result of the arrival date - the departure date to obtain a duration, it's in TimeSpan, it is the result of the subtraction of two DataTime
                 millisecondsDuration = Duration.TotalMilliseconds; // Convert Duration in milliseconds
                 ModelStateLogs.millisecondsDuration = millisecondsDuration; //add millisecondsDuration to the object ModelStateLogs
@@ -416,12 +466,27 @@ namespace EasySave_G8_UI.Models
             }
         }
 
+        //####################################################################################################################################
+        //Threads Pause Play Stop
+        private void ThreadPause()
+        {
+            while (PauseCurrentThread && !StopCurrentThread) 
+            { 
+                Thread.Sleep(100);
+            }
+        }
 
 
+        public void PauseSpecificThread()
+        {
+            if (PauseCurrentThread) { PauseCurrentThread = false; }
+            else { PauseCurrentThread = true; }
+        }
 
-
-
-
-
+        public void StopSpecificThread()
+        {
+            StopCurrentThread = true;
+        }
+        //####################################################################################################################################
     }
 }

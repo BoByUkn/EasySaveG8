@@ -1,20 +1,9 @@
 ﻿using EasySave_G8_UI.View_Models;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace EasySave_G8_UI.Views
 {
@@ -25,10 +14,15 @@ namespace EasySave_G8_UI.Views
     {
         private MainWindow currentMainWindow;
         private Loading currentLoading;
+        private View_Model ViewModel;
+
+        private bool isRunning;
+        private bool isPaused;
 
         public Loading()
         {
             InitializeComponent();
+            ViewModel = new View_Model();
             currentMainWindow = Application.Current.MainWindow as MainWindow;
             currentLoading = currentMainWindow.Main.Content as Loading;
         }
@@ -39,7 +33,8 @@ namespace EasySave_G8_UI.Views
             ProgressBar progressBar = null;
             Label middle_label = null;
             Label left_label = null;
-            Label right_label = null;
+            Button pause_button = null;
+            Button stop_button = null;
             MainStackPanel.Dispatcher.Invoke(() =>
             {
                 progressBar = new ProgressBar();
@@ -49,7 +44,7 @@ namespace EasySave_G8_UI.Views
                 progressBar.Width = 400;
                 progressBar.Height = 30;
                 progressBar.Foreground = Brushes.DarkCyan;
-                progressBar.Name = currentThread.Name;
+                progressBar.Name = currentThread.Name + "pgbar";
                 MainStackPanel.Children.Add(progressBar);
 
                 middle_label = new Label();
@@ -72,16 +67,29 @@ namespace EasySave_G8_UI.Views
                 left_label.Foreground = Brushes.White;
                 MainStackPanel.Children.Add(left_label);
 
-                right_label = new Label();
-                right_label.Height = 50;
-                right_label.HorizontalAlignment = HorizontalAlignment.Right;
-                right_label.VerticalAlignment = VerticalAlignment.Center;
-                right_label.FontSize = 20;
-                right_label.Margin = new Thickness(20, -58, 40, 0);
-                right_label.Content = "Running...";
-                right_label.Foreground = Brushes.White;
-                right_label.Name = currentThread.Name + "label2";
-                MainStackPanel.Children.Add(right_label);
+                stop_button = new Button();
+                stop_button.Height = 15;
+                stop_button.HorizontalAlignment = HorizontalAlignment.Right;
+                stop_button.VerticalAlignment = VerticalAlignment.Center;
+                stop_button.FontSize = 8;
+                stop_button.Width= 100;
+                stop_button.Margin = new Thickness(20, -85, 40, 0);
+                stop_button.Content = "Stop";
+                stop_button.Name = currentThread.Name + "stop_btn";
+                stop_button.Click += StopSpecific_btn_Click;
+                MainStackPanel.Children.Add(stop_button);
+
+                pause_button = new Button();
+                pause_button.Height = 15;
+                pause_button.Width = 100;
+                pause_button.HorizontalAlignment = HorizontalAlignment.Right;
+                pause_button.VerticalAlignment = VerticalAlignment.Center;
+                pause_button.FontSize = 8;
+                pause_button.Margin = new Thickness(20, -55, 40, 0);
+                pause_button.Content = "Pause";
+                pause_button.Name = currentThread.Name + "pause_btn";
+                pause_button.Click += PauseSpecific_btn_Click;
+                MainStackPanel.Children.Add(pause_button);
             });
         }
 
@@ -89,10 +97,10 @@ namespace EasySave_G8_UI.Views
         {
             ProgressBar progressBar = null;
             Label label1 = null;
-            Label label2 = null;
+            Label label3 = null;
             foreach (var child in MainStackPanel.Children)
             {
-                if ((child as FrameworkElement)?.Name == e.UserState.ToString())
+                if ((child as FrameworkElement)?.Name == e.UserState.ToString()+ "pgbar")
                 {
                     progressBar = child as ProgressBar;
                     progressBar.Value = e.ProgressPercentage;
@@ -102,21 +110,56 @@ namespace EasySave_G8_UI.Views
                     label1 = child as Label;
                     label1.Content = e.ProgressPercentage + "%";
                 }
-                if ((child as FrameworkElement)?.Name == e.UserState.ToString() + "label2")
+                if ((child as FrameworkElement)?.Name == e.UserState.ToString() + "label3")
                 {
-                    if (progressBar.Value == 100)
-                    {
-                        label2 = child as Label;
-                        label2.Content = "Done !";
-                    }
+                    if (e.ProgressPercentage == 100) { label3 = child as Label; label3.Content = ""; }
                 }
             }
             if (e.ProgressPercentage == 100)
             {
                 MainStackPanel.Children.Remove(label1);
-                MainStackPanel.Children.Remove(label2);
+                MainStackPanel.Children.Remove(label3);
                 MainStackPanel.Children.Remove(progressBar);
             }
+        }
+
+        private void Pause_btn_Click(object sender, RoutedEventArgs e)
+        {
+            if (Pause_btn.Content == "Continue") { Pause_btn.Content = "Pause"; }
+            else { Pause_btn.Content = "Continue"; }
+            Button btn = sender as Button;
+            foreach (var child in MainStackPanel.Children)
+            {
+                if (((child as FrameworkElement)?.Name).Contains("pause_btn"))
+                {
+                    btn = child as Button;
+                    if (btn.Content == "Pause") { btn.Content = "Continue"; }
+                }
+            }
+
+            ViewModel.VM_PauseThreads();
+        }
+
+        private void Stop_btn_Click(object sender, RoutedEventArgs e)
+        {
+            if (Pause_btn.Content == "Continue") { Pause_btn.Content = "Pause"; }
+            ViewModel.VM_StopThreads();
+        }
+
+        private void PauseSpecific_btn_Click(object sender, RoutedEventArgs e)
+        {
+            Button btn = sender as Button;
+            if (btn.Content == "Pause") { btn.Content = "Continue"; }
+            else { btn.Content = "Pause"; }
+            string WorkName = btn.Name.Replace("pause_btn", "");
+            ViewModel.VM_PauseSpecificThread(WorkName);
+        }
+
+        private void StopSpecific_btn_Click(object sender, RoutedEventArgs e)
+        {
+            Button btn = sender as Button;
+            string WorkName = btn.Name.Replace("stop_btn", "");
+            ViewModel.VM_StopSpecificThread(WorkName);
         }
     }
 }
