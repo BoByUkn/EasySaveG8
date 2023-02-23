@@ -134,9 +134,9 @@ namespace EasySave_G8_UI.Views
                 {
                     btn = child as Button;
                     if (btn.Content == "Pause") { btn.Content = "Continue"; }
+                    else { btn.Content = "Pause"; }
                 }
             }
-
             ViewModel.VM_PauseThreads();
         }
 
@@ -160,6 +160,23 @@ namespace EasySave_G8_UI.Views
             Button btn = sender as Button;
             string WorkName = btn.Name.Replace("stop_btn", "");
             ViewModel.VM_StopSpecificThread(WorkName);
+        }
+
+        public void BlacklistPause()
+        {
+            while (currentMainWindow.ApplicationOn)
+            {
+                while (ViewModel.VM_SaveOngoing() && currentMainWindow.ApplicationOn)
+                {
+                    if (ViewModel.VM_BlackListTest())
+                    {
+                        ViewModel.VM_ForcePause();
+                        while (ViewModel.VM_BlackListTest() && currentMainWindow.ApplicationOn) { Thread.Sleep(1000); }
+                        ViewModel.VM_ForcePause();
+                    }
+                    Thread.Sleep(500);
+                }
+            }
         }
     }
 }

@@ -24,8 +24,8 @@ namespace EasySave_G8_UI.Models
         private Model_Logs ModelLogs = new Model_Logs();
 
         private bool PauseCurrentThread = false;
+        private static bool BlacklistPauseCurrentThread = false;
         private bool StopCurrentThread = false;
-
 
         public static List<Model_AFT> AFTObjects = new List<Model_AFT>();
 
@@ -68,7 +68,7 @@ namespace EasySave_G8_UI.Models
                 Model_PRIORITY model_PRIORITY = new Model_PRIORITY(); // create a new Model_Priority in order to have a priority list
                 List<string> priorityList = model_PRIORITY.priorityReturn();
 
-                if (PauseCurrentThread) { ThreadPause(); }
+                if (PauseCurrentThread || BlacklistPauseCurrentThread) { ThreadPause(); }
                 if (StopCurrentThread) { localworker.ReportProgress(100, Name); Thread.CurrentThread.Abort(); }
 
                 if (File.Exists(Source)) //If source is a file only
@@ -109,7 +109,7 @@ namespace EasySave_G8_UI.Models
                     
                     foreach (var file in files) //Loop throught every files and add them to Pirority List
                     {
-                        if (PauseCurrentThread) { ThreadPause(); }
+                        if (PauseCurrentThread || BlacklistPauseCurrentThread) { ThreadPause(); }
                         if (StopCurrentThread) { localworker.ReportProgress(100, Name); Thread.CurrentThread.Abort(); }
 
                         Size = Size + new FileInfo(file).Length; //Increment size with each file
@@ -134,7 +134,7 @@ namespace EasySave_G8_UI.Models
 
                     foreach (var file in files_Priority)
                     {
-                        if (PauseCurrentThread) { ThreadPause(); }
+                        if (PauseCurrentThread || BlacklistPauseCurrentThread) { ThreadPause(); }
                         if (StopCurrentThread) { localworker.ReportProgress(100, Name); Thread.CurrentThread.Abort(); }
 
                         targetFile = file.Replace(Source, Destination2);
@@ -156,7 +156,7 @@ namespace EasySave_G8_UI.Models
 
                     foreach (var file in files_NoPriority) //Loop throught every files and copy them
                     {
-                        if (PauseCurrentThread) { ThreadPause(); }
+                        if (PauseCurrentThread || BlacklistPauseCurrentThread) { ThreadPause(); }
                         if (StopCurrentThread) { localworker.ReportProgress(100, Name); Thread.CurrentThread.Abort(); }
 
                         targetFile = file.Replace(Source, Destination2);
@@ -177,7 +177,7 @@ namespace EasySave_G8_UI.Models
 
                     foreach (var file in files_LessPriority)
                     {
-                        if (PauseCurrentThread) { ThreadPause(); }
+                        if (PauseCurrentThread || BlacklistPauseCurrentThread) { ThreadPause(); }
                         if (StopCurrentThread) { localworker.ReportProgress(100, Name); Thread.CurrentThread.Abort(); }
 
                         targetFile = file.Replace(Source, Destination2);
@@ -232,7 +232,7 @@ namespace EasySave_G8_UI.Models
                 Model_PRIORITY model_PRIORITY = new Model_PRIORITY(); // create a new Model_Priority in order to have a priority list
                 List<string> priorityList = model_PRIORITY.priorityReturn();
 
-                if (PauseCurrentThread) { ThreadPause(); }
+                if (PauseCurrentThread || BlacklistPauseCurrentThread) { ThreadPause(); }
                 if (StopCurrentThread) { localworker.ReportProgress(100, Name); Thread.CurrentThread.Abort(); }
 
                 if (!Directory.Exists(Destination)) { Directory.CreateDirectory(Destination); } //Create the destination directory if it doesn't exist
@@ -254,7 +254,7 @@ namespace EasySave_G8_UI.Models
 
                     foreach (var file in sourceFiles) //Loop throught every files and copy them
                     {
-                        if (PauseCurrentThread) { ThreadPause(); }
+                        if (PauseCurrentThread || BlacklistPauseCurrentThread) { ThreadPause(); }
                         if (StopCurrentThread) { localworker.ReportProgress(100, Name); Thread.CurrentThread.Abort(); }
 
                         Size = Size + new System.IO.FileInfo(file).Length;//Increment size with each file
@@ -274,7 +274,7 @@ namespace EasySave_G8_UI.Models
 
                     foreach (string sourceFile in files_Priority) // Browse each file in the source directory
                     {
-                        if (PauseCurrentThread) { ThreadPause(); }
+                        if (PauseCurrentThread || BlacklistPauseCurrentThread) { ThreadPause(); }
                         if (StopCurrentThread) { localworker.ReportProgress(100, Name); Thread.CurrentThread.Abort(); }
 
                         destinationFile = sourceFile.Replace(Source, Destination2); // Create a destination path for the file
@@ -307,7 +307,7 @@ namespace EasySave_G8_UI.Models
                     }
                     foreach (string sourceFile in files_NoPriority) // Browse each file in the source directory
                     {
-                        if (PauseCurrentThread) { ThreadPause(); }
+                        if (PauseCurrentThread || BlacklistPauseCurrentThread) { ThreadPause(); }
                         if (StopCurrentThread) { localworker.ReportProgress(100, Name); Thread.CurrentThread.Abort(); }
 
                         destinationFile = sourceFile.Replace(Source, Destination2); // Create a destination path for the file
@@ -340,7 +340,7 @@ namespace EasySave_G8_UI.Models
                     }
                     foreach (var sourceFile in files_LessPriority)
                     {
-                        if (PauseCurrentThread) { ThreadPause(); }
+                        if (PauseCurrentThread || BlacklistPauseCurrentThread) { ThreadPause(); }
                         if (StopCurrentThread) { localworker.ReportProgress(100, Name); Thread.CurrentThread.Abort(); }
 
                         destinationFile = sourceFile.Replace(Source, Destination2); // Create a destination path for the file
@@ -470,17 +470,22 @@ namespace EasySave_G8_UI.Models
         //Threads Pause Play Stop
         private void ThreadPause()
         {
-            while (PauseCurrentThread && !StopCurrentThread) 
+            while ((PauseCurrentThread || BlacklistPauseCurrentThread) && !StopCurrentThread) 
             { 
                 Thread.Sleep(100);
             }
         }
 
-
         public void PauseSpecificThread()
         {
             if (PauseCurrentThread) { PauseCurrentThread = false; }
             else { PauseCurrentThread = true; }
+        }
+
+        public static void BlacklistPauseThreads() 
+        {
+            if (BlacklistPauseCurrentThread) { BlacklistPauseCurrentThread = false; }
+            else { BlacklistPauseCurrentThread = true; }
         }
 
         public void StopSpecificThread()

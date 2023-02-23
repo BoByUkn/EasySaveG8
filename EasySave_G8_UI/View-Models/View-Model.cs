@@ -238,5 +238,17 @@ namespace EasySave_G8_UI.View_Models
             }
             finally { Model_AFT._semahporeAFTObjects.Release(); }
         }
+
+        //Forces Pause for all works
+        public void VM_ForcePause()
+        {
+            Model_AFT.BlacklistPauseThreads();
+        }
+
+        //Get work status
+        public bool VM_SaveOngoing()
+        {
+            return (Model_AFT.AFTObjects.Count != 0);
+        }
     }
 }
