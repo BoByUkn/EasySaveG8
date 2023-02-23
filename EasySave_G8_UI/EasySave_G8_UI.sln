@@ -5,6 +5,8 @@ VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasySave_G8_UI", "EasySave_G8_UI.csproj", "{AD317213-71EE-459D-A736-FAFE8CAF93D9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySave_Server", "..\EasySave_Server\EasySave_Server.csproj", "{B863B5D6-689A-4CE0-86F8-07D3F3827652}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,6 +20,12 @@ Global
 		{AD317213-71EE-459D-A736-FAFE8CAF93D9}.Exe|Any CPU.Build.0 = Exe|Any CPU
 		{AD317213-71EE-459D-A736-FAFE8CAF93D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AD317213-71EE-459D-A736-FAFE8CAF93D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B863B5D6-689A-4CE0-86F8-07D3F3827652}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B863B5D6-689A-4CE0-86F8-07D3F3827652}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B863B5D6-689A-4CE0-86F8-07D3F3827652}.Exe|Any CPU.ActiveCfg = Debug|Any CPU
+		{B863B5D6-689A-4CE0-86F8-07D3F3827652}.Exe|Any CPU.Build.0 = Debug|Any CPU
+		{B863B5D6-689A-4CE0-86F8-07D3F3827652}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B863B5D6-689A-4CE0-86F8-07D3F3827652}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

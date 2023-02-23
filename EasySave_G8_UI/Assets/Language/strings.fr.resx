@@ -213,6 +213,9 @@
   <data name="source_path" xml:space="preserve">
     <value>Source</value>
   </data>
+  <data name="SrvLang" xml:space="preserve">
+    <value>Langue : français</value>
+  </data>
   <data name="state_logs" xml:space="preserve">
     <value>Historique d'état</value>
   </data>
