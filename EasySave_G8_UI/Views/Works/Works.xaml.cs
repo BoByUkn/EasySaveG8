@@ -54,7 +54,7 @@ namespace EasySave_G8_UI.Views.Works
                 if (File.Exists(appPath))
                 {
                     foreach (string WorkName in List_Works.Items) { i++; }
-                    if (i == 0) { MessageBox.Show($"There is no Work to execute.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning); return; };
+                    if (i == 0) { MessageBox.Show($"{View_Model.VM_GetString_Language("no_work")}", $"{View_Model.VM_GetString_Language("error")}", MessageBoxButton.OK, MessageBoxImage.Warning); return; };
                     MainWindow1.Main.Content = MainWindow1.Loading1;
                     foreach (string WorkName in List_Works.Items)
                     {
@@ -70,10 +70,10 @@ namespace EasySave_G8_UI.Views.Works
                 }
                 else
                 {
-                    System.Windows.MessageBox.Show("You don't have CryptoSoft.exe, please put it in the right directory :" + appPath, "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    System.Windows.MessageBox.Show($"{View_Model.VM_GetString_Language("error_cryptosoft")}" + appPath, $"{View_Model.VM_GetString_Language("error")}", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
             }
-            else { MessageBox.Show($"{View_Model.VM_GetString_Language("msgbox_blacklist")}", "Error", MessageBoxButton.OK, MessageBoxImage.Warning); }
+            else { MessageBox.Show($"{View_Model.VM_GetString_Language("msgbox_blacklist")}", $"{View_Model.VM_GetString_Language("error")}", MessageBoxButton.OK, MessageBoxImage.Warning); }
         }
 
         private void ExecuteSelected_btn_Click(object sender, RoutedEventArgs e)
@@ -87,7 +87,7 @@ namespace EasySave_G8_UI.Views.Works
                 if (File.Exists(appPath))
                 {
                     foreach (string WorkName in List_Works.SelectedItems) { i++; }
-                    if (i == 0) { MessageBox.Show("Please choose at least one Work in the list to execute it.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning); return; }
+                    if (i == 0) { MessageBox.Show($"{View_Model.VM_GetString_Language("choose_work_execute")}", $"{View_Model.VM_GetString_Language("error")}", MessageBoxButton.OK, MessageBoxImage.Warning); return; }
 
                     MainWindow1.Main.Content = MainWindow1.Loading1;
                     foreach (string WorkName in List_Works.SelectedItems)
@@ -104,10 +104,10 @@ namespace EasySave_G8_UI.Views.Works
                 }
                 else
                 {
-                    System.Windows.MessageBox.Show("You don't have CryptoSoft.exe, please put it in the right directory :" + appPath, "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    System.Windows.MessageBox.Show($"{View_Model.VM_GetString_Language("error_cryptosoft")}" + appPath, $"{View_Model.VM_GetString_Language("error")}", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
             }
-            else { MessageBox.Show($"{View_Model.VM_GetString_Language("msgbox_blacklist")}", "Error", MessageBoxButton.OK, MessageBoxImage.Warning); }
+            else { MessageBox.Show($"{View_Model.VM_GetString_Language("msgbox_blacklist")}", $"{View_Model.VM_GetString_Language("error")}", MessageBoxButton.OK, MessageBoxImage.Warning); }
         }
 
         private void BackgroundWorker_DoWork(object? sender, DoWorkEventArgs e)
@@ -128,7 +128,7 @@ namespace EasySave_G8_UI.Views.Works
                 i++;
                 ViewModel.VM_Work_Delete(WorkName);
             }
-            if (i == 0) { MessageBox.Show("Please choose at least one Work in the list to delete it.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning); }
+            if (i == 0) { MessageBox.Show($"{View_Model.VM_GetString_Language("choose_work_delete")}", $"{View_Model.VM_GetString_Language("error")}", MessageBoxButton.OK, MessageBoxImage.Warning); }
             Works_List();
         }
 
@@ -140,11 +140,11 @@ namespace EasySave_G8_UI.Views.Works
             foreach (string Work in List_Works.SelectedItems)
             {
                 i++;
-                if (i>1) { MessageBox.Show("Only one Work can be edited at a time.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning); return; }
+                if (i>1) { MessageBox.Show($"{View_Model.VM_GetString_Language("work_edit_only")}", $"{View_Model.VM_GetString_Language("error")}", MessageBoxButton.OK, MessageBoxImage.Warning); return; }
                 WorkName = Work;
             }
             if (i == 1) { mainWindow.Main.Content = new Works_Edit(WorkName); }
-            else { MessageBox.Show("Please choose a Work in the list to edit it.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning); }
+            else { MessageBox.Show($"{View_Model.VM_GetString_Language("choose_work_edit")}", $"{View_Model.VM_GetString_Language("error")}", MessageBoxButton.OK, MessageBoxImage.Warning); }
         }
 
         private void List_Works_SelectionChanged(object sender, SelectionChangedEventArgs e)

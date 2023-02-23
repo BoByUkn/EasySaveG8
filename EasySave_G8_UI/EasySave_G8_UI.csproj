@@ -13,6 +13,7 @@
     <None Remove="Assets\Pictures\england.png" />
     <None Remove="Assets\Pictures\france.png" />
     <None Remove="Assets\Pictures\france2.png" />
+    <None Remove="Assets\Pictures\icon.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -24,6 +25,7 @@
     <Resource Include="Assets\Pictures\france.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Assets\Pictures\icon.ico" />
   </ItemGroup>
 
 </Project>

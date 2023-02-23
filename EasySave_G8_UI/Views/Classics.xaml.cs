@@ -55,7 +55,7 @@ namespace EasySave_G8_UI.Views
                     ClassicName = this.textBox1.Text;
                     try
                     {
-                        if (ViewModel.VM_StateLogsExists(ClassicName)) { System.Windows.MessageBox.Show("A work with that Name already exists. Please use another Name.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning); return; }
+                        if (ViewModel.VM_StateLogsExists(ClassicName)) { System.Windows.MessageBox.Show($"{View_Model.VM_GetString_Language("error_work_name")}", $"{View_Model.VM_GetString_Language("error")}", MessageBoxButton.OK, MessageBoxImage.Warning); return; }
                     }
                     catch { Exception ex; }
 
@@ -78,16 +78,16 @@ namespace EasySave_G8_UI.Views
                         backgroundWorker.ProgressChanged += BackgroundWorker_ProgressChanged;
                         backgroundWorker.RunWorkerAsync();
                     }
-                    catch (Exception) { System.Windows.MessageBox.Show("You can't launch a save without all parameters", "Error", MessageBoxButton.OK, MessageBoxImage.Warning); }
+                    catch (Exception) { System.Windows.MessageBox.Show($"{View_Model.VM_GetString_Language("error_parameters")}", $"{View_Model.VM_GetString_Language("error")}", MessageBoxButton.OK, MessageBoxImage.Warning); }
                 }
                 else
                 {
-                    System.Windows.MessageBox.Show("You don't have CryptoSoft.exe, please put it in the right directory :" + appPath, "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    System.Windows.MessageBox.Show($"{View_Model.VM_GetString_Language("error_cryptosoft")}" + appPath, $"{View_Model.VM_GetString_Language("error")}", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
             }
             else
             {
-                MessageBox.Show($"{View_Model.VM_GetString_Language("msgbox_blacklist")}", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show($"{View_Model.VM_GetString_Language("msgbox_blacklist")}", $"{View_Model.VM_GetString_Language("error")}", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 

@@ -23,8 +23,14 @@ namespace EasySave_G8_UI.Views
         {
             InitializeComponent();
             ViewModel = new View_Model();
+            translate();
             currentMainWindow = Application.Current.MainWindow as MainWindow;
             currentLoading = currentMainWindow.Main.Content as Loading;
+        }
+
+        private void translate()
+        {
+            Loading_Title.Text = $"{View_Model.VM_GetString_Language("loading")}";
         }
 
         public async void ProgressBar_Add()

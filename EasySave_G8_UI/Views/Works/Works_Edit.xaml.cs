@@ -93,10 +93,10 @@ namespace EasySave_G8_UI.Views.Works
                     }
                     else
                     {
-                        System.Windows.MessageBox.Show("You don't have CryptoSoft.exe, please put it in the right directory :" + appPath, "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        System.Windows.MessageBox.Show($"{View_Model.VM_GetString_Language("error_cryptosoft")}" + appPath, $"{View_Model.VM_GetString_Language("error")}", MessageBoxButton.OK, MessageBoxImage.Warning);
                     }
                 }
-                else { MessageBox.Show($"{View_Model.VM_GetString_Language("msgbox_blacklist")}", "Error", MessageBoxButton.OK, MessageBoxImage.Warning); return; }
+                else { MessageBox.Show($"{View_Model.VM_GetString_Language("msgbox_blacklist")}", $"{View_Model.VM_GetString_Language("error")}", MessageBoxButton.OK, MessageBoxImage.Warning); return; }
             }
             else
             {
@@ -120,8 +120,8 @@ namespace EasySave_G8_UI.Views.Works
             openFileDialog.CheckFileExists = false;
             openFileDialog.CheckPathExists = true;
             openFileDialog.ValidateNames = false;
-            openFileDialog.FileName = "Selectionner un dossier";
-            openFileDialog.Filter = "Dossiers|*.directory";
+            openFileDialog.FileName = $"{View_Model.VM_GetString_Language("select_directory")}";
+            openFileDialog.Filter = $"{View_Model.VM_GetString_Language("directories")}";
             openFileDialog.InitialDirectory = @"C:\";
 
             if (openFileDialog.ShowDialog() == true)
@@ -135,8 +135,8 @@ namespace EasySave_G8_UI.Views.Works
             openFileDialog.CheckFileExists = false;
             openFileDialog.CheckPathExists = true;
             openFileDialog.ValidateNames = false;
-            openFileDialog.FileName = "Selectionner un dossier";
-            openFileDialog.Filter = "Dossiers|*.directory";
+            openFileDialog.FileName = $"{View_Model.VM_GetString_Language("select_directory")}";
+            openFileDialog.Filter = $"{View_Model.VM_GetString_Language("directories")}";
             openFileDialog.InitialDirectory = @"C:\";
 
             if (openFileDialog.ShowDialog() == true)

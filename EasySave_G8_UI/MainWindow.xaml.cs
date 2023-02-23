@@ -61,7 +61,7 @@ namespace EasySave_G8_UI
             if (!createdNew)
             {
                 Application.Current.Shutdown();
-                MessageBox.Show("Application is already running.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning); return;
+                MessageBox.Show($"{View_Model.VM_GetString_Language("app_running")}", $"{View_Model.VM_GetString_Language("error")}", MessageBoxButton.OK, MessageBoxImage.Warning); return;
             }
         }
 

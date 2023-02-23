@@ -123,6 +123,9 @@
   <data name="add" xml:space="preserve">
     <value>Ajouter</value>
   </data>
+  <data name="app_running" xml:space="preserve">
+    <value>L'application est déjà en cours.</value>
+  </data>
   <data name="blacklist_add" xml:space="preserve">
     <value>Ajouter blacklist</value>
   </data>
@@ -131,6 +134,15 @@
   </data>
   <data name="browse" xml:space="preserve">
     <value>Parcourir</value>
+  </data>
+  <data name="choose_work_delete" xml:space="preserve">
+    <value>Veuillez sélectionner au moins un travail dans la liste pour le supprimer.</value>
+  </data>
+  <data name="choose_work_edit" xml:space="preserve">
+    <value>Veuillez sélectionner au moins un travail dans la liste pour l'éditer.</value>
+  </data>
+  <data name="choose_work_execute" xml:space="preserve">
+    <value>Veuillez sélectionner au moins un travail dans la liste pour l'exécuter.</value>
   </data>
   <data name="classics" xml:space="preserve">
     <value>Classique</value>
@@ -174,6 +186,18 @@
   <data name="edit_selection" xml:space="preserve">
     <value>Editer sélection</value>
   </data>
+  <data name="error" xml:space="preserve">
+    <value>Erreur</value>
+  </data>
+  <data name="error_cryptosoft" xml:space="preserve">
+    <value>Vous n'avez pas CryptoSoft.exe, placez-le dans le répertoire : </value>
+  </data>
+  <data name="error_parameters" xml:space="preserve">
+    <value>Vous ne pouvez pas lancer une sauvegarde sans tous les paramètres.</value>
+  </data>
+  <data name="error_work_name" xml:space="preserve">
+    <value>Un travail avec ce nom existe déjà. Veuillez utiliser un autre nom.</value>
+  </data>
   <data name="execute_all" xml:space="preserve">
     <value>Tout exécuter</value>
   </data>
@@ -210,11 +234,23 @@
   <data name="name" xml:space="preserve">
     <value>Nom</value>
   </data>
+  <data name="name_taken" xml:space="preserve">
+    <value>Ce nom est déjà utilisé.</value>
+  </data>
   <data name="next" xml:space="preserve">
     <value>Suivant</value>
   </data>
   <data name="no" xml:space="preserve">
     <value>Non</value>
+  </data>
+  <data name="no_logs" xml:space="preserve">
+    <value>Vous n'avez pas de fichier Logs actuellement, veuillez lancer une sauvegarde classique ou un travail d'abord.</value>
+  </data>
+  <data name="no_statelogs" xml:space="preserve">
+    <value>Vous n'avez pas de fichier StateLogs actuellement, veuillez lancer une sauvegarde classique ou un travail d'abord.</value>
+  </data>
+  <data name="no_work" xml:space="preserve">
+    <value>Aucun travail à exécuter.</value>
   </data>
   <data name="prioritylist_add" xml:space="preserve">
     <value>Ajouter priorité</value>
@@ -257,6 +293,9 @@
   </data>
   <data name="work_edit" xml:space="preserve">
     <value>Editer le travail</value>
+  </data>
+  <data name="work_edit_only" xml:space="preserve">
+    <value>Un seul travail peut être édité à la fois.</value>
   </data>
   <data name="yes" xml:space="preserve">
     <value>Oui</value>

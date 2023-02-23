@@ -123,6 +123,9 @@
   <data name="add" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="app_running" xml:space="preserve">
+    <value>Application is already running.</value>
+  </data>
   <data name="blacklist_add" xml:space="preserve">
     <value>Add blacklist</value>
   </data>
@@ -131,6 +134,15 @@
   </data>
   <data name="browse" xml:space="preserve">
     <value>Browse</value>
+  </data>
+  <data name="choose_work_delete" xml:space="preserve">
+    <value>Please choose at least one Work in the list to delete it.</value>
+  </data>
+  <data name="choose_work_edit" xml:space="preserve">
+    <value>Please choose a work in the list to edit it.</value>
+  </data>
+  <data name="choose_work_execute" xml:space="preserve">
+    <value>Please choose at least one Work in the list to execute it.</value>
   </data>
   <data name="classics" xml:space="preserve">
     <value>Classics</value>
@@ -174,6 +186,18 @@
   <data name="edit_selection" xml:space="preserve">
     <value>Edit selection</value>
   </data>
+  <data name="error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="error_cryptosoft" xml:space="preserve">
+    <value>You don't have CryptoSoft.exe, please put it in the right directory : </value>
+  </data>
+  <data name="error_parameters" xml:space="preserve">
+    <value>You can't launch a save without all parameters.</value>
+  </data>
+  <data name="error_work_name" xml:space="preserve">
+    <value>A work with that name already exists. Please use another name.</value>
+  </data>
   <data name="execute_all" xml:space="preserve">
     <value>Execute all</value>
   </data>
@@ -210,11 +234,23 @@
   <data name="name" xml:space="preserve">
     <value>Name</value>
   </data>
+  <data name="name_taken" xml:space="preserve">
+    <value>This name is already taken.</value>
+  </data>
   <data name="next" xml:space="preserve">
     <value>Next</value>
   </data>
   <data name="no" xml:space="preserve">
     <value>No</value>
+  </data>
+  <data name="no_logs" xml:space="preserve">
+    <value>You don't have Logs file yet, please launch classic save or work first.</value>
+  </data>
+  <data name="no_statelogs" xml:space="preserve">
+    <value>You don't have StateLogs file yet, please launch classic save or work first.</value>
+  </data>
+  <data name="no_work" xml:space="preserve">
+    <value>There is no work to execute.</value>
   </data>
   <data name="prioritylist_add" xml:space="preserve">
     <value>Add priority</value>
@@ -257,6 +293,9 @@
   </data>
   <data name="work_edit" xml:space="preserve">
     <value>Edit Work</value>
+  </data>
+  <data name="work_edit_only" xml:space="preserve">
+    <value>Only one work can be edited at a time.</value>
   </data>
   <data name="yes" xml:space="preserve">
     <value>Yes</value>
