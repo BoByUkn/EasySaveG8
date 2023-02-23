@@ -237,7 +237,7 @@ namespace EasySave_G8_UI.Models
                 List<string> priorityList = model_PRIORITY.priorityReturn();
 
                 if (PauseCurrentThread || BlacklistPauseCurrentThread) { ThreadPause(); }
-                if (StopCurrentThread) { localworker.ReportProgress(100, Name); Thread.CurrentThread.Abort(); }
+                if (StopCurrentThread) { localworker.ReportProgress(100, Name); return; }
 
                 if (!Directory.Exists(Destination)) { Directory.CreateDirectory(Destination); } //Create the destination directory if it doesn't exist
                 if (Directory.Exists(Source))
