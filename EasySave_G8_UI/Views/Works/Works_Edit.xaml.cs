@@ -59,7 +59,7 @@ namespace EasySave_G8_UI.Views.Works
         }
 
         private void Save_btn_Click(object sender, RoutedEventArgs e)
-        {            
+        {
             bool Type;
             if (comboBox1.SelectedIndex == 0) { Type = true; }
             else { Type = false; }
@@ -67,6 +67,12 @@ namespace EasySave_G8_UI.Views.Works
             bool ExeNow;
             if (comboBox2.SelectedIndex == 0) { ExeNow = true; }
             else { ExeNow = false; }
+
+            if (textBox1.Text == "")
+            {
+                MessageBox.Show($"Name cannot be empty.", $"Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
 
             ViewModel.VM_Work_Delete(Original_WorkName);
             ViewModel.VM_Work_New(textBox1.Text, textBox2.Text, textBox3.Text, Type);

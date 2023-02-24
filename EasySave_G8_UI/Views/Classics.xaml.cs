@@ -48,6 +48,7 @@ namespace EasySave_G8_UI.Views
             bool blacklist_state = ViewModel.VM_BlackListTest();
             string appPath = Directory.GetCurrentDirectory() + @"\cryptosoft.exe";
 
+
             if (blacklist_state == false)
             {
                 if (File.Exists(appPath))
@@ -56,6 +57,11 @@ namespace EasySave_G8_UI.Views
                     try
                     {
                         if (ViewModel.VM_StateLogsExists(ClassicName)) { System.Windows.MessageBox.Show($"{View_Model.VM_GetString_Language("error_work_name")}", $"{View_Model.VM_GetString_Language("error")}", MessageBoxButton.OK, MessageBoxImage.Warning); return; }
+                        else if (ClassicName == "")
+                        {
+                            MessageBox.Show($"Name cannot be empty.", $"Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            return;
+                        }
                     }
                     catch { Exception ex; }
 

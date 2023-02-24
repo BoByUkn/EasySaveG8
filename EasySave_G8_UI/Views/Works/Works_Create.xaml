@@ -35,7 +35,6 @@
                         <Run Language="fr-fr"/>
                         </TextBlock>
                         <TextBox x:Name="textBox1" TextWrapping="Wrap" Height="30" FontSize="20" VerticalAlignment="Top" HorizontalAlignment="Center" Width="420" Grid.Column="1" Margin="0,54,0,0" Grid.RowSpan="2"/>
-                        <Label x:Name="LabelError" Content="" HorizontalAlignment="Left" Height="30" VerticalAlignment="Center" Width="135" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Margin="505,0,0,0" Background="{x:Null}" Foreground="Red" FontSize="10"/>
 
                         <TextBlock Name="Source_Path" Text="Source" Foreground="White" FontSize="17" Margin="46,59,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="0" FontFamily="Bahnschrift Condensed" Grid.Row="1" Grid.RowSpan="2">
                         <Run Language="fr-fr" />
