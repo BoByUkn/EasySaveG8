@@ -68,6 +68,17 @@ namespace EasySave_G8_UI.Models
             //}
             File.WriteAllText(filePath, cipherKey.ToString());
         }
+
+        public void LaunchRemoteServ()
+        {
+            string appPath = Directory.GetCurrentDirectory() + @"\EasySave_Server.exe";
+            Process appProcess = new Process(); //Create the process
+            appProcess.StartInfo.FileName = appPath; //Starting CryptoSoft
+            appProcess.StartInfo.CreateNoWindow = true;
+            appProcess.Start(); //Start the process
+            appProcess.WaitForExit(); //Wait for the app to complete
+            appProcess.Close();  //Close the process
+        }
     }
 
     public class Model_LANG

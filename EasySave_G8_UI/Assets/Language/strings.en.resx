@@ -181,13 +181,19 @@
     <value>Differential</value>
   </data>
   <data name="directories" xml:space="preserve">
-    <value>Directory | *.directory</value>
+    <value>Directory | *.directory </value>
   </data>
   <data name="edit_selection" xml:space="preserve">
     <value>Edit selection</value>
   </data>
   <data name="error" xml:space="preserve">
     <value>Error</value>
+  </data>
+  <data name="ErrorDestPath" xml:space="preserve">
+    <value>You need to put a right destination</value>
+  </data>
+  <data name="ErrorSourcePath" xml:space="preserve">
+    <value>You need to put a right source</value>
   </data>
   <data name="error_cryptosoft" xml:space="preserve">
     <value>You don't have CryptoSoft.exe, please put it in the right directory : </value>
@@ -257,6 +263,9 @@
   </data>
   <data name="prioritylist_rm" xml:space="preserve">
     <value>Remove priority</value>
+  </data>
+  <data name="remote" xml:space="preserve">
+    <value>Remote Server</value>
   </data>
   <data name="remove" xml:space="preserve">
     <value>Remove</value>

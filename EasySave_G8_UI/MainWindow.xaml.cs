@@ -20,6 +20,7 @@ namespace EasySave_G8_UI
         public Loading Loading1;
         private View_Model ViewModel;
         public bool ApplicationOn = true;
+        public static MainWindow MainWindow1;
 
         public MainWindow()
         {
@@ -33,6 +34,8 @@ namespace EasySave_G8_UI
             }
 
             translate();
+
+            MainWindow1 = Application.Current.MainWindow as MainWindow;
 
             this.WindowStyle = WindowStyle.None;
             this.AllowsTransparency = true;
@@ -76,6 +79,10 @@ namespace EasySave_G8_UI
             Loading_btn.Content = $"{View_Model.VM_GetString_Language("loading")}";
             Settings_btn.Content = $"{View_Model.VM_GetString_Language("settings")}";
             Shutdown_btn.Content = $"{View_Model.VM_GetString_Language("shutdown")}";
+            Remote_btn.Content = $"{View_Model.VM_GetString_Language("remote")}";
+
+
+
         }
 
         private void Classics_Click(object sender, RoutedEventArgs e)
@@ -125,6 +132,11 @@ namespace EasySave_G8_UI
         {
             ViewModel.VM_Change_Language("fr");
             translate();
+        }
+
+        private void Remote_btn_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel.VM_RemoteLaunch();
         }
     }
 }
