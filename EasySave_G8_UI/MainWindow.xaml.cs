@@ -79,6 +79,10 @@ namespace EasySave_G8_UI
             Loading_btn.Content = $"{View_Model.VM_GetString_Language("loading")}";
             Settings_btn.Content = $"{View_Model.VM_GetString_Language("settings")}";
             Shutdown_btn.Content = $"{View_Model.VM_GetString_Language("shutdown")}";
+            Remote_btn.Content = $"{View_Model.VM_GetString_Language("remote")}";
+
+
+
         }
 
         private void Classics_Click(object sender, RoutedEventArgs e)

@@ -264,6 +264,9 @@
   <data name="prioritylist_rm" xml:space="preserve">
     <value>Remove priority</value>
   </data>
+  <data name="remote" xml:space="preserve">
+    <value>Remote Server</value>
+  </data>
   <data name="remove" xml:space="preserve">
     <value>Remove</value>
   </data>
