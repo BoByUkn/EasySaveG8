@@ -350,6 +350,8 @@ namespace EasySave_G8_UI.Models
                             }
                         }
                         ModelStateLogs.file_remain = file_remain;
+                        ModelStateLogs.CryptoTime = Total_CryptoTime; // actualize cryptotime
+                        ModelStateLogs.progression = percentage; // actualize the progression attribute on ModelStateLogs with actual percentage
                         ModelLogs.StateLog(ModelStateLogs);
                     }
                     foreach (string sourceFile in files_NoPriority) // Browse each file in the source directory
@@ -395,6 +397,8 @@ namespace EasySave_G8_UI.Models
                             }
                         }
                         ModelStateLogs.file_remain = file_remain;
+                        ModelStateLogs.CryptoTime = Total_CryptoTime; // actualize cryptotime
+                        ModelStateLogs.progression = percentage; // actualize the progression attribute on ModelStateLogs with actual percentage
                         ModelLogs.StateLog(ModelStateLogs);
                     }
                     foreach (var sourceFile in files_LessPriority)
@@ -440,6 +444,7 @@ namespace EasySave_G8_UI.Models
                             }
                         }
                         ModelStateLogs.file_remain = file_remain;
+                        ModelStateLogs.CryptoTime = Total_CryptoTime; // actualize cryptotime
                         ModelLogs.StateLog(ModelStateLogs);
                        
                     }
