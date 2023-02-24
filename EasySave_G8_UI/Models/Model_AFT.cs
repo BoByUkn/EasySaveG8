@@ -482,16 +482,19 @@ namespace EasySave_G8_UI.Models
             
         }
 
-        public void Logs() //Write backup's logs
+        public void Logs() // Method to write backup logs
         {
+            // Get the current UTC date and format it to allow serialization
             string utcDateOnly = utcDateDateTime.ToString("dd/MM/yyyy");
             utcDateOnly = utcDateOnly.Replace("/", "-"); //Format the date to allow serializing
+            
+            // Create file paths for the JSON and XML logs
             string fileName = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\logs\JSON\" + utcDateOnly + ".json";
             string fileName2 = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\logs\XML\" + utcDateOnly + ".xml";
 
-            if (File.Exists(fileName))  //Test if log file exists, else it creates it
+            if (File.Exists(fileName)) // If the JSON log file already exists, update it with the current log data
             {
-                string fileContent = null;
+                string fileContent = null; // Read the current JSON log file and deserialize it into a list of Model_AFT objects
 
                 _semaphorejson.Wait();
                 try { fileContent = File.ReadAllText(fileName); } //Bring content of filename in filecontent
@@ -502,9 +505,10 @@ namespace EasySave_G8_UI.Models
                 values?.Add(this); //Add object ModelAFT in the list values
                 
                 string jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(values, Newtonsoft.Json.Formatting.Indented); //Serialialize the data in JSON form
-                
+
+                // Write the updated JSON log file and the XML log file
                 _semaphorejson.Wait();
-                try { File.WriteAllText(fileName, jsonString); } //Write json file
+                try { File.WriteAllText(fileName, jsonString); }
                 finally { _semaphorejson.Release(); }
 
                 XmlSerializer serializer = new XmlSerializer(typeof(List<Model_AFT>));
@@ -517,9 +521,10 @@ namespace EasySave_G8_UI.Models
                 finally { _semaphorexml.Release(); }
             }
 
+            // If the JSON log file does not exist, create it and write the current log data to it
             else if (!File.Exists(fileName))
             {
-                List<Model_AFT> values = new List<Model_AFT>(); // create the list named values
+                List<Model_AFT> values = new List<Model_AFT>(); // Create a new list of Model_AFT objects and add the current log data to it
                 values.Add(this);// Add object ModelAFT in the list values
                 var jsonString = JsonConvert.SerializeObject(values, Newtonsoft.Json.Formatting.Indented); //Serialialize the data in JSON form
                 

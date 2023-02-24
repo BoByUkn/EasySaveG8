@@ -99,19 +99,24 @@ namespace EasySave_G8_UI.View_Models
             return list;
         }
 
+        // This method returns a list of Model_StateLogs by calling the Get_StateLogs method of Model_Logs class
         public List<Model_StateLogs> MV_Look_StateLogs()
         {
+            // Create an instance of Model_Logs class
             Model_Logs ModelLogs = new Model_Logs();
+            // Call the Get_StateLogs method of Model_Logs class to retrieve a list of Model_StateLogs
             List<Model_StateLogs> list = ModelLogs.Get_StateLogs();
+            // Return the retrieved list of Model_StateLogs
             return list;
         }
 
         public bool VM_BlackListTest()
         {
-            Model_BLACKLIST ModelBLACKLIST = new Model_BLACKLIST();
-            return ModelBLACKLIST.BlacklistTest();
+            Model_BLACKLIST ModelBLACKLIST = new Model_BLACKLIST(); // create a new instance of the Model_BLACKLIST class
+            return ModelBLACKLIST.BlacklistTest(); // call the BlacklistTest method from the Model_BLACKLIST class and return its result
         }
 
+        // This function adds a process name to the blacklist
         public void VM_BlackListAdd(string ProcessName)
         {
             Model_BLACKLIST ModelBLACKLIST = new Model_BLACKLIST();

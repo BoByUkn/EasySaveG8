@@ -189,6 +189,12 @@
   <data name="error" xml:space="preserve">
     <value>Error</value>
   </data>
+  <data name="ErrorDestPath" xml:space="preserve">
+    <value>You need to put a right destination</value>
+  </data>
+  <data name="ErrorSourcePath" xml:space="preserve">
+    <value>You need to put a right source</value>
+  </data>
   <data name="error_cryptosoft" xml:space="preserve">
     <value>You don't have CryptoSoft.exe, please put it in the right directory : </value>
   </data>
