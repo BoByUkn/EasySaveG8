@@ -99,6 +99,7 @@
             this.txtStatus.Location = new System.Drawing.Point(96, 85);
             this.txtStatus.Multiline = true;
             this.txtStatus.Name = "txtStatus";
+            this.txtStatus.ReadOnly = true;
             this.txtStatus.Size = new System.Drawing.Size(580, 172);
             this.txtStatus.TabIndex = 6;
             // 

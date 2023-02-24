@@ -362,7 +362,6 @@ namespace EasySave_G8_UI.Models
                         destinationFile = sourceFile.Replace(Source, Destination2); // Create a destination path for the file
                         ActualSize2 = ActualSize2 + new System.IO.FileInfo(sourceFile).Length;//Increment size with each file
                         percentage = (int)(((double)ActualSize2 / (double)Size) * 100);
-
                         localworker.ReportProgress(percentage, Name);
                         ModelStateLogs.progression = percentage;
                         file_remain--;

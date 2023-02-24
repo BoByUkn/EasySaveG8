@@ -20,6 +20,7 @@ namespace EasySave_G8_UI
         public Loading Loading1;
         private View_Model ViewModel;
         public bool ApplicationOn = true;
+        public static MainWindow MainWindow1;
 
         public MainWindow()
         {
@@ -33,6 +34,8 @@ namespace EasySave_G8_UI
             }
 
             translate();
+
+            MainWindow1 = Application.Current.MainWindow as MainWindow;
 
             this.WindowStyle = WindowStyle.None;
             this.AllowsTransparency = true;
@@ -125,6 +128,12 @@ namespace EasySave_G8_UI
         {
             ViewModel.VM_Change_Language("fr");
             translate();
+        }
+
+        private void Remote_btn_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Prout server up");
+            //LANCER LE EXE DU SERVER ICI
         }
     }
 }

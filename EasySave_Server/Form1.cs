@@ -4,18 +4,23 @@ using System.Text;
 using System.Windows.Forms;
 using EasySave_G8_UI;
 using EasySave_G8_UI.View_Models;
+using EasySave_G8_UI.Models;
+using System.ComponentModel;
 
 namespace EasySave_Server
 {
     public partial class ES_Server : Form
     {
+        SimpleTcpServer server;
+        private View_Model ViewModel;
+        private int PercentSpacer;
+
         public ES_Server()
         {
             InitializeComponent();
-            lblLang.Text = $"{View_Model.VM_GetString_Language("SrvLang")}";
+            ViewModel = new View_Model();
         }
 
-        SimpleTcpServer server;
         private void Server_Load(object sender, EventArgs e)
         {
             server = new SimpleTcpServer();
@@ -29,13 +34,29 @@ namespace EasySave_Server
             //Update mesage to txtStatus
             txtStatus.Invoke((MethodInvoker)delegate ()
             {
+                txtStatus.Clear();
                 txtStatus.Text += e.MessageString;
                 e.ReplyLine(string.Format("Connection etablished"));
             });
 
-            if (e.MessageString == "paolo")
+            if (e.MessageString == "WorkList")
             {
-                MessageBox.Show(e.MessageString, "bonjour");
+                WorkList();
+            }
+
+            if (e.MessageString.Contains("WorkExec#"))
+            {
+                Work_Exec(e.MessageString.Replace("WorkExec#", ""));
+            }
+
+            if (e.MessageString.Contains("WorkPause#"))
+            {
+                Work_Pause(e.MessageString.Replace("WorkPause#", ""));
+            }
+
+            if (e.MessageString.Contains("WorkStop#"))
+            {
+                Work_Stop(e.MessageString.Replace("WorkStop#", ""));
             }
         }
 
@@ -43,8 +64,12 @@ namespace EasySave_Server
         {
             //Start server host
             txtStatus.Text += "Server starting...";
-            System.Net.IPAddress ip = System.Net.IPAddress.Parse(txtHost.Text);
-            server.Start(ip, Convert.ToInt32(txtPort.Text));
+            try
+            {
+                System.Net.IPAddress ip = System.Net.IPAddress.Parse(txtHost.Text);
+                server.Start(ip, Convert.ToInt32(txtPort.Text));
+            }
+            catch (Exception ex) { txtStatus.Clear(); txtStatus.Text += "Invalid IP adress"; }
         }
 
         private void btnStop_Click(object sender, EventArgs e)
@@ -58,6 +83,57 @@ namespace EasySave_Server
         private void btnSend_Click(object sender, EventArgs e)
         {
             server.Broadcast(txtMessage.Text);
+        }
+
+        private void WorkList()
+        {
+            Model_Works model_Works = new Model_Works();
+            List<Model_PRE> obj_list = model_Works.Get_Work(null, true);
+            foreach (Model_PRE obj in obj_list)
+            {
+                server.Broadcast(obj.Name);
+                Thread.Sleep(100);
+            }
+            server.Broadcast("stop");
+        }
+
+        private void Work_Exec(string WorkName)
+        {
+            BackgroundWorker backgroundWorker = new BackgroundWorker();
+            backgroundWorker.DoWork += BackgroundWorker_DoWork;
+            backgroundWorker.ProgressChanged += BackgroundWorker_ProgressChanged;
+            backgroundWorker.RunWorkerAsync(argument: WorkName);
+        }
+
+        private void Work_Pause(string WorkName)
+        {
+            ViewModel.VM_PauseSpecificThread(WorkName);
+        }
+
+        private void Work_Stop(string WorkName) 
+        { 
+            ViewModel.VM_StopSpecificThread(WorkName);
+        }
+
+        private void BackgroundWorker_DoWork(object? sender, DoWorkEventArgs e)
+        {
+            ViewModel.VM_Work_Run((string)e.Argument, sender);
+        }
+
+        private void BackgroundWorker_ProgressChanged(object? sender, ProgressChangedEventArgs e)
+        {
+            if (e.ProgressPercentage < 101)
+            {
+                txtStatus.Invoke((MethodInvoker)delegate ()
+                {
+                    txtStatus.Clear();
+                    txtStatus.Text = e.ProgressPercentage.ToString() + "%#" + e.UserState.ToString();
+                });
+                PercentSpacer += 50;
+
+                Thread.Sleep(PercentSpacer);
+                server.Broadcast(e.ProgressPercentage.ToString() + "%#" + e.UserState.ToString());
+            }
         }
     }
 }

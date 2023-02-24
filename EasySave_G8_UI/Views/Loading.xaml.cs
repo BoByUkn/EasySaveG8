@@ -104,6 +104,7 @@ namespace EasySave_G8_UI.Views
             ProgressBar progressBar = null;
             Label label1 = null;
             Label label3 = null;
+
             foreach (var child in MainStackPanel.Children)
             {
                 if ((child as FrameworkElement)?.Name == e.UserState.ToString()+ "pgbar")
