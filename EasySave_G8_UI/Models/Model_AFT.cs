@@ -75,6 +75,8 @@ namespace EasySave_G8_UI.Models
             Model_EXTENSION Model_Ext = new Model_EXTENSION(); // create a new Model_Priority in order to have a priority list
             List<string> CSExtNameList = Model_Ext.ExtensionReturn();
 
+            Model_NBKO modelNbKo = new Model_NBKO();
+
             if (PauseCurrentThread || BlacklistPauseCurrentThread) { ThreadPause(); }
             if (StopCurrentThread) { localworker.ReportProgress(100, Name); return; }
 
@@ -112,7 +114,6 @@ namespace EasySave_G8_UI.Models
                 List<string> files_LessPriority = new List<string>(); // Convert Tab in List (in order to use Remove Method)
                 string Destination2 = Destination + @"\" + Path.GetFileName(Source); //Combine the destination directory with the file name of the source 
                 string targetFile;
-                Model_NBKO modelNbKo = new Model_NBKO();
 
                 utcDateStart = DateTime.Now;
                 file_remain = total_files;
@@ -260,6 +261,8 @@ namespace EasySave_G8_UI.Models
                 Model_EXTENSION Model_Ext = new Model_EXTENSION(); // create a new Model_Priority in order to have a priority list
                 List<string> CSExtNameList = Model_Ext.ExtensionReturn();
 
+                Model_NBKO modelNbKo = new Model_NBKO();
+
                 BackgroundWorker localworker = sender as BackgroundWorker; //localworker initialize
                 localworker.WorkerReportsProgress = true; //allow localworker to report progress
                 localworker.ReportProgress(0, Name); //report inital progress
@@ -302,6 +305,13 @@ namespace EasySave_G8_UI.Models
                                 files_Priority.Add(file); // Add file in priority file
                                 files_NoPriority.Remove(file); // Remove file from the all files in the list files_NoPriority (in order to have only no priority files)
                             }
+                        }
+                        if ((new FileInfo(file).Length > modelNbKo.NbKoReturn()) && (modelNbKo.NbKoReturn() != 0))
+                        {
+                            Trace.WriteLine("Lengh du file en cours" + new FileInfo(file).Length + "retourne val nbko" + modelNbKo.NbKoReturn());
+                            files_NoPriority.Remove(file); // Remove file from the all files in the list files_NoPriority (in order to have only no priority files)
+                            files_Priority.Remove(file); // Remove file from the all files in the list files_Priority (in order to have only no priority files)
+                            files_LessPriority.Add(file);
                         }
                     }
                     ModelStateLogs.Size = Size;
