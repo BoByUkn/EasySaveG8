@@ -59,6 +59,7 @@ namespace EasySave_G8_UI.Views
         private void Blacklist_add_btn_Click(object sender, RoutedEventArgs e)
         {
             string ProcessName = Blacklist_add.Text;
+            if (ProcessName == "") { return; }
             ViewModel.VM_BlackListAdd(ProcessName);
             PageRefresh();
         }
@@ -105,6 +106,7 @@ namespace EasySave_G8_UI.Views
         private void Prioritylist_add_btn_Click(object sender, RoutedEventArgs e)
         {
             string ExtensionName = Prioritylist_add1.Text;
+            if (ExtensionName == "") { return; }
             int index = PriorityNumer_combobox.SelectedIndex;
             if (index == -1) { index = 0; }
             ViewModel.VM_PriorityListAdd(ExtensionName, index);
@@ -128,8 +130,8 @@ namespace EasySave_G8_UI.Views
         }
         private void Extensionlist_add_btn_Click(object sender, RoutedEventArgs e)
         {
-            View_Model ViewModel = new View_Model();
             string CSExtensionName = Extensionlist_add1.Text;
+            if (CSExtensionName == "") { return; }
             ViewModel.VM_ExtensionListAdd(CSExtensionName);
             PageRefresh();
         }
@@ -137,7 +139,6 @@ namespace EasySave_G8_UI.Views
 
         private void Size_add_btn_Click(object sender, RoutedEventArgs e)
         {
-            View_Model ViewModel = new View_Model();
             double Size;
             if (Double.TryParse(Size_txbx.Text, out Size))
             {

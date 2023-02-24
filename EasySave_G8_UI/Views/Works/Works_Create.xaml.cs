@@ -53,6 +53,18 @@ namespace EasySave_G8_UI.Views.Works
                 MessageBox.Show($"Name cannot be empty.", $"Error", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
+            
+            if (textBox2.Text == "")
+            {
+                MessageBox.Show($"Source cannot be empty.", $"Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            if (textBox3.Text == "")
+            {
+                MessageBox.Show($"Destination cannot be empty.", $"Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
 
             bool Type;
             if (comboBox1.SelectedIndex == 0) { Type = true; }

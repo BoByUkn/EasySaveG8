@@ -74,6 +74,18 @@ namespace EasySave_G8_UI.Views.Works
                 return;
             }
 
+            if (textBox2.Text == "")
+            {
+                MessageBox.Show($"Source cannot be empty.", $"Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            if (textBox3.Text == "")
+            {
+                MessageBox.Show($"Destination cannot be empty.", $"Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
             ViewModel.VM_Work_Delete(Original_WorkName);
             ViewModel.VM_Work_New(textBox1.Text, textBox2.Text, textBox3.Text, Type);
 
