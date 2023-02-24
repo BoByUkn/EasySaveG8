@@ -23,6 +23,7 @@ namespace EasySave_G8_UI.Models
         public int total_files { get; set; }
         public int file_remain { get; set; }
         public double millisecondsDuration { get; set; }
+        public double Total_CryptoTime { get; set; }
         private double ActualSize2 = 0;
         private Model_Logs ModelLogs = new Model_Logs();
 
@@ -55,12 +56,13 @@ namespace EasySave_G8_UI.Models
         public void Run(object? sender) //Run a backup
         {
             {
+                Total_CryptoTime = 0;
                 _semahporeAFTObjects.Wait();
                 try { AFTObjects.Add(this); }
                 finally { _semahporeAFTObjects.Release();}
 
                 int percentage = 0;
-                double Total_CryptoTime = 0;
+                
 
                 Model_StateLogs ModelStateLogs = new Model_StateLogs(this.Name, this.Source, this.Destination, this.Type, this.total_files); //init statelogs
 
@@ -158,7 +160,7 @@ namespace EasySave_G8_UI.Models
                         {
                             if (Path.GetExtension(file) == ext)
                             {
-                                Total_CryptoTime += Cryptosoft(Destination); //Encrypt the file and sum up
+                                Total_CryptoTime += Cryptosoft(targetFile); //Encrypt the file and sum up
                             }
                         }
                         ActualSize2 = ActualSize2 + new FileInfo(file).Length;//Increment size with each file
@@ -187,7 +189,7 @@ namespace EasySave_G8_UI.Models
                         {
                             if (Path.GetExtension(file) == ext)
                             {
-                                Total_CryptoTime += Cryptosoft(Destination); //Encrypt the file and sum up
+                                Total_CryptoTime += Cryptosoft(targetFile); //Encrypt the file and sum up
                             }
                         }
                         file_remain-- ; // File remain decrease when a file copy have been done
@@ -211,7 +213,7 @@ namespace EasySave_G8_UI.Models
                         {
                             if (Path.GetExtension(file) == ext)
                             {
-                                Total_CryptoTime += Cryptosoft(Destination); //Encrypt the file and sum up
+                                Total_CryptoTime += Cryptosoft(targetFile); //Encrypt the file and sum up
                             }
                         }
                         long sizeee = new FileInfo(file).Length;
@@ -251,7 +253,7 @@ namespace EasySave_G8_UI.Models
                 finally { _semahporeAFTObjects.Release(); }
 
                 int percentage = 0;
-                double Total_CryptoTime = 0;
+                Total_CryptoTime = 0;
 
                 Model_StateLogs ModelStateLogs = new Model_StateLogs(this.Name, this.Source, this.Destination, this.Type, this.total_files); //init statelogs
 
@@ -451,6 +453,7 @@ namespace EasySave_G8_UI.Models
 
                 Duration = utcDateFinish.Subtract(utcDateStart); // Calculation of the result of the arrival date - the departure date to obtain a duration, it's in TimeSpan, it is the result of the subtraction of two DataTime
                 millisecondsDuration = Duration.TotalMilliseconds; // Convert Duration in milliseconds
+                ModelStateLogs.CryptoTime = Total_CryptoTime; // actualize cryptotime
                 ModelStateLogs.millisecondsDuration = millisecondsDuration; //add millisecondsDuration to the object ModelStateLogs
                 ModelStateLogs.State = "ENDED"; // Uptadte status of the save in order to write it in Json state logs
                 ModelLogs.StateLog(ModelStateLogs); // Write the JSon State Logs with all info 

@@ -108,7 +108,7 @@ namespace EasySave_G8_UI.Views
             openFileDialog.CheckPathExists = true;
             openFileDialog.ValidateNames = false;
             openFileDialog.FileName = $"{View_Model.VM_GetString_Language("select_directory")}";
-            openFileDialog.Filter = $"{View_Model.VM_GetString_Language("directories")}| *.directory";
+            openFileDialog.Filter = $"{View_Model.VM_GetString_Language("directories")}";
             openFileDialog.InitialDirectory = @"C:\";
 
             if (openFileDialog.ShowDialog() == true)
@@ -124,7 +124,7 @@ namespace EasySave_G8_UI.Views
             openFileDialog.CheckPathExists = true;
             openFileDialog.ValidateNames = false;
             openFileDialog.FileName = $"{View_Model.VM_GetString_Language("select_directory")}";
-            openFileDialog.Filter = $"{View_Model.VM_GetString_Language("directories")}| *.directory";
+            openFileDialog.Filter = $"{View_Model.VM_GetString_Language("directories")}";
             openFileDialog.InitialDirectory = @"C:\";
 
             if (openFileDialog.ShowDialog() == true)

@@ -181,7 +181,7 @@
     <value>Differential</value>
   </data>
   <data name="directories" xml:space="preserve">
-    <value>Directories</value>
+    <value>Directory | *.directory</value>
   </data>
   <data name="edit_selection" xml:space="preserve">
     <value>Edit selection</value>
