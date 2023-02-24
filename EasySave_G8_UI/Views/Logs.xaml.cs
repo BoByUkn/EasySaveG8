@@ -47,7 +47,7 @@ namespace EasySave_G8_UI.Views
                     textBoxLogs.AppendText("\n\n");
                 }
             }
-            catch (Exception) { System.Windows.MessageBox.Show("You don't have StateLogs file yet, please launch classic save or work first", "Error", MessageBoxButton.OK, MessageBoxImage.Warning); }
+            catch (Exception) { System.Windows.MessageBox.Show($"{View_Model.VM_GetString_Language("no_logs")}", $"{View_Model.VM_GetString_Language("error")}", MessageBoxButton.OK, MessageBoxImage.Warning); }
         }
 
         private void ButtonStateLogs_Refresh(object sender, EventArgs e)
@@ -71,7 +71,7 @@ namespace EasySave_G8_UI.Views
                     textBoxLogs.AppendText("\n\n");
                 }
             }
-            catch (Exception) { System.Windows.MessageBox.Show("You don't have StateLogs file yet, please launch classic save or work first", "Error", MessageBoxButton.OK, MessageBoxImage.Warning); }
+            catch (Exception) { System.Windows.MessageBox.Show($"{View_Model.VM_GetString_Language("no_statelogs")}", $"{View_Model.VM_GetString_Language("error")}", MessageBoxButton.OK, MessageBoxImage.Warning); }
         }
     }
 }

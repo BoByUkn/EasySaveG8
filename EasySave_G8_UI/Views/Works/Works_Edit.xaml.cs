@@ -74,9 +74,13 @@ namespace EasySave_G8_UI.Views.Works
             if (ExeNow)
             {
                 bool blacklist_state = ViewModel.VM_BlackListTest();
+                string appPath = Directory.GetCurrentDirectory() + @"\cryptosoft.exe";
+
                 if (!blacklist_state)
                 {
-                    Thread thread_pgbar = new Thread(MainWindow1.Loading1.ProgressBar_Add);
+                    if (File.Exists(appPath))
+                    {
+                        Thread thread_pgbar = new Thread(MainWindow1.Loading1.ProgressBar_Add);
                     thread_pgbar.Name = textBox1.Text;
                     thread_pgbar.Start();
 
@@ -86,8 +90,13 @@ namespace EasySave_G8_UI.Views.Works
                     backgroundWorker.DoWork += BackgroundWorker_DoWork;
                     backgroundWorker.ProgressChanged += BackgroundWorker_ProgressChanged;
                     backgroundWorker.RunWorkerAsync(argument: textBox1.Text);
+                    }
+                    else
+                    {
+                        System.Windows.MessageBox.Show($"{View_Model.VM_GetString_Language("error_cryptosoft")}" + appPath, $"{View_Model.VM_GetString_Language("error")}", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    }
                 }
-                else { MessageBox.Show($"{View_Model.VM_GetString_Language("msgbox_blacklist")}", "Error", MessageBoxButton.OK, MessageBoxImage.Warning); return; }
+                else { MessageBox.Show($"{View_Model.VM_GetString_Language("msgbox_blacklist")}", $"{View_Model.VM_GetString_Language("error")}", MessageBoxButton.OK, MessageBoxImage.Warning); return; }
             }
             else
             {
@@ -111,8 +120,8 @@ namespace EasySave_G8_UI.Views.Works
             openFileDialog.CheckFileExists = false;
             openFileDialog.CheckPathExists = true;
             openFileDialog.ValidateNames = false;
-            openFileDialog.FileName = "Selectionner un dossier";
-            openFileDialog.Filter = "Dossiers|*.directory";
+            openFileDialog.FileName = $"{View_Model.VM_GetString_Language("select_directory")}";
+            openFileDialog.Filter = $"{View_Model.VM_GetString_Language("directories")}";
             openFileDialog.InitialDirectory = @"C:\";
 
             if (openFileDialog.ShowDialog() == true)
@@ -126,8 +135,8 @@ namespace EasySave_G8_UI.Views.Works
             openFileDialog.CheckFileExists = false;
             openFileDialog.CheckPathExists = true;
             openFileDialog.ValidateNames = false;
-            openFileDialog.FileName = "Selectionner un dossier";
-            openFileDialog.Filter = "Dossiers|*.directory";
+            openFileDialog.FileName = $"{View_Model.VM_GetString_Language("select_directory")}";
+            openFileDialog.Filter = $"{View_Model.VM_GetString_Language("directories")}";
             openFileDialog.InitialDirectory = @"C:\";
 
             if (openFileDialog.ShowDialog() == true)

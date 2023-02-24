@@ -2,6 +2,7 @@
 using EasySave_G8_UI.Views;
 using EasySave_G8_UI.Views.Works;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using System.Windows;
@@ -18,6 +19,7 @@ namespace EasySave_G8_UI
         private static Mutex _mutex = null;
         public Loading Loading1;
         private View_Model ViewModel;
+        public bool ApplicationOn = true;
 
         public MainWindow()
         {
@@ -43,8 +45,10 @@ namespace EasySave_G8_UI
             else { ENradio.IsChecked = true; }
 
             Loading1 = new Loading();
-
+            Thread _threadblacklist = new Thread(Loading1.BlacklistPause);
+            _threadblacklist.Start();
         }
+
         private void MainWindow_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             this.DragMove();
@@ -57,7 +61,7 @@ namespace EasySave_G8_UI
             if (!createdNew)
             {
                 Application.Current.Shutdown();
-                MessageBox.Show("Application is already running.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning); return;
+                MessageBox.Show($"{View_Model.VM_GetString_Language("app_running")}", $"{View_Model.VM_GetString_Language("error")}", MessageBoxButton.OK, MessageBoxImage.Warning); return;
             }
         }
 
@@ -104,8 +108,10 @@ namespace EasySave_G8_UI
             Main.Content = new Settings();
         }
 
+
         private void Shutdown_Click(object sender, RoutedEventArgs e)
         {
+            ApplicationOn = false;
             Application.Current.Shutdown();
         }
 

@@ -25,7 +25,7 @@ namespace EasySave_G8_UI.Models
         public void Exec(object? sender) //Execute a backup
         {
             Model_AFT ModelAFT = new Model_AFT(this.Name, this.Source, this.Destination, this.Type);
-            if(this.Type == true){ModelAFT.Run(sender);} //Complete backup
+            if (this.Type == true){ModelAFT.Run(sender);} //Complete backup
             else if (this.Type == false){ModelAFT.RunDiff(sender);} //Differential backup
             ModelAFT.Logs();
         }
