@@ -132,8 +132,7 @@ namespace EasySave_G8_UI
 
         private void Remote_btn_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Prout server up");
-            //LANCER LE EXE DU SERVER ICI
+            ViewModel.VM_RemoteLaunch();
         }
     }
 }

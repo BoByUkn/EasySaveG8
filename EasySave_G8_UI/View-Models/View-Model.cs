@@ -257,5 +257,11 @@ namespace EasySave_G8_UI.View_Models
         {
             return (Model_AFT.AFTObjects.Count != 0);
         }
+
+        public void VM_RemoteLaunch()
+        {
+            Model_COMMON modelCommon = new Model_COMMON(null);
+            modelCommon.LaunchRemoteServ();
+        }
     }
 }
