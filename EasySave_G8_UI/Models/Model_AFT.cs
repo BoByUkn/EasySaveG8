@@ -189,7 +189,6 @@ namespace EasySave_G8_UI.Models
                         if (Path.GetExtension(file) == ext)
                         {
                             Total_CryptoTime += Cryptosoft(targetFile); //Encrypt the file and sum up
-                            Trace.WriteLine("tot crypto time = " + Total_CryptoTime);
                         }
                     }
                     file_remain-- ; // File remain decrease when a file copy have been done

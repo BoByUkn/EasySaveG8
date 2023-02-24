@@ -102,8 +102,6 @@ namespace EasySave_G8_UI.Models
             return false;
         }
 
-
-
         public List<Model_AFT> Get_Logs(string Date) //Retrieve log file content
         {
             string fileName = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\EasySave\logs\JSON\" + Date + ".json";
