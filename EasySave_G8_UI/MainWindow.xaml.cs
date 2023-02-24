@@ -63,6 +63,7 @@ namespace EasySave_G8_UI
             _mutex = new Mutex(true, "EasySave G8", out createdNew);
             if (!createdNew)
             {
+                ApplicationOn = false;
                 Application.Current.Shutdown();
                 MessageBox.Show($"{View_Model.VM_GetString_Language("app_running")}", $"{View_Model.VM_GetString_Language("error")}", MessageBoxButton.OK, MessageBoxImage.Warning); return;
             }

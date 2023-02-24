@@ -45,7 +45,24 @@ namespace EasySave_G8_UI.Views.Works
             string Name = textBox1.Text;
             if (ViewModel.VM_Work_Exist(Name))
             {
-                LabelError.Content = $"{View_Model.VM_GetString_Language("name_taken")}";
+                MessageBox.Show($"Name is already taken by another work.", $"Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+            else if (Name == "")
+            {
+                MessageBox.Show($"Name cannot be empty.", $"Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+            
+            if (textBox2.Text == "")
+            {
+                MessageBox.Show($"Source cannot be empty.", $"Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            if (textBox3.Text == "")
+            {
+                MessageBox.Show($"Destination cannot be empty.", $"Error", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
